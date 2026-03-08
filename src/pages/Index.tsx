@@ -293,6 +293,7 @@ const Index = () => {
               <p className="text-[14px] text-muted-foreground mb-10 leading-[1.7] font-light">
                 I'm currently available for freelance work and full-time opportunities. Let's build something great together.
               </p>
+
               <div className="flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium shadow-sm group" asChild>
                   <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
