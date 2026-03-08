@@ -1,5 +1,7 @@
 import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const highlights = [
   "Designed, built, and deployed multiple production web applications from scratch, handling all layers of the stack",
@@ -15,7 +17,10 @@ const certs = [
   { icon: ShieldCheck, type: "Training", title: "Smart Contract Security" },
 ];
 
-const ExperiencePage = () => (
+const ExperiencePage = () => {
+  usePageTitle("Experience");
+  return (
+  <PageTransition>
   <div className="py-16 md:py-24">
     <div className="container mx-auto px-6 max-w-2xl">
       <ScrollReveal>
@@ -66,6 +71,8 @@ const ExperiencePage = () => (
       </div>
     </div>
   </div>
-);
+  </PageTransition>
+  );
+};
 
 export default ExperiencePage;

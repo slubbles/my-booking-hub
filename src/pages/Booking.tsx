@@ -8,6 +8,8 @@ import { Clock, CheckCircle2, ArrowLeft, ArrowRight, Video, Globe } from "lucide
 import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 import profileImg from "@/assets/profile.jpg";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -27,6 +29,7 @@ const durations = [
 type Step = "calendar" | "details" | "confirmed";
 
 const BookingPage = () => {
+  usePageTitle("Book a Call");
   const [step, setStep] = useState<Step>("calendar");
   const [selectedDuration, setSelectedDuration] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -55,6 +58,7 @@ const BookingPage = () => {
   };
 
   return (
+    <PageTransition>
     <div className="py-10 md:py-16">
       <div className="container mx-auto px-6 max-w-5xl">
         <AnimatePresence mode="wait">
@@ -226,6 +230,7 @@ const BookingPage = () => {
         </AnimatePresence>
       </div>
     </div>
+    </PageTransition>
   );
 };
 

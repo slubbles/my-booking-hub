@@ -1,4 +1,6 @@
 import ScrollReveal from "@/components/ScrollReveal";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const skillCategories = [
   {
@@ -31,7 +33,10 @@ const skillCategories = [
   },
 ];
 
-const SkillsPage = () => (
+const SkillsPage = () => {
+  usePageTitle("Skills");
+  return (
+  <PageTransition>
   <div className="py-16 md:py-24">
     <div className="container mx-auto px-6 max-w-2xl">
       <ScrollReveal>
@@ -57,6 +62,8 @@ const SkillsPage = () => (
       </div>
     </div>
   </div>
-);
+  </PageTransition>
+  );
+};
 
 export default SkillsPage;
