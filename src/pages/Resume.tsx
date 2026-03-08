@@ -8,7 +8,7 @@ const experience = [
   {
     role: "Full Stack Developer",
     company: "Freelance / Self-Employed",
-    period: "Dec 2023 — Present",
+    period: "Dec 2023 - Present",
     active: true,
     points: [
       "Designed, built, and deployed multiple production web applications from scratch, handling all layers of the stack",
@@ -90,7 +90,7 @@ const ResumePage = () => {
           <ScrollReveal delay={0.03}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-12 premium-shadow">
               <p className="text-[12px] leading-[1.8] text-muted-foreground">
-                Proven ability to ship complete solutions independently — from UI design to backend APIs, payment systems, and deployment. Experienced with React, TypeScript, Node.js, PostgreSQL, and cloud platforms. Comfortable working across the entire stack and delivering production-ready products under real-world constraints.
+                Proven ability to ship complete solutions independently - from UI design to backend APIs, payment systems, and deployment. Experienced with React, TypeScript, Node.js, PostgreSQL, and cloud platforms. Comfortable working across the entire stack and delivering production-ready products under real-world constraints.
               </p>
             </div>
           </ScrollReveal>
@@ -197,7 +197,7 @@ const ResumePage = () => {
           {/* Bonus note */}
           <ScrollReveal delay={0.13}>
             <p className="text-[10px] text-muted-foreground/50 text-center mt-14">
-              Bonus: Solana blockchain, Rust, Smart Contracts — available where relevant.
+              Bonus: Solana blockchain, Rust, Smart Contracts - available where relevant.
             </p>
           </ScrollReveal>
         </div>

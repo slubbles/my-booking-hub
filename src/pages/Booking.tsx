@@ -129,7 +129,7 @@ const BookingPage = () => {
                     {selectedDate && selectedTime && step === "details" && (
                       <div className="mt-5 pt-5 border-t border-border">
                         <p className="text-[13px] font-medium text-foreground">{format(selectedDate, "EEEE, MMMM d")}</p>
-                        <p className="text-[12px] text-muted-foreground">{selectedTime} — {durations[selectedDuration].label}</p>
+                        <p className="text-[12px] text-muted-foreground">{selectedTime} - {durations[selectedDuration].label}</p>
                       </div>
                     )}
                   </div>

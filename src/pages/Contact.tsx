@@ -20,7 +20,7 @@ const ContactPage = () => {
                 Open to freelance projects, full-time roles, and collaborations.
               </p>
               <p className="text-[12px] text-muted-foreground/70 mb-12">
-                Based in the Philippines (UTC+8) — available for remote work worldwide.
+                Based in the Philippines (UTC+8) - available for remote work worldwide.
               </p>
             </ScrollReveal>
 

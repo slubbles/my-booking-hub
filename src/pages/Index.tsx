@@ -41,7 +41,7 @@ const featuredProjects = [
 
 const testimonials = [
   {
-    quote: "Salem delivered exactly what we needed — clean code, fast turnaround, and great communication throughout the project.",
+    quote: "Salem delivered exactly what we needed - clean code, fast turnaround, and great communication throughout the project.",
     name: "Alex Chen",
     role: "Startup Founder",
   },
@@ -107,7 +107,7 @@ const Index = () => {
 
             <ScrollReveal delay={0.1}>
               <p className="text-[16px] md:text-[18px] text-muted-foreground leading-[1.75] mb-10 max-w-lg font-light">
-                Full Stack Developer shipping end-to-end web applications — UI design, backend APIs, payment integrations, and deployment.
+                Full Stack Developer shipping end-to-end web applications - UI design, backend APIs, payment integrations, and deployment.
               </p>
             </ScrollReveal>
 
@@ -141,7 +141,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Tech stack — subtle horizontal strip */}
+      {/* Tech stack - subtle horizontal strip */}
       <section className="border-y border-border/60 py-3.5 overflow-hidden">
         <div className="container mx-auto px-6">
           <ScrollReveal>
