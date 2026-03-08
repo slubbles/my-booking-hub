@@ -7,7 +7,7 @@ const ThemeToggle = () => {
     if (typeof window !== "undefined") {
       return document.documentElement.classList.contains("dark");
     }
-    return false;
+    return true;
   });
 
   useEffect(() => {
@@ -27,7 +27,8 @@ const ThemeToggle = () => {
       setDark(true);
     } else if (stored === "light") {
       setDark(false);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    } else {
+      // Default to dark mode
       setDark(true);
     }
   }, []);

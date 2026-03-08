@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Clock } from "lucide-react";
+import { ArrowRight, MapPin, Clock, Quote } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import TechMarquee from "@/components/TechMarquee";
 import PageTransition from "@/components/PageTransition";
@@ -40,6 +40,24 @@ const featuredProjects = [
     desc: "Micro-crowdfunding platform with escrow logic and secure payment flows.",
     tags: ["React", "Node.js", "Payments"],
     image: odvImg,
+  },
+];
+
+const testimonials = [
+  {
+    quote: "Idderf delivered exactly what we needed - clean code, on time, and with great communication throughout the project.",
+    name: "Alex Rivera",
+    role: "Founder, SaaS Startup",
+  },
+  {
+    quote: "One of the most reliable developers I've worked with. He doesn't just build features, he thinks about the whole product.",
+    name: "Sarah Chen",
+    role: "Product Manager",
+  },
+  {
+    quote: "Hired him for a Stripe integration and he went above and beyond. The payment flow works flawlessly in production.",
+    name: "Marcus Webb",
+    role: "E-commerce Owner",
   },
 ];
 
@@ -183,6 +201,33 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-6">
+          <ScrollReveal>
+            <div className="mb-12">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Social Proof</span>
+              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What People Say</h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid sm:grid-cols-3 gap-4">
+            {testimonials.map((t, i) => (
+              <ScrollReveal key={t.name} delay={i * 0.08}>
+                <div className="bg-card border border-border/60 rounded-2xl p-6 h-full premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500 flex flex-col">
+                  <Quote size={16} className="text-primary/30 mb-4 flex-shrink-0" />
+                  <p className="text-[13px] text-muted-foreground leading-[1.7] mb-6 flex-1 italic">"{t.quote}"</p>
+                  <div>
+                    <p className="text-[13px] font-semibold text-foreground">{t.name}</p>
+                    <p className="text-[11px] text-muted-foreground/60">{t.role}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Latest from the blog */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
@@ -229,8 +274,16 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 border-t border-border/60">
-        <div className="container mx-auto px-6">
+      <section className="py-16 md:py-24 border-t border-border/60 relative overflow-hidden">
+        {/* Animated ambient glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]"
+            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+        <div className="container mx-auto px-6 relative">
           <ScrollReveal>
             <div className="text-center max-w-md mx-auto">
               <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>

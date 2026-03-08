@@ -18,7 +18,7 @@ const certs = [
 ];
 
 const ExperiencePage = () => {
-  useSEO({ title: "Experience", description: "Professional experience and certifications of Idderf Salem — Full Stack Developer.", path: "/experience" });
+  useSEO({ title: "Experience", description: "Professional experience and certifications of Idderf Salem - Full Stack Developer.", path: "/experience" });
   return (
     <PageTransition>
       <div className="py-24 md:py-32">
