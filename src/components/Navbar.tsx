@@ -144,7 +144,7 @@ const Navbar = () => {
                       to={item.href}
                       className={cn(
                         "flex items-center justify-between px-4 py-3 text-[15px] rounded-xl transition-all duration-300",
-                        location.pathname === item.href
+                        location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href))
                           ? "text-foreground font-semibold bg-secondary/70"
                           : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
                       )}
