@@ -2,6 +2,8 @@ import { Mail, Github, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const ContactPage = () => (
   <div className="py-16 md:py-24">
