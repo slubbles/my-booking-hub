@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Clock, ExternalLink, Quote, Sparkles } from "lucide-react";
+import { ArrowRight, MapPin, Clock, ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import usePageTitle from "@/hooks/usePageTitle";
@@ -24,21 +24,18 @@ const featuredProjects = [
     url: "https://postcontent.io",
     desc: "AI-powered content creation platform with Grok API. Generate hooks, scripts, and threads effortlessly.",
     tags: ["React", "Node.js", "Grok API"],
-    emoji: "✍️",
   },
   {
     title: "Snarbles",
     url: "https://snarbles.xyz",
     desc: "Full-stack app with Stripe payments, analytics dashboard, and real-time verification system.",
     tags: ["Next.js", "Stripe", "TypeScript"],
-    emoji: "⚡",
   },
   {
     title: "One Dollar Ventures",
     url: "https://onedollarventures.com",
     desc: "Micro-crowdfunding platform with escrow logic and secure payment flows.",
     tags: ["React", "Node.js", "Payments"],
-    emoji: "💰",
   },
 ];
 
@@ -67,7 +64,6 @@ const Index = () => {
     <PageTransition>
       {/* Hero */}
       <section className="py-20 md:py-32 relative overflow-hidden">
-        {/* Subtle background gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04),transparent_70%)] pointer-events-none" />
         
         <div className="container mx-auto px-6 relative">
@@ -79,17 +75,15 @@ const Index = () => {
                   <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-primary rounded-full border-2 border-background" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/8 text-primary text-[12px] font-medium">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-                      </span>
-                      Available for Work
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/8 text-primary text-[12px] font-medium">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
                     </span>
-                  </div>
+                    Available for Work
+                  </span>
                   <div className="flex items-center gap-3 text-[12px] text-muted-foreground mt-1">
-                    <span className="flex items-center gap-1"><MapPin size={11} /> Philippines 🇵🇭</span>
+                    <span className="flex items-center gap-1"><MapPin size={11} /> Philippines</span>
                     <span className="flex items-center gap-1"><Clock size={11} /> UTC+8</span>
                   </div>
                 </div>
@@ -113,9 +107,7 @@ const Index = () => {
             <ScrollReveal delay={0.18}>
               <div className="flex flex-wrap gap-3 mb-20">
                 <Button size="lg" className="rounded-full px-7 h-12 text-[14px]" asChild>
-                  <Link to="/projects">
-                    View My Work <ArrowRight size={16} />
-                  </Link>
+                  <Link to="/projects">View My Work <ArrowRight size={16} /></Link>
                 </Button>
                 <Button variant="outline" size="lg" className="rounded-full px-7 h-12 text-[14px]" asChild>
                   <Link to="/booking">Book a Call</Link>
@@ -142,7 +134,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Tech stack — marquee style */}
+      {/* Tech stack */}
       <section className="border-y border-border py-4 overflow-hidden">
         <div className="container mx-auto px-6">
           <ScrollReveal>
@@ -165,11 +157,8 @@ const Index = () => {
           <ScrollReveal>
             <div className="flex items-end justify-between mb-10">
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles size={14} className="text-primary" />
-                  <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Featured Work</span>
-                </div>
-                <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground">Selected Projects</h2>
+                <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Featured Work</span>
+                <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mt-2">Selected Projects</h2>
               </div>
               <Link to="/projects" className="hidden sm:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group">
                 View all <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
@@ -186,8 +175,7 @@ const Index = () => {
                   rel="noopener noreferrer"
                   className="group block border border-border rounded-xl p-6 h-full hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1"
                 >
-                  <div className="text-[28px] mb-4">{project.emoji}</div>
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-start justify-between mb-3">
                     <h3 className="text-[16px] font-bold text-foreground">{project.title}</h3>
                     <ExternalLink size={14} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all duration-200 mt-0.5" />
                   </div>
@@ -231,7 +219,7 @@ const Index = () => {
                     "{t.quote}"
                   </p>
                   <div className="flex items-center gap-3 pt-4 border-t border-border">
-                    <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-[13px] font-bold text-foreground">
+                    <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-[12px] font-bold text-foreground">
                       {t.name.split(" ").map(n => n[0]).join("")}
                     </div>
                     <div>
@@ -250,23 +238,21 @@ const Index = () => {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-6">
           <ScrollReveal>
-            <div className="relative rounded-2xl p-10 md:p-16 text-center max-w-3xl mx-auto overflow-hidden bg-foreground text-background">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
-              <div className="relative">
-                <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight mb-3">
-                  Have a project in mind?
-                </h2>
-                <p className="text-[15px] text-background/60 mb-8 max-w-md mx-auto leading-relaxed">
-                  I'm currently available for freelance work and full-time opportunities. Let's build something great together.
-                </p>
-                <div className="flex flex-wrap justify-center gap-3">
-                  <Button size="lg" className="rounded-full px-8 h-12 bg-background text-foreground hover:bg-background/90 text-[14px]" asChild>
-                    <Link to="/booking">Book a Call <ArrowRight size={16} /></Link>
-                  </Button>
-                  <Button variant="outline" size="lg" className="rounded-full px-8 h-12 border-background/20 text-background hover:bg-background/10 text-[14px]" asChild>
-                    <a href="mailto:idderfsalem98@gmail.com">Email Me</a>
-                  </Button>
-                </div>
+            <div className="text-center max-w-xl mx-auto">
+              <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Let's Connect</span>
+              <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mt-2 mb-3">
+                Have a project in mind?
+              </h2>
+              <p className="text-[15px] text-muted-foreground mb-8 leading-relaxed">
+                I'm currently available for freelance work and full-time opportunities. Let's build something great together.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Button size="lg" className="rounded-full px-8 h-12 text-[14px]" asChild>
+                  <Link to="/booking">Book a Call <ArrowRight size={16} /></Link>
+                </Button>
+                <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-[14px]" asChild>
+                  <a href="mailto:idderfsalem98@gmail.com">Email Me</a>
+                </Button>
               </div>
             </div>
           </ScrollReveal>

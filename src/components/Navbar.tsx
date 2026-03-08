@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
   { label: "Skills", href: "/skills" },
@@ -86,6 +87,7 @@ const Navbar = () => {
 
         {/* Right CTAs */}
         <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           <Link
             to="/contact"
             className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary transition-all duration-200"
@@ -102,22 +104,25 @@ const Navbar = () => {
         </div>
 
         {/* Mobile toggle */}
-        <button
-          className="md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-secondary text-foreground transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            {mobileOpen ? (
-              <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <X size={18} />
-              </motion.div>
-            ) : (
-              <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                <Menu size={18} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </button>
+        <div className="md:hidden flex items-center gap-1">
+          <ThemeToggle />
+          <button
+            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-secondary text-foreground transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {mobileOpen ? (
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <X size={18} />
+                </motion.div>
+              ) : (
+                <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                  <Menu size={18} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu — full screen overlay */}

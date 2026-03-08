@@ -12,9 +12,9 @@ const highlights = [
 ];
 
 const certs = [
-  { icon: GraduationCap, type: "Bootcamp", title: "Solana Bootcamp", emoji: "🎓" },
-  { icon: Award, type: "Certification", title: "Anchor Framework", emoji: "🏆" },
-  { icon: ShieldCheck, type: "Training", title: "Smart Contract Security", emoji: "🛡️" },
+  { icon: GraduationCap, type: "Bootcamp", title: "Solana Bootcamp" },
+  { icon: Award, type: "Certification", title: "Anchor Framework" },
+  { icon: ShieldCheck, type: "Training", title: "Smart Contract Security" },
 ];
 
 const ExperiencePage = () => {
@@ -63,7 +63,7 @@ const ExperiencePage = () => {
             {certs.map((cert, i) => (
               <ScrollReveal key={cert.title} delay={0.14 + i * 0.06}>
                 <div className="border border-border rounded-xl p-5 hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] transition-all duration-300 h-full">
-                  <span className="text-[24px] block mb-3">{cert.emoji}</span>
+                  <cert.icon size={20} className="text-primary mb-3" />
                   <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1">{cert.type}</p>
                   <h3 className="text-[14px] font-semibold text-foreground">{cert.title}</h3>
                 </div>
