@@ -1,5 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const projects = [
   {
