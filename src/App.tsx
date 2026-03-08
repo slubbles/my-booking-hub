@@ -11,6 +11,7 @@ import Projects from "./pages/Projects";
 import Experience from "./pages/Experience";
 import Booking from "./pages/Booking";
 import Contact from "./pages/Contact";
+import Resume from "./pages/Resume";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const AnimatedRoutes = () => {
           <Route path="/projects" element={<Projects />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/resume" element={<Resume />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
         <Route path="*" element={<NotFound />} />
