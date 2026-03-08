@@ -8,7 +8,7 @@ const experience = [
   {
     role: "Full Stack Developer",
     company: "Freelance / Self-Employed",
-    period: "Dec 2023 — Present",
+    period: "Dec 2023 - Present",
     active: true,
     points: [
       "Designed, built, and deployed multiple production web applications from scratch, handling all layers of the stack",
