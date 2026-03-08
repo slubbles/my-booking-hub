@@ -10,6 +10,8 @@ import postcontentImg from "@/assets/projects/postcontent.png";
 import snarblesImg from "@/assets/projects/snarbles.png";
 import odvImg from "@/assets/projects/onedollarventures.png";
 import { motion } from "framer-motion";
+import { blogPosts } from "@/data/blogPosts";
+import { format } from "date-fns";
 
 const stats = [
   { value: "2+", label: "Years Experience" },
@@ -181,7 +183,50 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Latest from the blog */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-6">
+          <ScrollReveal>
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Writing</span>
+                <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">Latest from the Blog</h2>
+              </div>
+              <Link to="/blog" className="hidden sm:flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 group">
+                All posts <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              </Link>
+            </div>
+          </ScrollReveal>
 
+          <div className="grid sm:grid-cols-3 gap-4">
+            {blogPosts.slice(0, 3).map((post, i) => (
+              <ScrollReveal key={post.slug} delay={i * 0.08}>
+                <Link
+                  to={`/blog/${post.slug}`}
+                  className="group block bg-card border border-border/60 rounded-2xl p-6 h-full premium-shadow hover:premium-shadow-hover hover:-translate-y-1 transition-all duration-500"
+                >
+                  <div className="flex items-center gap-2 mb-3 text-[10px] text-muted-foreground/60">
+                    <time>{format(new Date(post.date), "MMM d, yyyy")}</time>
+                    <span>·</span>
+                    <span>{post.readTime}</span>
+                  </div>
+                  <h3 className="text-[14px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-2 leading-snug">{post.title}</h3>
+                  <p className="text-[12px] text-muted-foreground leading-[1.65] mb-4">{post.excerpt.slice(0, 100)}...</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {post.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-0.5 text-[9px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
+                    ))}
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <Link to="/blog" className="sm:hidden flex items-center justify-center gap-1 text-[12px] text-muted-foreground hover:text-foreground transition-colors mt-10">
+            All posts <ArrowRight size={13} />
+          </Link>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="py-16 md:py-24 border-t border-border/60">

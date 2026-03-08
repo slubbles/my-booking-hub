@@ -6,11 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
-  { label: "Skills", href: "/skills" },
   { label: "Projects", href: "/projects" },
   { label: "Experience", href: "/experience" },
   { label: "Blog", href: "/blog" },
-  { label: "Resume", href: "/resume" },
   { label: "Contact", href: "/contact" },
 ];
 
