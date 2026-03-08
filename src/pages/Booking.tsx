@@ -119,7 +119,7 @@ const BookingPage = () => {
 
                     <div className="flex items-center gap-2 text-[12px] text-muted-foreground mb-1.5">
                       <Video size={13} />
-                      <span>Cal Video</span>
+                      <span>Google Meet</span>
                     </div>
                     <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
                       <Globe size={13} />
