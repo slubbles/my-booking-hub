@@ -159,52 +159,36 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          <div className="space-y-0 divide-y divide-border/40">
-            {[
-              {
-                icon: Monitor,
-                title: "Frontend Development",
-                desc: "Pixel-perfect, responsive UIs with React, Next.js, TypeScript, and Tailwind CSS.",
-              },
-              {
-                icon: Server,
-                title: "Backend Development",
-                desc: "RESTful APIs, authentication, webhooks, and third-party integrations with Node.js.",
-              },
-              {
-                icon: Database,
-                title: "Database Design",
-                desc: "Schema design, migrations, and optimization with PostgreSQL, Prisma, and Supabase.",
-              },
-              {
-                icon: Cloud,
-                title: "DevOps & Deployment",
-                desc: "CI/CD pipelines, containerization, and production deployments on Vercel, Railway, and AWS.",
-              },
-              {
-                icon: Bot,
-                title: "AI Agents",
-                desc: "Custom AI integrations and agent workflows using Claude, Grok, and OpenAI APIs.",
-              },
-              {
-                icon: Compass,
-                title: "System Design",
-                desc: "Architecture planning, scalability strategies, and technical decisions for production systems.",
-              },
-            ].map((service, i) => (
-              <ScrollReveal key={service.title} delay={i * 0.04}>
-                <div className="group flex items-start gap-5 py-5 first:pt-0 last:pb-0 cursor-default">
-                  <div className="w-9 h-9 rounded-lg bg-primary/[0.07] flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/[0.12] transition-colors duration-300">
-                    <service.icon size={16} className="text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-[13px] font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
-                    <p className="text-[12px] text-muted-foreground leading-[1.65]">{service.desc}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal delay={0.08}>
+            <div className="px-10 md:px-14">
+              <Carousel opts={{ align: "start", loop: true }} className="w-full">
+                <CarouselContent className="-ml-3">
+                  {[
+                    { icon: Monitor, title: "Frontend Development", desc: "Pixel-perfect, responsive UIs with React, Next.js, TypeScript, and Tailwind CSS." },
+                    { icon: Server, title: "Backend Development", desc: "RESTful APIs, authentication, webhooks, and third-party integrations with Node.js." },
+                    { icon: Database, title: "Database Design", desc: "Schema design, migrations, and optimization with PostgreSQL, Prisma, and Supabase." },
+                    { icon: Cloud, title: "DevOps & Deployment", desc: "CI/CD pipelines, containerization, and production deployments on Vercel, Railway, and AWS." },
+                    { icon: Bot, title: "AI Agents", desc: "Custom AI integrations and agent workflows using Claude, Grok, and OpenAI APIs." },
+                    { icon: Compass, title: "System Design", desc: "Architecture planning, scalability strategies, and technical decisions for production systems." },
+                  ].map((service) => (
+                    <CarouselItem key={service.title} className="pl-3 basis-full sm:basis-1/2 lg:basis-1/3">
+                      <div className="group flex items-start gap-4 py-6 px-5 rounded-2xl border border-border/40 hover:border-border/80 bg-card/50 hover:bg-card transition-all duration-300 h-full">
+                        <div className="w-10 h-10 rounded-xl bg-primary/[0.08] flex items-center justify-center flex-shrink-0 group-hover:bg-primary/[0.14] transition-colors duration-300">
+                          <service.icon size={18} className="text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-[13px] font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                          <p className="text-[12px] text-muted-foreground leading-[1.7]">{service.desc}</p>
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
