@@ -84,7 +84,7 @@ const BookingPage = () => {
           ) : (
             <ScrollReveal>
               <div className="border border-border rounded-lg overflow-hidden bg-background">
-                <div className="grid md:grid-cols-[280px_1fr_260px]">
+                <div className="grid lg:grid-cols-[280px_1fr_260px]">
                   {/* Left panel */}
                   <div className="border-b md:border-b-0 md:border-r border-border p-5">
                     <div className="flex items-center gap-2.5 mb-5">
