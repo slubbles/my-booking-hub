@@ -230,6 +230,7 @@ const BookingPage = () => {
         </AnimatePresence>
       </div>
     </div>
+    </PageTransition>
   );
 };
 
