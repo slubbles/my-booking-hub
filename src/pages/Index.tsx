@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Clock, ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import TechMarquee from "@/components/TechMarquee";
 import PageTransition from "@/components/PageTransition";
 import useSEO from "@/hooks/useSEO";
 import profileImg from "@/assets/profile.jpg";
