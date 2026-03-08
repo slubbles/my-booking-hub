@@ -11,6 +11,7 @@ import Projects from "./pages/Projects";
 import Experience from "./pages/Experience";
 import Booking from "./pages/Booking";
 import Contact from "./pages/Contact";
+import Resume from "./pages/Resume";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
