@@ -150,7 +150,7 @@ const Index = () => {
       <TechMarquee />
 
       {/* What I Can Help With */}
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-14">
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="mb-12">
