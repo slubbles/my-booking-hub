@@ -10,6 +10,8 @@ import postcontentImg from "@/assets/projects/postcontent.png";
 import snarblesImg from "@/assets/projects/snarbles.png";
 import odvImg from "@/assets/projects/onedollarventures.png";
 import { motion } from "framer-motion";
+import { blogPosts } from "@/data/blogPosts";
+import { format } from "date-fns";
 
 const stats = [
   { value: "2+", label: "Years Experience" },
