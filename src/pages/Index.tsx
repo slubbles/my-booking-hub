@@ -14,10 +14,6 @@ const stats = [
   { value: "10+", label: "Happy Clients" },
 ];
 
-const techStack = [
-  "React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Stripe", "Tailwind CSS",
-  "Prisma", "Supabase", "Vercel", "Docker", "REST APIs",
-];
 
 const featuredProjects = [
   {
