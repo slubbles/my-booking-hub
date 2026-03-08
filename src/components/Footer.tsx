@@ -10,7 +10,7 @@ const socialLinks = [
 ];
 
 const Footer = () => (
-  <footer className="border-t border-border/60">
+  <footer className="border-t border-border/20">
     <div className="container mx-auto px-6 py-16">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
         {/* Brand */}
