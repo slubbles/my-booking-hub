@@ -56,7 +56,7 @@ const Navbar = () => {
           className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 bg-secondary/50 rounded-full px-1 py-0.5 border border-border/40"
         >
           {navItems.map((item) => {
-            const isActive = location.pathname === item.href;
+            const isActive = location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
