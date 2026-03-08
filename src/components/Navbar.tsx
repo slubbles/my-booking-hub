@@ -152,7 +152,7 @@ const Navbar = () => {
                       {item.label}
                       <ArrowRight size={14} className={cn(
                         "transition-opacity",
-                        location.pathname === item.href ? "opacity-60" : "opacity-0"
+                        (location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href))) ? "opacity-60" : "opacity-0"
                       )} />
                     </Link>
                   </motion.div>

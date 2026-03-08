@@ -279,7 +279,7 @@ SENTRY_DSN=https://xxx@sentry.io/xxx
 | Vercel (Hobby) | $0 |
 | Supabase (Free) | $0 |
 | Resend (100/day) | $0 |
-| Cal.com (Free) | $0 |
+| Google Calendar API | $0 (free tier, 1M queries/day) |
 | Plausible | $9/mo or self-host free |
 | Cloudflare DNS | $0 |
 | Domain (.dev) | ~$12/year |
@@ -287,8 +287,40 @@ SENTRY_DSN=https://xxx@sentry.io/xxx
 
 ---
 
+## Remaining Frontend Polish (Logged from Audit)
+
+These items were identified during the 9.8 audit and have since been addressed:
+
+- [x] Tighten section spacing across all pages (mb-14 -> mb-10)
+- [x] Change "Book a Call" navbar button from black to red (bg-primary)
+- [x] Change "Cal Video" label to "Google Meet" on booking page
+- [x] Add testimonials section to homepage
+- [x] Add contact form with Zod validation
+- [x] Add reading progress bar on blog posts
+- [x] Add share buttons (X, LinkedIn, copy link) on blog posts
+- [x] Remove all em dashes, rewrite blogs to sound human
+- [x] Default to dark mode
+
+### Still TODO (Frontend-only)
+- [ ] Replace emoji in 404 page with Lucide icon (brand consistency)
+- [ ] Fix navbar active state for nested routes (/projects/:slug should highlight Projects)
+- [ ] Add `noValidate` to contact form to prevent browser validation conflicts with Zod
+- [ ] Add branded favicon matching the red accent
+- [ ] Add RSS feed meta tag for blog
+
+### Backend Required
+- [ ] Wire up contact form to store submissions + send email (Supabase + Resend)
+- [ ] Integrate Google Calendar API for real Meet booking links
+- [ ] Add Plausible/Umami analytics
+- [ ] Add Sentry error tracking
+- [ ] Compress and optimize project screenshots (WebP/AVIF)
+- [ ] Implement per-page OG image generation
+- [ ] Add sitemap generation at build time
+
+---
+
 ## Notes
 
 - The current frontend is production-ready for a static portfolio. The above is only needed if you want dynamic features (form submissions, real bookings, blog management).
 - For a developer portfolio, keeping the blog as MDX files in the repo is often the best approach - it's version controlled, requires no backend, and you write in your code editor.
-- Cal.com embed is the fastest path to a working booking system with zero backend work.
+- Google Calendar API is free (1M queries/day). To create Google Meet links programmatically, you need Google OAuth + Calendar API through a backend (Lovable Cloud / Supabase Edge Functions).

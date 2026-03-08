@@ -19,7 +19,7 @@ const NotFound = () => {
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-20 h-20 rounded-full bg-primary/[0.06] flex items-center justify-center">
-                  <span className="text-[32px]">🔍</span>
+                  <Search size={32} className="text-primary/60" />
                 </div>
               </div>
             </div>
