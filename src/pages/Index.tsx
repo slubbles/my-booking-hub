@@ -41,27 +41,6 @@ const featuredProjects = [
   },
 ];
 
-const testimonials = [
-  {
-    quote: "Salem delivered exactly what we needed - clean code, fast turnaround, and great communication throughout the project.",
-    name: "Alex Chen",
-    role: "Startup Founder",
-    project: "Post Content",
-  },
-  {
-    quote: "Exceptional full-stack work. He handled everything from the UI to Stripe integration seamlessly. Would hire again.",
-    name: "Maria Santos",
-    role: "Product Manager",
-    project: "Snarbles",
-  },
-  {
-    quote: "Professional, reliable, and technically sharp. Salem turned our rough idea into a polished, production-ready app.",
-    name: "James Wright",
-    role: "Business Owner",
-    project: "One Dollar Ventures",
-  },
-];
-
 const Index = () => {
   useSEO({ path: "/" });
 
