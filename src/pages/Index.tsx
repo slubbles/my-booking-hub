@@ -83,7 +83,7 @@ const Index = () => {
                     alt="Idderf Salem"
                     className="w-12 h-12 rounded-full object-cover ring-[1.5px] ring-border shadow-sm"
                   />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-background" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-primary rounded-full border-2 border-background" />
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground font-medium">
