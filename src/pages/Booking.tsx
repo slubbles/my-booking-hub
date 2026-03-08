@@ -189,7 +189,7 @@ const BookingPage = () => {
                       initial={{ opacity: 0, x: 16 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.25 }}
-                      className="p-5 md:col-span-2"
+                      className="p-5 lg:col-span-2"
                     >
                       <div className="max-w-sm">
                         <button

@@ -127,7 +127,7 @@ const Index = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <div className="flex gap-14 md:gap-20">
+              <div className="flex gap-8 sm:gap-14 md:gap-20">
                 {stats.map((stat, i) => (
                   <motion.div
                     key={stat.label}
