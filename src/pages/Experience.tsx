@@ -1,5 +1,7 @@
 import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 
 const highlights = [
   "Designed, built, and deployed multiple production web applications from scratch, handling all layers of the stack",
