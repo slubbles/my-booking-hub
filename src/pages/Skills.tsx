@@ -34,7 +34,7 @@ const skillCategories = [
 ];
 
 const SkillsPage = () => {
-  usePageTitle("Skills");
+  useSEO({ title: "Skills", description: "Technical skills and expertise of Idderf Salem — React, TypeScript, Node.js, Stripe, and more.", path: "/skills" });
   return (
     <PageTransition>
       <div className="py-24 md:py-32">
