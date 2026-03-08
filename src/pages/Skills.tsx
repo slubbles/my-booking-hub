@@ -5,37 +5,30 @@ import usePageTitle from "@/hooks/usePageTitle";
 const skillCategories = [
   {
     title: "Frontend",
-    emoji: "🎨",
     skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
   },
   {
     title: "Backend",
-    emoji: "⚙️",
     skills: ["Node.js", "RESTful APIs", "Webhooks", "Prisma ORM"],
   },
   {
     title: "Database",
-    emoji: "🗄️",
     skills: ["PostgreSQL", "Supabase"],
   },
   {
     title: "Payments",
-    emoji: "💳",
     skills: ["Stripe API", "Polar.sh", "Escrow Systems", "Fiat & Crypto Processing"],
   },
   {
     title: "DevOps & Tools",
-    emoji: "🚀",
     skills: ["Git/GitHub", "Vercel", "Railway", "Netlify", "Docker", "CI/CD", "AWS (familiar)"],
   },
   {
     title: "Integrations",
-    emoji: "🔗",
     skills: ["Claude API", "Grok API", "X API"],
   },
   {
     title: "Bonus",
-    emoji: "✨",
     skills: ["Solana blockchain", "Rust", "Smart Contracts"],
   },
 ];
@@ -56,10 +49,7 @@ const SkillsPage = () => {
             {skillCategories.map((cat, i) => (
               <ScrollReveal key={cat.title} delay={i * 0.06}>
                 <div className="border border-border rounded-xl p-5 h-full hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] transition-all duration-300">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="text-[20px]">{cat.emoji}</span>
-                    <h2 className="text-[15px] font-bold text-foreground">{cat.title}</h2>
-                  </div>
+                  <h2 className="text-[14px] font-bold text-foreground mb-3">{cat.title}</h2>
                   <div className="flex flex-wrap gap-1.5">
                     {cat.skills.map((skill) => (
                       <span key={skill} className="px-2.5 py-1 text-[12px] rounded-full border border-border text-muted-foreground hover:border-foreground/20 hover:text-foreground transition-all duration-200 cursor-default">
