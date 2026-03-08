@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Clock, ExternalLink } from "lucide-react";
+import { ArrowRight, MapPin, Clock, ExternalLink, Quote } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import PageTransition from "@/components/PageTransition";
+import usePageTitle from "@/hooks/usePageTitle";
 import profileImg from "@/assets/profile.jpg";
 
 const stats = [
@@ -36,9 +38,29 @@ const featuredProjects = [
   },
 ];
 
+const testimonials = [
+  {
+    quote: "Salem delivered exactly what we needed — clean code, fast turnaround, and great communication throughout the project.",
+    name: "Alex Chen",
+    role: "Startup Founder",
+  },
+  {
+    quote: "Exceptional full-stack work. He handled everything from the UI to Stripe integration seamlessly. Would hire again.",
+    name: "Maria Santos",
+    role: "Product Manager",
+  },
+  {
+    quote: "Professional, reliable, and technically sharp. Salem turned our rough idea into a polished, production-ready app.",
+    name: "James Wright",
+    role: "Business Owner",
+  },
+];
+
 const Index = () => {
+  usePageTitle("");
+
   return (
-    <>
+    <PageTransition>
       {/* Hero */}
       <section className="py-16 md:py-28">
         <div className="container mx-auto px-6">
@@ -161,6 +183,35 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-16 md:py-24 bg-secondary/40">
+        <div className="container mx-auto px-6">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <h2 className="text-[24px] md:text-[28px] font-bold tracking-tight text-foreground">What Clients Say</h2>
+              <p className="text-[13px] text-muted-foreground mt-1">Feedback from people I've worked with.</p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {testimonials.map((t, i) => (
+              <ScrollReveal key={t.name} delay={i * 0.08}>
+                <div className="bg-background border border-border rounded-lg p-6 h-full flex flex-col">
+                  <Quote size={18} className="text-primary/40 mb-3 flex-shrink-0" />
+                  <p className="text-[13px] text-muted-foreground leading-[1.65] mb-4 flex-1">
+                    "{t.quote}"
+                  </p>
+                  <div>
+                    <p className="text-[13px] font-semibold text-foreground">{t.name}</p>
+                    <p className="text-[11px] text-muted-foreground">{t.role}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
@@ -184,7 +235,7 @@ const Index = () => {
           </ScrollReveal>
         </div>
       </section>
-    </>
+    </PageTransition>
   );
 };
 
