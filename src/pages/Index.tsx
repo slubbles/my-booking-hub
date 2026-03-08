@@ -101,7 +101,7 @@ const Index = () => {
               <h1 className="text-[40px] md:text-[64px] font-extrabold tracking-[-0.035em] text-foreground leading-[1.05] mb-5">
                 I build products
                 <br />
-                <span className="text-muted-foreground/50">from idea to launch.</span>
+                <span className="text-primary">from idea to launch.</span>
               </h1>
             </ScrollReveal>
 
