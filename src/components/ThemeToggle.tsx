@@ -3,12 +3,10 @@ import { Moon, Sun } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const ThemeToggle = () => {
-  const [dark, setDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark");
-    }
-    return true;
-  });
+  // Read initial state from the DOM class (set by inline script in index.html)
+  const [dark, setDark] = useState(() =>
+    document.documentElement.classList.contains("dark")
+  );
 
   useEffect(() => {
     const root = document.documentElement;
@@ -20,18 +18,6 @@ const ThemeToggle = () => {
       localStorage.setItem("theme", "light");
     }
   }, [dark]);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    if (stored === "dark") {
-      setDark(true);
-    } else if (stored === "light") {
-      setDark(false);
-    } else {
-      // Default to dark mode
-      setDark(true);
-    }
-  }, []);
 
   return (
     <Tooltip>
