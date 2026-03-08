@@ -47,7 +47,7 @@ const Index = () => {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="py-24 md:py-40 relative overflow-hidden">
+      <section className="pt-12 md:pt-20 pb-16 md:pb-24 relative overflow-hidden">
         {/* Ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06),transparent_70%)]" />
