@@ -1,7 +1,7 @@
 import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 
 const highlights = [
   "Designed, built, and deployed multiple production web applications from scratch, handling all layers of the stack",
@@ -18,7 +18,7 @@ const certs = [
 ];
 
 const ExperiencePage = () => {
-  usePageTitle("Experience");
+  useSEO({ title: "Experience", description: "Professional experience and certifications of Idderf Salem — Full Stack Developer.", path: "/experience" });
   return (
     <PageTransition>
       <div className="py-24 md:py-32">

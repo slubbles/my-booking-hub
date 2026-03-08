@@ -9,7 +9,7 @@ import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 import profileImg from "@/assets/profile.jpg";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -29,7 +29,7 @@ const durations = [
 type Step = "calendar" | "details" | "confirmed";
 
 const BookingPage = () => {
-  usePageTitle("Book a Call");
+  useSEO({ title: "Book a Call", description: "Schedule a project discussion call with Idderf Salem.", path: "/booking" });
   const [step, setStep] = useState<Step>("calendar");
   const [selectedDuration, setSelectedDuration] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();

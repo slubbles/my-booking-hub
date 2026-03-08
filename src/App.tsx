@@ -8,6 +8,7 @@ import Layout from "@/components/Layout";
 import Index from "./pages/Index";
 import Skills from "./pages/Skills";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
 import Experience from "./pages/Experience";
 import Booking from "./pages/Booking";
 import Contact from "./pages/Contact";
@@ -26,6 +27,7 @@ const AnimatedRoutes = () => {
           <Route path="/" element={<Index />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/resume" element={<Resume />} />

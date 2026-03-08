@@ -1,6 +1,6 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 
 const skillCategories = [
   {
@@ -34,7 +34,7 @@ const skillCategories = [
 ];
 
 const SkillsPage = () => {
-  usePageTitle("Skills");
+  useSEO({ title: "Skills", description: "Technical skills and expertise of Idderf Salem — React, TypeScript, Node.js, Stripe, and more.", path: "/skills" });
   return (
     <PageTransition>
       <div className="py-24 md:py-32">
@@ -52,7 +52,7 @@ const SkillsPage = () => {
                   <h2 className="text-[13px] font-semibold text-foreground mb-3">{cat.title}</h2>
                   <div className="flex flex-wrap gap-1.5">
                     {cat.skills.map((skill) => (
-                      <span key={skill} className="px-2.5 py-1 text-[11px] rounded-full bg-secondary text-muted-foreground/80 font-medium hover:text-foreground transition-colors duration-300 cursor-default">
+                      <span key={skill} className="px-2.5 py-1 text-[11px] rounded-full bg-secondary text-muted-foreground/80 font-medium hover:text-foreground hover:bg-primary/[0.06] hover:border-primary/20 transition-all duration-300 cursor-default">
                         {skill}
                       </span>
                     ))}

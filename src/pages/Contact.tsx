@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const ContactPage = () => {
-  usePageTitle("Contact");
+  useSEO({ title: "Contact", description: "Get in touch with Idderf Salem for freelance projects, full-time roles, and collaborations.", path: "/contact" });
   return (
     <PageTransition>
       <div className="py-24 md:py-32">

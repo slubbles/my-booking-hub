@@ -1,7 +1,7 @@
 import { ExternalLink as ExtLink, Briefcase, GraduationCap, Code2, Globe, Mail, Rocket, ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 import { Button } from "@/components/ui/button";
 
 const experience = [
@@ -54,7 +54,7 @@ const education = [
 ];
 
 const ResumePage = () => {
-  usePageTitle("Resume");
+  useSEO({ title: "Resume", description: "Resume of Idderf Salem — Full Stack Developer with production experience in React, TypeScript, and Node.js.", path: "/resume" });
 
   return (
     <PageTransition>
