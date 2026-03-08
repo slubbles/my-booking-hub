@@ -88,8 +88,8 @@ const Index = () => {
                 <div className="flex flex-col gap-1">
                   <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground font-medium">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
                     </span>
                     Available for Work
                   </span>
