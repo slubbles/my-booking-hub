@@ -64,7 +64,7 @@ const ResumePage = () => {
           <ScrollReveal>
             <div className="flex items-start justify-between gap-4 mb-14">
               <div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Curriculum Vitae</span>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Resume</span>
                 <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Idderf Salem</h1>
                 <p className="text-[14px] text-muted-foreground font-light">Full Stack Developer with over a year of production experience building and deploying end-to-end web applications.</p>
                 <div className="flex items-center gap-4 mt-3 text-[11px] text-muted-foreground/70 flex-wrap">
