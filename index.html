@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Idderf Salem</title>
+    <script>
+      // Default to dark mode
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'light') return;
+        document.documentElement.classList.add('dark');
+      })();
+    </script>
     <meta name="description" content="Full Stack Developer building production web applications from idea to launch. Specializing in React, TypeScript, Node.js, and payment integrations.">
     <meta name="author" content="Idderf Salem" />
     <meta name="robots" content="index, follow" />

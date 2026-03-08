@@ -22,7 +22,7 @@ const useSEO = ({
   image,
 }: SEOProps = {}) => {
   useEffect(() => {
-    const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Full Stack Developer`;
+    const fullTitle = title ? `${title} - ${SITE_NAME}` : `${SITE_NAME} - Full Stack Developer`;
     document.title = fullTitle;
 
     const setMeta = (attr: string, key: string, content: string) => {
