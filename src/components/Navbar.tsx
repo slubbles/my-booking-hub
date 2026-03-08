@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { label: "Skills", href: "/skills" },
@@ -14,6 +15,7 @@ const Navbar = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -21,100 +23,159 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 bg-background transition-shadow duration-200",
-        scrolled && "shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]"
+        "sticky top-0 z-50 transition-all duration-300",
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-sm"
+          : "bg-background border-b border-border"
       )}
     >
-      <div className="container mx-auto flex h-[60px] items-center justify-between px-6">
+      <div className="container mx-auto flex h-16 items-center justify-between px-6">
         {/* Logo */}
-        <Link to="/" className="text-[17px] font-bold tracking-[-0.01em] text-foreground">
-          Idderf Salem
+        <Link to="/" className="relative group flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+            IS
+          </div>
+          <span className="text-[15px] font-semibold tracking-tight text-foreground hidden sm:block">
+            Idderf Salem
+          </span>
         </Link>
 
-        {/* Center nav */}
-        <nav className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={cn(
-                "relative px-3.5 py-1.5 text-[14px] transition-colors",
-                location.pathname === item.href
-                  ? "text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {item.label}
-              {location.pathname === item.href && (
-                <span className="absolute bottom-0 left-3.5 right-3.5 h-[2px] bg-foreground rounded-full" />
-              )}
-            </Link>
-          ))}
+        {/* Center nav — pill style */}
+        <nav
+          ref={navRef}
+          className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 bg-secondary/60 rounded-full px-1.5 py-1"
+        >
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={cn(
+                  "relative px-4 py-1.5 text-[13px] font-medium rounded-full transition-all duration-200",
+                  isActive
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="navbar-active"
+                    className="absolute inset-0 bg-foreground rounded-full"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Right */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Right CTAs */}
+        <div className="hidden md:flex items-center gap-2">
           <Link
             to="/contact"
-            className="text-[14px] text-foreground hover:text-muted-foreground transition-colors"
+            className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary transition-all duration-200"
           >
             Get in Touch
           </Link>
           <Link
             to="/booking"
-            className="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-foreground text-background text-[13px] font-medium hover:bg-foreground/90 transition-colors"
+            className="inline-flex items-center gap-2 h-9 px-5 rounded-full bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-200 group"
           >
-            Book a Call <ChevronRight size={14} />
+            Book a Call
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
-        <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-secondary text-foreground transition-colors"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            {mobileOpen ? (
+              <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                <X size={18} />
+              </motion.div>
+            ) : (
+              <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                <Menu size={18} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </div>
 
-      <div className={cn("h-px transition-colors", scrolled ? "bg-transparent" : "bg-border")} />
+      {/* Mobile menu — full screen overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="md:hidden fixed inset-x-0 top-16 bottom-0 bg-background/95 backdrop-blur-xl z-40"
+          >
+            <div className="container mx-auto px-6 py-8 flex flex-col h-full">
+              <nav className="flex flex-col gap-1">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.2 }}
+                  >
+                    <Link
+                      to={item.href}
+                      className={cn(
+                        "flex items-center justify-between px-4 py-3.5 text-[16px] rounded-xl transition-all",
+                        location.pathname === item.href
+                          ? "text-foreground font-semibold bg-secondary"
+                          : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                      )}
+                    >
+                      {item.label}
+                      <ArrowRight size={16} className={cn(
+                        "transition-opacity",
+                        location.pathname === item.href ? "opacity-100" : "opacity-0"
+                      )} />
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
 
-      {mobileOpen && (
-        <div className="md:hidden bg-background border-b border-border px-6 py-4 space-y-0.5 animate-in slide-in-from-top-2 duration-200">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={cn(
-                "block px-3 py-2.5 text-[14px] rounded-md transition-colors",
-                location.pathname === item.href
-                  ? "text-foreground font-medium bg-secondary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <div className="pt-3 mt-2 border-t border-border flex flex-col gap-2">
-            <Link
-              to="/contact"
-              className="px-3 py-2.5 text-[14px] text-muted-foreground hover:text-foreground"
-            >
-              Get in Touch
-            </Link>
-            <Link
-              to="/booking"
-              className="inline-flex items-center justify-center gap-1.5 h-10 rounded-full bg-foreground text-background text-[13px] font-medium"
-            >
-              Book a Call <ChevronRight size={14} />
-            </Link>
-          </div>
-        </div>
-      )}
+              <div className="mt-auto pb-8 flex flex-col gap-3">
+                <Link
+                  to="/contact"
+                  className="flex items-center justify-center h-12 rounded-xl border border-border text-[14px] font-medium text-foreground hover:bg-secondary transition-colors"
+                >
+                  Get in Touch
+                </Link>
+                <Link
+                  to="/booking"
+                  className="flex items-center justify-center gap-2 h-12 rounded-xl bg-primary text-primary-foreground text-[14px] font-medium hover:bg-primary/90 transition-colors"
+                >
+                  Book a Call <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
