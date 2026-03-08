@@ -129,7 +129,7 @@ const Index = () => {
       <TechMarquee />
 
       {/* Featured projects */}
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-end justify-between mb-12">
