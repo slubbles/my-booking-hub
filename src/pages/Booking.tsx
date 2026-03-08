@@ -136,7 +136,7 @@ const BookingPage = () => {
 
                   {step === "calendar" ? (
                     <>
-                      <div className="border-b md:border-b-0 md:border-r border-border p-5 flex flex-col items-center justify-center">
+                      <div className="border-b lg:border-b-0 lg:border-r border-border p-5 flex flex-col items-center justify-center">
                         <Calendar
                           mode="single"
                           selected={selectedDate}
