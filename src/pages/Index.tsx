@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Clock, ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 import profileImg from "@/assets/profile.jpg";
 import { motion } from "framer-motion";
 
@@ -21,19 +21,19 @@ const techStack = [
 const featuredProjects = [
   {
     title: "Post Content",
-    url: "https://postcontent.io",
+    slug: "post-content",
     desc: "AI-powered content creation platform with Grok API. Generate hooks, scripts, and threads effortlessly.",
     tags: ["React", "Node.js", "Grok API"],
   },
   {
     title: "Snarbles",
-    url: "https://snarbles.xyz",
+    slug: "snarbles",
     desc: "Full-stack app with Stripe payments, analytics dashboard, and real-time verification system.",
     tags: ["Next.js", "Stripe", "TypeScript"],
   },
   {
     title: "One Dollar Ventures",
-    url: "https://onedollarventures.com",
+    slug: "one-dollar-ventures",
     desc: "Micro-crowdfunding platform with escrow logic and secure payment flows.",
     tags: ["React", "Node.js", "Payments"],
   },
@@ -58,7 +58,7 @@ const testimonials = [
 ];
 
 const Index = () => {
-  usePageTitle("");
+  useSEO({ path: "/" });
 
   return (
     <PageTransition>
@@ -113,10 +113,10 @@ const Index = () => {
 
             <ScrollReveal delay={0.15}>
               <div className="flex flex-wrap gap-3 mb-24">
-                <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm" asChild>
-                  <Link to="/projects">View My Work <ArrowRight size={15} className="ml-1" /></Link>
+                <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm group" asChild>
+                  <Link to="/projects">View My Work <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
                 </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium" asChild>
+                <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium hover:shadow-sm transition-shadow duration-300" asChild>
                   <Link to="/booking">Book a Call</Link>
                 </Button>
               </div>
@@ -141,7 +141,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Tech stack - subtle horizontal strip */}
+      {/* Tech stack */}
       <section className="border-y border-border/60 py-3.5 overflow-hidden">
         <div className="container mx-auto px-6">
           <ScrollReveal>
@@ -149,7 +149,7 @@ const Index = () => {
               <span className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/60 font-medium flex-shrink-0">Stack</span>
               <div className="w-px h-3 bg-border flex-shrink-0" />
               {techStack.map((t) => (
-                <span key={t} className="px-3 py-1 text-[11px] rounded-full border border-border/70 text-muted-foreground/70 whitespace-nowrap hover:border-border hover:text-foreground/80 transition-all duration-300 cursor-default">
+                <span key={t} className="px-3 py-1 text-[11px] rounded-full border border-border/70 text-muted-foreground/70 whitespace-nowrap hover:border-primary/30 hover:text-foreground/80 hover:bg-primary/[0.03] transition-all duration-300 cursor-default">
                   {t}
                 </span>
               ))}
@@ -176,15 +176,13 @@ const Index = () => {
           <div className="grid sm:grid-cols-3 gap-4">
             {featuredProjects.map((project, i) => (
               <ScrollReveal key={project.title} delay={i * 0.08}>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block rounded-2xl p-6 h-full bg-card border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500"
+                <Link
+                  to={`/projects/${project.slug}`}
+                  className="group block rounded-2xl p-6 h-full bg-card border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-1 transition-all duration-500"
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-[15px] font-semibold text-foreground">{project.title}</h3>
-                    <ExternalLink size={13} className="text-muted-foreground/40 group-hover:text-muted-foreground transition-all duration-300 mt-0.5" />
+                    <h3 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h3>
+                    <ArrowRight size={13} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-0.5" />
                   </div>
                   <p className="text-[13px] text-muted-foreground leading-[1.65] mb-5">{project.desc}</p>
                   <div className="flex flex-wrap gap-1.5 mt-auto">
@@ -192,7 +190,7 @@ const Index = () => {
                       <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
                     ))}
                   </div>
-                </a>
+                </Link>
               </ScrollReveal>
             ))}
           </div>
@@ -216,7 +214,7 @@ const Index = () => {
           <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {testimonials.map((t, i) => (
               <ScrollReveal key={t.name} delay={i * 0.08}>
-                <div className="bg-card border border-border/60 rounded-2xl p-6 h-full flex flex-col premium-shadow hover:premium-shadow-hover transition-all duration-500">
+                <div className="bg-card border border-border/60 rounded-2xl p-6 h-full flex flex-col premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500">
                   <div className="flex gap-0.5 mb-4">
                     {[...Array(5)].map((_, j) => (
                       <span key={j} className="text-primary/80 text-[13px]">&#9733;</span>
@@ -254,8 +252,8 @@ const Index = () => {
                 I'm currently available for freelance work and full-time opportunities. Let's build something great together.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                <Button size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium shadow-sm" asChild>
-                  <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1" /></Link>
+                <Button size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium shadow-sm group" asChild>
+                  <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
                 </Button>
                 <Button variant="outline" size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium" asChild>
                   <a href="mailto:idderfsalem98@gmail.com">Email Me</a>
