@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import profileImg from "@/assets/profile.jpg";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const timeSlots = [
   "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
@@ -62,6 +63,7 @@ const BookingPage = () => {
               key="confirmed"
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-md mx-auto text-center py-20"
             >
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
@@ -73,24 +75,17 @@ const BookingPage = () => {
               </p>
               <p className="text-muted-foreground mb-8">at {selectedTime} (UTC+8)</p>
               <p className="text-sm text-muted-foreground mb-6">Confirmation sent to <span className="text-foreground font-medium">{email}</span></p>
-              <Button variant="outline" onClick={resetBooking}>Book Another</Button>
+              <Button variant="outline" onClick={resetBooking} className="hover-scale">Book Another</Button>
             </motion.div>
           ) : (
-            <motion.div
-              key="booking"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              {/* Cal.com style layout */}
-              <div className="border border-border rounded-2xl overflow-hidden bg-background">
+            <ScrollReveal>
+              <div className="border border-border rounded-2xl overflow-hidden bg-background shadow-sm">
                 <div className="grid md:grid-cols-[320px_1fr_280px]">
-                  {/* Left panel - Meeting info */}
+                  {/* Left panel */}
                   <div className="border-b md:border-b-0 md:border-r border-border p-6">
                     <div className="flex items-center gap-3 mb-6">
                       <img src={profileImg} alt="Idderf Salem" className="w-10 h-10 rounded-full object-cover" />
-                      <div>
-                        <p className="text-sm text-muted-foreground">Idderf Salem</p>
-                      </div>
+                      <p className="text-sm text-muted-foreground">Idderf Salem</p>
                     </div>
 
                     <h1 className="text-xl font-bold text-foreground mb-3">Project Discussion</h1>
@@ -98,7 +93,6 @@ const BookingPage = () => {
                       Let's discuss your project requirements, technical approach, and how I can help bring your vision to life.
                     </p>
 
-                    {/* Duration selector */}
                     <div className="flex items-center gap-2 mb-4">
                       <Clock size={15} className="text-muted-foreground" />
                       <div className="flex bg-secondary rounded-lg p-0.5 gap-0.5">
@@ -128,7 +122,6 @@ const BookingPage = () => {
                       <span>Asia/Manila (UTC+8)</span>
                     </div>
 
-                    {/* Summary if date/time selected */}
                     {selectedDate && selectedTime && step === "details" && (
                       <div className="mt-6 pt-6 border-t border-border">
                         <p className="text-sm font-medium text-foreground">{format(selectedDate, "EEEE, MMMM d")}</p>
@@ -139,7 +132,6 @@ const BookingPage = () => {
 
                   {step === "calendar" ? (
                     <>
-                      {/* Calendar */}
                       <div className="border-b md:border-b-0 md:border-r border-border p-6 flex flex-col items-center justify-center">
                         <Calendar
                           mode="single"
@@ -152,7 +144,6 @@ const BookingPage = () => {
                         />
                       </div>
 
-                      {/* Time slots */}
                       <div className="p-6">
                         {selectedDate ? (
                           <>
@@ -177,11 +168,7 @@ const BookingPage = () => {
                               ))}
                             </div>
                             {selectedTime && (
-                              <Button
-                                variant="dark"
-                                className="w-full mt-4"
-                                onClick={() => setStep("details")}
-                              >
+                              <Button variant="dark" className="w-full mt-4 hover-scale" onClick={() => setStep("details")}>
                                 Next <ArrowRight size={16} />
                               </Button>
                             )}
@@ -194,8 +181,12 @@ const BookingPage = () => {
                       </div>
                     </>
                   ) : (
-                    /* Details form */
-                    <div className="p-6 md:col-span-2">
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      className="p-6 md:col-span-2"
+                    >
                       <div className="max-w-md">
                         <button
                           onClick={() => setStep("calendar")}
@@ -220,7 +211,7 @@ const BookingPage = () => {
                           <Button
                             variant="dark"
                             size="lg"
-                            className="w-full"
+                            className="w-full hover-scale"
                             disabled={!name.trim() || !email.trim()}
                             onClick={handleConfirm}
                           >
@@ -228,11 +219,11 @@ const BookingPage = () => {
                           </Button>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
                 </div>
               </div>
-            </motion.div>
+            </ScrollReveal>
           )}
         </AnimatePresence>
       </div>

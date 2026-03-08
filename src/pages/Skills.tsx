@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const skillCategories = [
   {
@@ -26,29 +26,25 @@ const skillCategories = [
 const SkillsPage = () => (
   <div className="py-20">
     <div className="container mx-auto px-6 max-w-4xl">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <ScrollReveal>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-2">Technical Skills</h1>
         <p className="text-muted-foreground mb-12">Technologies and tools I ship production code with.</p>
-      </motion.div>
+      </ScrollReveal>
 
       <div className="space-y-6">
         {skillCategories.map((cat, i) => (
-          <motion.div
-            key={cat.title}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08 }}
-            className="border border-border rounded-2xl p-6"
-          >
-            <h2 className="font-semibold text-foreground mb-4">{cat.title}</h2>
-            <div className="flex flex-wrap gap-2">
-              {cat.skills.map((skill) => (
-                <span key={skill} className="px-3 py-1.5 text-sm rounded-lg bg-secondary text-secondary-foreground">
-                  {skill}
-                </span>
-              ))}
+          <ScrollReveal key={cat.title} delay={i * 0.08}>
+            <div className="border border-border rounded-2xl p-6 hover:border-foreground/15 transition-colors">
+              <h2 className="font-semibold text-foreground mb-4">{cat.title}</h2>
+              <div className="flex flex-wrap gap-2">
+                {cat.skills.map((skill) => (
+                  <span key={skill} className="px-3 py-1.5 text-sm rounded-lg bg-secondary text-secondary-foreground hover-scale inline-block">
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
-          </motion.div>
+          </ScrollReveal>
         ))}
       </div>
     </div>

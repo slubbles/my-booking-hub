@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const highlights = [
   "Built and deployed Snarbles, a live production token creation platform on Solana/Algorand",
@@ -19,46 +19,47 @@ const certs = [
 const ExperiencePage = () => (
   <div className="py-20">
     <div className="container mx-auto px-6 max-w-3xl">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <ScrollReveal>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-2">Experience</h1>
         <p className="text-muted-foreground mb-12">Building production systems and shipping real products.</p>
-      </motion.div>
+      </ScrollReveal>
 
       {/* Work */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="border border-border rounded-2xl p-6 mb-12"
-      >
-        <div className="flex items-start gap-4 mb-6">
-          <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <Briefcase size={20} className="text-primary" />
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <h2 className="font-semibold text-foreground">Full Stack Web3 Developer</h2>
-              <span className="px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-primary/10 text-primary">Active</span>
+      <ScrollReveal delay={0.1}>
+        <div className="border border-border rounded-2xl p-6 mb-12">
+          <div className="flex items-start gap-4 mb-6">
+            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <Briefcase size={20} className="text-primary" />
             </div>
-            <p className="text-sm text-muted-foreground">Freelance • Dec 2023 — Present • Remote, Philippines 🇵🇭</p>
+            <div className="flex-1">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h2 className="font-semibold text-foreground">Full Stack Web3 Developer</h2>
+                <span className="px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-primary/10 text-primary">Active</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Freelance • Dec 2023 — Present • Remote, Philippines 🇵🇭</p>
+            </div>
+          </div>
+          <div className="space-y-3 ml-[60px]">
+            {highlights.map((item, i) => (
+              <ScrollReveal key={i} delay={0.15 + i * 0.05} distance={12}>
+                <div className="flex gap-3 items-start">
+                  <span className="text-xs text-muted-foreground font-mono mt-0.5 flex-shrink-0 w-5">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
-        <div className="space-y-3 ml-[60px]">
-          {highlights.map((item, i) => (
-            <div key={i} className="flex gap-3 items-start">
-              <span className="text-xs text-muted-foreground font-mono mt-0.5 flex-shrink-0 w-5">{String(i + 1).padStart(2, "0")}</span>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+      </ScrollReveal>
 
       {/* Education */}
-      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+      <ScrollReveal delay={0.1}>
         <h2 className="text-xl font-semibold text-foreground mb-6">Education & Certifications</h2>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {certs.map((cert) => (
-            <div key={cert.title} className="border border-border rounded-2xl p-5">
+      </ScrollReveal>
+      <div className="grid sm:grid-cols-3 gap-4">
+        {certs.map((cert, i) => (
+          <ScrollReveal key={cert.title} delay={0.15 + i * 0.08} direction={i === 0 ? "left" : i === 2 ? "right" : "up"}>
+            <div className="border border-border rounded-2xl p-5 hover:border-foreground/15 hover:shadow-sm transition-all h-full">
               <cert.icon size={20} className="text-primary mb-3" />
               <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">{cert.type}</p>
               <h3 className="font-medium text-foreground text-sm mb-3">{cert.title}</h3>
@@ -68,9 +69,9 @@ const ExperiencePage = () => (
                 ))}
               </div>
             </div>
-          ))}
-        </div>
-      </motion.div>
+          </ScrollReveal>
+        ))}
+      </div>
     </div>
   </div>
 );
