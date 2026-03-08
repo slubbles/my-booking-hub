@@ -45,11 +45,8 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex h-14 items-center justify-between px-6">
         {/* Logo */}
-        <Link to="/" className="relative group flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-foreground flex items-center justify-center text-background text-[10px] font-bold tracking-tight">
-            IS
-          </div>
-          <span className="text-[14px] font-medium tracking-tight text-foreground hidden sm:block">
+        <Link to="/" className="relative group flex items-center">
+          <span className="text-[14px] font-semibold tracking-tight text-foreground">
             Idderf Salem
           </span>
         </Link>
