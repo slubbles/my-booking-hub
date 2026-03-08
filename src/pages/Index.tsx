@@ -41,27 +41,6 @@ const featuredProjects = [
   },
 ];
 
-const testimonials = [
-  {
-    quote: "Salem delivered exactly what we needed - clean code, fast turnaround, and great communication throughout the project.",
-    name: "Alex Chen",
-    role: "Startup Founder",
-    project: "Post Content",
-  },
-  {
-    quote: "Exceptional full-stack work. He handled everything from the UI to Stripe integration seamlessly. Would hire again.",
-    name: "Maria Santos",
-    role: "Product Manager",
-    project: "Snarbles",
-  },
-  {
-    quote: "Professional, reliable, and technically sharp. Salem turned our rough idea into a polished, production-ready app.",
-    name: "James Wright",
-    role: "Business Owner",
-    project: "One Dollar Ventures",
-  },
-];
-
 const Index = () => {
   useSEO({ path: "/" });
 
@@ -202,44 +181,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 md:py-32 border-y border-border/60">
-        <div className="container mx-auto px-6">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Testimonials</span>
-              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What Clients Say</h2>
-            </div>
-          </ScrollReveal>
 
-          <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {testimonials.map((t, i) => (
-              <ScrollReveal key={t.name} delay={i * 0.08}>
-                <div className="bg-card border border-border/60 rounded-2xl p-6 h-full flex flex-col premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500">
-                  <div className="flex gap-0.5 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <span key={j} className="text-primary/80 text-[13px]">&#9733;</span>
-                    ))}
-                  </div>
-                  <p className="text-[13px] text-foreground/75 leading-[1.75] mb-4 flex-1 font-light">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <p className="text-[10px] text-muted-foreground/50 mb-4 italic">Re: {t.project}</p>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border/50">
-                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-[11px] font-semibold text-foreground/70">
-                      {t.name.split(" ").map(n => n[0]).join("")}
-                    </div>
-                    <div>
-                      <p className="text-[12px] font-semibold text-foreground">{t.name}</p>
-                      <p className="text-[10px] text-muted-foreground">{t.role}</p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-24 md:py-32">
