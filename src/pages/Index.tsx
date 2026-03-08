@@ -13,6 +13,21 @@ import odvImg from "@/assets/projects/onedollarventures.png";
 import { motion } from "framer-motion";
 import { blogPosts } from "@/data/blogPosts";
 import { format } from "date-fns";
+import frontendImg from "@/assets/services/frontend.jpg";
+import backendImg from "@/assets/services/backend.jpg";
+import databaseImg from "@/assets/services/database.jpg";
+import devopsImg from "@/assets/services/devops.jpg";
+import aiImg from "@/assets/services/ai.jpg";
+import systemImg from "@/assets/services/system.jpg";
+
+const services = [
+  { title: "Frontend Development", desc: "Pixel-perfect, responsive UIs with React, Next.js, TypeScript, and Tailwind CSS.", image: frontendImg },
+  { title: "Backend Development", desc: "RESTful APIs, authentication, webhooks, and third-party integrations with Node.js.", image: backendImg },
+  { title: "Database Design", desc: "Schema design, migrations, and optimization with PostgreSQL, Prisma, and Supabase.", image: databaseImg },
+  { title: "DevOps & Deployment", desc: "CI/CD pipelines, containerization, and production deployments on Vercel, Railway, and AWS.", image: devopsImg },
+  { title: "AI Agents", desc: "Custom AI integrations and agent workflows using Claude, Grok, and OpenAI APIs.", image: aiImg },
+  { title: "System Design", desc: "Architecture planning, scalability strategies, and technical decisions for production systems.", image: systemImg },
+];
 
 const stats = [
   { value: "2+", label: "Years Experience" },
