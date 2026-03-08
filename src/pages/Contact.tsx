@@ -5,7 +5,10 @@ import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import usePageTitle from "@/hooks/usePageTitle";
 
-const ContactPage = () => (
+const ContactPage = () => {
+  usePageTitle("Contact");
+  return (
+  <PageTransition>
   <div className="py-16 md:py-24">
     <div className="container mx-auto px-6 max-w-lg">
       <div className="text-center">
