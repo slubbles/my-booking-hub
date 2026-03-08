@@ -436,6 +436,7 @@ serve(async (req) => {
     if (!email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       throw new Error("Valid email required");
     if (!date || !time || !duration) throw new Error("Date/time/duration required");
+    if (![15, 30, 45, 60].includes(duration)) throw new Error("Invalid duration");
 
     // Parse datetime in UTC+8
     const startDateTime = new Date(`${date}T${time}:00+08:00`);
@@ -443,6 +444,44 @@ serve(async (req) => {
 
     // Verify it's in the future
     if (startDateTime <= new Date()) throw new Error("Cannot book in the past");
+
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
+
+    // Check DB availability table (day_of_week + time range)
+    const dayOfWeek = startDateTime.getDay(); // 0=Sun
+    const timeStr = time + ":00"; // ensure HH:MM:SS
+    const { data: availSlots } = await supabase
+      .from("availability")
+      .select("*")
+      .eq("day_of_week", dayOfWeek)
+      .eq("is_active", true)
+      .lte("start_time", timeStr)
+      .gte("end_time", timeStr);
+
+    if (!availSlots || availSlots.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "This time slot is not within available hours." }),
+        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Check for existing bookings at this time
+    const { data: existingBookings } = await supabase
+      .from("bookings")
+      .select("id")
+      .eq("date", date)
+      .eq("time", time)
+      .eq("status", "confirmed");
+
+    if (existingBookings && existingBookings.length > 0) {
+      return new Response(
+        JSON.stringify({ error: "This time slot is already booked." }),
+        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // Google Calendar: Create event with Meet link
     const serviceAccountKey = JSON.parse(
