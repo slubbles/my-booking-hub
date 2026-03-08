@@ -37,22 +37,22 @@ const SkillsPage = () => {
   usePageTitle("Skills");
   return (
     <PageTransition>
-      <div className="py-20 md:py-28">
+      <div className="py-24 md:py-32">
         <div className="container mx-auto px-6 max-w-2xl">
           <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Expertise</span>
-            <h1 className="text-[32px] md:text-[42px] font-bold tracking-tight text-foreground mt-2 mb-1">Technical Skills</h1>
-            <p className="text-[15px] text-muted-foreground mb-12">Technologies and tools I ship production code with.</p>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Expertise</span>
+            <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Technical Skills</h1>
+            <p className="text-[14px] text-muted-foreground mb-14 font-light">Technologies and tools I ship production code with.</p>
           </ScrollReveal>
 
           <div className="grid sm:grid-cols-2 gap-4">
             {skillCategories.map((cat, i) => (
-              <ScrollReveal key={cat.title} delay={i * 0.06}>
-                <div className="border border-border rounded-xl p-5 h-full hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] transition-all duration-300">
-                  <h2 className="text-[14px] font-bold text-foreground mb-3">{cat.title}</h2>
+              <ScrollReveal key={cat.title} delay={i * 0.05}>
+                <div className="bg-card border border-border/60 rounded-2xl p-5 h-full premium-shadow hover:premium-shadow-hover transition-all duration-500">
+                  <h2 className="text-[13px] font-semibold text-foreground mb-3">{cat.title}</h2>
                   <div className="flex flex-wrap gap-1.5">
                     {cat.skills.map((skill) => (
-                      <span key={skill} className="px-2.5 py-1 text-[12px] rounded-full border border-border text-muted-foreground hover:border-foreground/20 hover:text-foreground transition-all duration-200 cursor-default">
+                      <span key={skill} className="px-2.5 py-1 text-[11px] rounded-full bg-secondary text-muted-foreground/80 font-medium hover:text-foreground transition-colors duration-300 cursor-default">
                         {skill}
                       </span>
                     ))}

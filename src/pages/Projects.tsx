@@ -34,39 +34,39 @@ const ProjectsPage = () => {
   usePageTitle("Projects");
   return (
     <PageTransition>
-      <div className="py-20 md:py-28">
+      <div className="py-24 md:py-32">
         <div className="container mx-auto px-6 max-w-2xl">
           <ScrollReveal>
-            <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Portfolio</span>
-            <h1 className="text-[32px] md:text-[42px] font-bold tracking-tight text-foreground mt-2 mb-1">Key Projects</h1>
-            <p className="text-[15px] text-muted-foreground mb-12">Live production systems I've built and shipped.</p>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Portfolio</span>
+            <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Key Projects</h1>
+            <p className="text-[14px] text-muted-foreground mb-14 font-light">Live production systems I've built and shipped.</p>
           </ScrollReveal>
 
-          <div className="space-y-5">
+          <div className="space-y-4">
             {projects.map((project, i) => (
-              <ScrollReveal key={project.title} delay={i * 0.08}>
+              <ScrollReveal key={project.title} delay={i * 0.07}>
                 <a
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block group border border-border rounded-xl p-6 hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5"
+                  className="block group bg-card border border-border/60 rounded-2xl p-6 premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="flex items-center gap-2.5 mb-0.5">
-                        <h2 className="text-[16px] font-bold text-foreground">{project.title}</h2>
-                        <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-primary/8 text-primary">
+                        <h2 className="text-[15px] font-semibold text-foreground">{project.title}</h2>
+                        <span className="px-2 py-0.5 text-[9px] font-medium rounded-full bg-primary/8 text-primary tracking-wide">
                           {project.status}
                         </span>
                       </div>
-                      <p className="text-[12px] text-muted-foreground">{project.role}</p>
+                      <p className="text-[11px] text-muted-foreground/70">{project.role}</p>
                     </div>
-                    <ExternalLink size={14} className="text-muted-foreground group-hover:text-foreground transition-all mt-1 opacity-0 group-hover:opacity-100" />
+                    <ExternalLink size={13} className="text-muted-foreground/40 group-hover:text-muted-foreground transition-all duration-300 mt-1" />
                   </div>
-                  <p className="text-[13px] text-muted-foreground leading-[1.65] mb-4">{project.description}</p>
+                  <p className="text-[13px] text-muted-foreground leading-[1.7] mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="px-2.5 py-0.5 text-[11px] rounded-full border border-border text-muted-foreground">{tag}</span>
+                      <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
                     ))}
                   </div>
                 </a>
