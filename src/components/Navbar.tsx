@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
   { label: "Skills", href: "/skills" },
