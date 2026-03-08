@@ -575,11 +575,6 @@ serve(async (req) => {
     }
 
     // Store in database
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-    );
-
     await supabase.from("bookings").insert({
       name: name.trim(),
       email: email.trim(),
@@ -588,7 +583,7 @@ serve(async (req) => {
       time,
       duration_minutes: duration,
       meet_link: meetLink,
-      google_event_id: event.id,
+      google_event_id: googleEventId,
       status: "confirmed",
     });
 
