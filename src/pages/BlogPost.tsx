@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Link2, Check } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
+import ReadingProgressBar from "@/components/ReadingProgressBar";
 import useSEO from "@/hooks/useSEO";
 import { blogPosts } from "@/data/blogPosts";
 import { format } from "date-fns";
