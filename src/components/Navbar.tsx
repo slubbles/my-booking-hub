@@ -92,7 +92,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/booking"
-            className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-foreground text-background text-[12px] font-medium hover:bg-foreground/90 transition-all duration-300 group"
+            className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-primary text-primary-foreground text-[12px] font-medium hover:bg-primary/90 transition-all duration-300 group"
           >
             Book a Call
             <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -168,7 +168,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/booking"
-                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-foreground text-background text-[13px] font-medium hover:bg-foreground/90 transition-all duration-300"
+                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-300"
                 >
                   Book a Call <ArrowRight size={14} />
                 </Link>
