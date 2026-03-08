@@ -74,6 +74,8 @@ const ProjectsPage = () => {
       </div>
     </div>
   </div>
-);
+  </PageTransition>
+  );
+};
 
 export default ProjectsPage;

@@ -62,6 +62,8 @@ const SkillsPage = () => {
       </div>
     </div>
   </div>
-);
+  </PageTransition>
+  );
+};
 
 export default SkillsPage;

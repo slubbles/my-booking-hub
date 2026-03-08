@@ -71,6 +71,8 @@ const ExperiencePage = () => {
       </div>
     </div>
   </div>
-);
+  </PageTransition>
+  );
+};
 
 export default ExperiencePage;
