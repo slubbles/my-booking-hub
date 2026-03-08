@@ -274,7 +274,7 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 border-t border-border/60 relative overflow-hidden">
+      <section className="py-16 md:py-24 border-t border-border/20 relative overflow-hidden">
         {/* Animated ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div

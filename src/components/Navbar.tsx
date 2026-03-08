@@ -38,7 +38,7 @@ const Navbar = () => {
       className={cn(
         "sticky top-0 z-50 transition-all duration-500",
         scrolled
-          ? "bg-background/70 backdrop-blur-2xl border-b border-border/40"
+          ? "bg-background/70 backdrop-blur-2xl border-b border-border/20"
           : "bg-background/95 border-b border-transparent"
       )}
     >
