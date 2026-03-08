@@ -80,7 +80,7 @@ const ResumePage = () => {
                 className="rounded-full gap-1.5 flex-shrink-0 mt-2"
                 asChild
               >
-                <a href="/Idderf_Salem_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="https://drive.google.com/file/d/1cZ7y2X8sPL-rRDg83W83r3zhZN0xnm4-/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                   <ExtLink size={14} />
                   <span className="hidden sm:inline">View Resume</span>
                 </a>
