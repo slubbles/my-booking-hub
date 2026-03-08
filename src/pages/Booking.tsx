@@ -58,6 +58,7 @@ const BookingPage = () => {
   };
 
   return (
+    <PageTransition>
     <div className="py-10 md:py-16">
       <div className="container mx-auto px-6 max-w-5xl">
         <AnimatePresence mode="wait">
