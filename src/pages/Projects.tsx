@@ -55,7 +55,7 @@ const ProjectsPage = () => {
                     <div>
                       <div className="flex items-center gap-2.5 mb-0.5">
                         <h2 className="text-[15px] font-semibold text-foreground">{project.title}</h2>
-                        <span className="px-2 py-0.5 text-[9px] font-medium rounded-full bg-primary/8 text-primary tracking-wide">
+                        <span className="px-2 py-0.5 text-[9px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">
                           {project.status}
                         </span>
                       </div>

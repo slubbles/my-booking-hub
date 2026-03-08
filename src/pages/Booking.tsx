@@ -70,7 +70,7 @@ const BookingPage = () => {
               transition={{ duration: 0.3 }}
               className="max-w-sm mx-auto text-center py-20"
             >
-              <div className="w-14 h-14 rounded-full bg-primary/8 flex items-center justify-center mx-auto mb-5">
+              <div className="w-14 h-14 rounded-full bg-primary/[0.08] flex items-center justify-center mx-auto mb-5">
                 <CheckCircle2 size={28} className="text-primary" />
               </div>
               <h2 className="text-[20px] font-bold text-foreground mb-2">You're booked!</h2>
