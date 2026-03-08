@@ -5,30 +5,37 @@ import usePageTitle from "@/hooks/usePageTitle";
 const skillCategories = [
   {
     title: "Frontend",
+    emoji: "🎨",
     skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
   },
   {
     title: "Backend",
+    emoji: "⚙️",
     skills: ["Node.js", "RESTful APIs", "Webhooks", "Prisma ORM"],
   },
   {
     title: "Database",
+    emoji: "🗄️",
     skills: ["PostgreSQL", "Supabase"],
   },
   {
     title: "Payments",
+    emoji: "💳",
     skills: ["Stripe API", "Polar.sh", "Escrow Systems", "Fiat & Crypto Processing"],
   },
   {
     title: "DevOps & Tools",
+    emoji: "🚀",
     skills: ["Git/GitHub", "Vercel", "Railway", "Netlify", "Docker", "CI/CD", "AWS (familiar)"],
   },
   {
     title: "Integrations",
+    emoji: "🔗",
     skills: ["Claude API", "Grok API", "X API"],
   },
   {
     title: "Bonus",
+    emoji: "✨",
     skills: ["Solana blockchain", "Rust", "Smart Contracts"],
   },
 ];
@@ -36,33 +43,37 @@ const skillCategories = [
 const SkillsPage = () => {
   usePageTitle("Skills");
   return (
-  <PageTransition>
-  <div className="py-16 md:py-24">
-    <div className="container mx-auto px-6 max-w-2xl">
-      <ScrollReveal>
-        <h1 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mb-1">Technical Skills</h1>
-        <p className="text-[14px] text-muted-foreground mb-10">Technologies and tools I ship production code with.</p>
-      </ScrollReveal>
-
-      <div className="space-y-5">
-        {skillCategories.map((cat, i) => (
-          <ScrollReveal key={cat.title} delay={i * 0.06}>
-            <div className="border border-border rounded-lg p-5 hover:border-foreground/12 transition-colors">
-              <h2 className="text-[14px] font-semibold text-foreground mb-3">{cat.title}</h2>
-              <div className="flex flex-wrap gap-1.5">
-                {cat.skills.map((skill) => (
-                  <span key={skill} className="px-2.5 py-1 text-[12px] rounded-md bg-secondary text-muted-foreground">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
+    <PageTransition>
+      <div className="py-20 md:py-28">
+        <div className="container mx-auto px-6 max-w-2xl">
+          <ScrollReveal>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Expertise</span>
+            <h1 className="text-[32px] md:text-[42px] font-bold tracking-tight text-foreground mt-2 mb-1">Technical Skills</h1>
+            <p className="text-[15px] text-muted-foreground mb-12">Technologies and tools I ship production code with.</p>
           </ScrollReveal>
-        ))}
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {skillCategories.map((cat, i) => (
+              <ScrollReveal key={cat.title} delay={i * 0.06}>
+                <div className="border border-border rounded-xl p-5 h-full hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] transition-all duration-300">
+                  <div className="flex items-center gap-2.5 mb-4">
+                    <span className="text-[20px]">{cat.emoji}</span>
+                    <h2 className="text-[15px] font-bold text-foreground">{cat.title}</h2>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {cat.skills.map((skill) => (
+                      <span key={skill} className="px-2.5 py-1 text-[12px] rounded-full border border-border text-muted-foreground hover:border-foreground/20 hover:text-foreground transition-all duration-200 cursor-default">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  </PageTransition>
+    </PageTransition>
   );
 };
 
