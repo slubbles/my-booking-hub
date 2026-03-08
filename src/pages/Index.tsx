@@ -184,7 +184,7 @@ const Index = () => {
 
 
       {/* CTA */}
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-24 border-t border-border/60">
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="text-center max-w-md mx-auto">
