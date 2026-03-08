@@ -84,9 +84,9 @@ const BookingPage = () => {
           ) : (
             <ScrollReveal>
               <div className="border border-border rounded-lg overflow-hidden bg-background">
-                <div className="grid md:grid-cols-[280px_1fr_260px]">
+                <div className="grid lg:grid-cols-[280px_1fr_260px]">
                   {/* Left panel */}
-                  <div className="border-b md:border-b-0 md:border-r border-border p-5">
+                  <div className="border-b lg:border-b-0 lg:border-r border-border p-5">
                     <div className="flex items-center gap-2.5 mb-5">
                       <img src={profileImg} alt="Idderf Salem" className="w-9 h-9 rounded-full object-cover" />
                       <p className="text-[13px] text-muted-foreground">Idderf Salem</p>
@@ -136,7 +136,7 @@ const BookingPage = () => {
 
                   {step === "calendar" ? (
                     <>
-                      <div className="border-b md:border-b-0 md:border-r border-border p-5 flex flex-col items-center justify-center">
+                      <div className="border-b lg:border-b-0 lg:border-r border-border p-5 flex flex-col items-center justify-center">
                         <Calendar
                           mode="single"
                           selected={selectedDate}
@@ -189,7 +189,7 @@ const BookingPage = () => {
                       initial={{ opacity: 0, x: 16 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.25 }}
-                      className="p-5 md:col-span-2"
+                      className="p-5 lg:col-span-2"
                     >
                       <div className="max-w-sm">
                         <button

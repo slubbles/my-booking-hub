@@ -225,9 +225,7 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  zoom: 1.1;
-}
+/* Removed body { zoom: 1.1 } — it breaks mobile viewport scaling and causes horizontal overflow */
 
 ::selection {
   background: hsl(var(--primary) / 0.15);
