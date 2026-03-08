@@ -1,4 +1,4 @@
-import { Download, Briefcase, GraduationCap, Code2, Globe, Mail, Rocket, ExternalLink } from "lucide-react";
+import { ExternalLink as ExtLink, Briefcase, GraduationCap, Code2, Globe, Mail, Rocket, ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import usePageTitle from "@/hooks/usePageTitle";
