@@ -13,6 +13,8 @@ import Experience from "./pages/Experience";
 import Booking from "./pages/Booking";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
+import Blog from "./pages/Blog";
+import BlogPostPage from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
