@@ -15,10 +15,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-2.5 mb-4">
-            <div className="w-6 h-6 rounded-md bg-foreground flex items-center justify-center text-background text-[9px] font-bold tracking-tight">
-              IS
-            </div>
+          <div className="mb-4">
             <span className="text-[14px] font-semibold text-foreground">Idderf Salem</span>
           </div>
           <p className="text-[12px] text-muted-foreground leading-[1.7] max-w-xs mb-6 font-light">
