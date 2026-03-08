@@ -86,7 +86,7 @@ const BookingPage = () => {
               <div className="border border-border rounded-lg overflow-hidden bg-background">
                 <div className="grid lg:grid-cols-[280px_1fr_260px]">
                   {/* Left panel */}
-                  <div className="border-b md:border-b-0 md:border-r border-border p-5">
+                  <div className="border-b lg:border-b-0 lg:border-r border-border p-5">
                     <div className="flex items-center gap-2.5 mb-5">
                       <img src={profileImg} alt="Idderf Salem" className="w-9 h-9 rounded-full object-cover" />
                       <p className="text-[13px] text-muted-foreground">Idderf Salem</p>
