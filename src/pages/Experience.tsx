@@ -2,49 +2,47 @@ import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const highlights = [
-  "Built and deployed Snarbles, a live production token creation platform on Solana/Algorand",
-  "Developed complete Stripe payment integration with React + Node.js backend",
-  "Architected P2P marketplace framework with trustless escrow smart contracts",
-  "Built Post Content, an AI-powered content generation platform using Grok 4-1",
-  "Developed One Dollar Ventures (ODV), a live venture platform with Solana smart contracts",
-  "Shipped production MVPs end to end, from smart contracts to mobile-optimized frontends",
+  "Designed, built, and deployed multiple production web applications from scratch, handling all layers of the stack",
+  "Implemented Stripe payment integration with secure checkout flows, webhook handling, and subscription management",
+  "Built RESTful APIs with Node.js and integrated third-party services including payment processors and AI APIs",
+  "Deployed and maintained live apps on Vercel, Railway, and Netlify with CI/CD pipelines",
+  "Architected a peer-to-peer marketplace with escrow logic and real transaction handling",
 ];
 
 const certs = [
-  { icon: GraduationCap, type: "Bootcamp", title: "Solana Bootcamp", skills: ["Solana Web3.js", "On-chain Programs", "Token Standards"] },
-  { icon: Award, type: "Certification", title: "Anchor Framework", skills: ["Rust Smart Contracts", "PDAs", "CPIs"] },
-  { icon: ShieldCheck, type: "Training", title: "Smart Contract Security", skills: ["Vulnerability Auditing", "Access Control"] },
+  { icon: GraduationCap, type: "Bootcamp", title: "Solana Bootcamp" },
+  { icon: Award, type: "Certification", title: "Anchor Framework" },
+  { icon: ShieldCheck, type: "Training", title: "Smart Contract Security" },
 ];
 
 const ExperiencePage = () => (
-  <div className="py-20">
-    <div className="container mx-auto px-6 max-w-3xl">
+  <div className="py-16 md:py-24">
+    <div className="container mx-auto px-6 max-w-2xl">
       <ScrollReveal>
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-2">Experience</h1>
-        <p className="text-muted-foreground mb-12">Building production systems and shipping real products.</p>
+        <h1 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mb-1">Experience</h1>
+        <p className="text-[14px] text-muted-foreground mb-10">Building production systems and shipping real products.</p>
       </ScrollReveal>
 
-      {/* Work */}
-      <ScrollReveal delay={0.1}>
-        <div className="border border-border rounded-2xl p-6 mb-12">
-          <div className="flex items-start gap-4 mb-6">
-            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <Briefcase size={20} className="text-primary" />
+      <ScrollReveal delay={0.08}>
+        <div className="border border-border rounded-lg p-5 mb-10">
+          <div className="flex items-start gap-3 mb-5">
+            <div className="w-10 h-10 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0">
+              <Briefcase size={18} className="text-primary" />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <h2 className="font-semibold text-foreground">Full Stack Web3 Developer</h2>
-                <span className="px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-primary/10 text-primary">Active</span>
+                <h2 className="text-[15px] font-semibold text-foreground">Full Stack Developer</h2>
+                <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-primary/8 text-primary">Active</span>
               </div>
-              <p className="text-sm text-muted-foreground">Freelance • Dec 2023 — Present • Remote, Philippines 🇵🇭</p>
+              <p className="text-[12px] text-muted-foreground">Freelance / Self-Employed · Dec 2023 — Present</p>
             </div>
           </div>
-          <div className="space-y-3 ml-[60px]">
+          <div className="space-y-2.5 ml-[52px]">
             {highlights.map((item, i) => (
-              <ScrollReveal key={i} delay={0.15 + i * 0.05} distance={12}>
-                <div className="flex gap-3 items-start">
-                  <span className="text-xs text-muted-foreground font-mono mt-0.5 flex-shrink-0 w-5">{String(i + 1).padStart(2, "0")}</span>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
+              <ScrollReveal key={i} delay={0.12 + i * 0.04} distance={10}>
+                <div className="flex gap-2.5 items-start">
+                  <span className="text-[11px] text-muted-foreground font-mono mt-0.5 flex-shrink-0 w-4">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="text-[13px] text-muted-foreground leading-[1.6]">{item}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -52,22 +50,16 @@ const ExperiencePage = () => (
         </div>
       </ScrollReveal>
 
-      {/* Education */}
       <ScrollReveal delay={0.1}>
-        <h2 className="text-xl font-semibold text-foreground mb-6">Education & Certifications</h2>
+        <h2 className="text-[16px] font-semibold text-foreground mb-4">Certifications & Training</h2>
       </ScrollReveal>
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-3 gap-3">
         {certs.map((cert, i) => (
-          <ScrollReveal key={cert.title} delay={0.15 + i * 0.08} direction={i === 0 ? "left" : i === 2 ? "right" : "up"}>
-            <div className="border border-border rounded-2xl p-5 hover:border-foreground/15 hover:shadow-sm transition-all h-full">
-              <cert.icon size={20} className="text-primary mb-3" />
-              <p className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">{cert.type}</p>
-              <h3 className="font-medium text-foreground text-sm mb-3">{cert.title}</h3>
-              <div className="flex flex-wrap gap-1.5">
-                {cert.skills.map((s) => (
-                  <span key={s} className="px-2 py-0.5 text-[11px] rounded bg-secondary text-muted-foreground">{s}</span>
-                ))}
-              </div>
+          <ScrollReveal key={cert.title} delay={0.14 + i * 0.06}>
+            <div className="border border-border rounded-lg p-4 hover:border-foreground/12 transition-colors h-full">
+              <cert.icon size={18} className="text-primary mb-2.5" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">{cert.type}</p>
+              <h3 className="text-[13px] font-medium text-foreground">{cert.title}</h3>
             </div>
           </ScrollReveal>
         ))}
