@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Clock, Quote } from "lucide-react";
+import { ArrowRight, MapPin, Clock, Quote, Monitor, Server, Database, Cloud, Bot, Compass } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import TechMarquee from "@/components/TechMarquee";
 import PageTransition from "@/components/PageTransition";
@@ -147,6 +147,63 @@ const Index = () => {
 
       {/* Tech stack marquee */}
       <TechMarquee />
+
+      {/* What I Can Help With */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-6">
+          <ScrollReveal>
+            <div className="mb-12">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Services</span>
+              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What I Can Help With</h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                icon: Monitor,
+                title: "Frontend Development",
+                desc: "Pixel-perfect, responsive UIs with React, Next.js, TypeScript, and Tailwind CSS. Fast, accessible, and polished.",
+              },
+              {
+                icon: Server,
+                title: "Backend Development",
+                desc: "RESTful APIs, authentication, webhooks, and third-party integrations with Node.js and Express.",
+              },
+              {
+                icon: Database,
+                title: "Database Design",
+                desc: "Schema design, migrations, and optimization with PostgreSQL, Prisma, and Supabase.",
+              },
+              {
+                icon: Cloud,
+                title: "DevOps & Deployment",
+                desc: "CI/CD pipelines, containerization, and production deployments on Vercel, Railway, and AWS.",
+              },
+              {
+                icon: Bot,
+                title: "AI Agents",
+                desc: "Custom AI integrations and agent workflows using Claude, Grok, and OpenAI APIs.",
+              },
+              {
+                icon: Compass,
+                title: "System Design",
+                desc: "Architecture planning, scalability strategies, and technical decision-making for production systems.",
+              },
+            ].map((service, i) => (
+              <ScrollReveal key={service.title} delay={i * 0.06}>
+                <div className="bg-card border border-border/60 rounded-2xl p-6 h-full premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500 group">
+                  <div className="w-10 h-10 rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4 group-hover:bg-primary/[0.12] transition-colors duration-300">
+                    <service.icon size={18} className="text-primary" />
+                  </div>
+                  <h3 className="text-[14px] font-semibold text-foreground mb-2">{service.title}</h3>
+                  <p className="text-[12px] text-muted-foreground leading-[1.7]">{service.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Featured projects */}
       <section className="py-16 md:py-24">
