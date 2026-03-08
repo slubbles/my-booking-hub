@@ -9,7 +9,7 @@ import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import PageTransition from "@/components/PageTransition";
-import usePageTitle from "@/hooks/usePageTitle";
+import useSEO from "@/hooks/useSEO";
 import profileImg from "@/assets/profile.jpg";
 import ScrollReveal from "@/components/ScrollReveal";
 
