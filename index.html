@@ -15,8 +15,13 @@
         }
       })();
     </script>
-    <!-- Preload critical fonts to reduce render-blocking -->
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://images.stripeassets.com" crossorigin>
+    <!-- Preload critical fonts to break CSS→font chain -->
     <link rel="preload" href="/fonts/Larsseit-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/Larsseit.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/Larsseit-Medium.otf" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="/fonts/Larsseit-Bold.otf" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="/fonts/Larsseit-ExtraBold.otf" as="font" type="font/otf" crossorigin>
     <meta name="description" content="Full Stack Developer building production web applications from idea to launch. Specializing in React, TypeScript, Node.js, and payment integrations.">
