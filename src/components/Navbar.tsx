@@ -168,7 +168,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/booking"
-                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-foreground text-background text-[13px] font-medium hover:bg-foreground/90 transition-all duration-300"
+                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-300"
                 >
                   Book a Call <ArrowRight size={14} />
                 </Link>
