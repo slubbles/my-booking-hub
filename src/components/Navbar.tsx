@@ -63,18 +63,11 @@ const Navbar = () => {
                 className={cn(
                   "relative px-4 py-1.5 text-[12px] font-medium rounded-full transition-all duration-300",
                   isActive
-                    ? "text-background"
+                    ? "text-background bg-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="navbar-active"
-                    className="absolute inset-0 bg-foreground rounded-full"
-                    transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                  />
-                )}
-                <span className="relative z-10">{item.label}</span>
+                {item.label}
               </Link>
             );
           })}
