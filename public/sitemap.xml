@@ -36,6 +36,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://idderfsalem.dev/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://idderfsalem.dev/blog/building-stripe-payment-flows</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://idderfsalem.dev/blog/ai-content-generation-architecture</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://idderfsalem.dev/blog/escrow-system-design</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://idderfsalem.dev/resume</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

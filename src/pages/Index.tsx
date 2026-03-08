@@ -47,7 +47,7 @@ const Index = () => {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="py-24 md:py-40 relative overflow-hidden">
+      <section className="pt-12 md:pt-20 pb-16 md:pb-24 relative overflow-hidden">
         {/* Ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06),transparent_70%)]" />
@@ -96,7 +96,7 @@ const Index = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <div className="flex flex-wrap gap-3 mb-24">
+              <div className="flex flex-wrap gap-3 mb-16">
                 <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm group" asChild>
                   <Link to="/projects">View My Work <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
                 </Button>
@@ -129,7 +129,7 @@ const Index = () => {
       <TechMarquee />
 
       {/* Featured projects */}
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-end justify-between mb-12">
@@ -184,7 +184,7 @@ const Index = () => {
 
 
       {/* CTA */}
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-24 border-t border-border/60">
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="text-center max-w-md mx-auto">
