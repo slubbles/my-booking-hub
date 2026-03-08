@@ -211,11 +211,11 @@
   }
 
   .premium-shadow {
-    @apply shadow-[0_0_0_1px_hsl(var(--border)),0_2px_8px_-2px_rgba(0,0,0,0.06),0_8px_24px_-4px_rgba(0,0,0,0.04)];
+    box-shadow: 0 0 0 1px hsl(var(--border)), 0 2px 8px -2px hsl(var(--foreground) / 0.06), 0 8px 24px -4px hsl(var(--foreground) / 0.04);
   }
 
   .premium-shadow-hover {
-    @apply shadow-[0_0_0_1px_hsl(var(--border)),0_4px_16px_-4px_rgba(0,0,0,0.1),0_16px_48px_-8px_rgba(0,0,0,0.06)];
+    box-shadow: 0 0 0 1px hsl(var(--border)), 0 4px 16px -4px hsl(var(--foreground) / 0.1), 0 16px 48px -8px hsl(var(--foreground) / 0.06);
   }
 }
 

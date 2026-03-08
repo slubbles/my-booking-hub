@@ -64,7 +64,7 @@ const ResumePage = () => {
           <ScrollReveal>
             <div className="flex items-start justify-between gap-4 mb-14">
               <div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Curriculum Vitae</span>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Resume</span>
                 <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Idderf Salem</h1>
                 <p className="text-[14px] text-muted-foreground font-light">Full Stack Developer with over a year of production experience building and deploying end-to-end web applications.</p>
                 <div className="flex items-center gap-4 mt-3 text-[11px] text-muted-foreground/70 flex-wrap">
@@ -109,7 +109,7 @@ const ResumePage = () => {
                   <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
                     <h3 className="text-[15px] font-semibold text-foreground">{exp.role}</h3>
                     {exp.active && (
-                      <span className="px-2.5 py-0.5 text-[9px] font-medium rounded-full bg-primary/8 text-primary tracking-wide">Active</span>
+                      <span className="px-2.5 py-0.5 text-[9px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">Active</span>
                     )}
                   </div>
                   <p className="text-[11px] text-muted-foreground/70 mb-4">{exp.company} · {exp.period}</p>
