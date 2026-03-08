@@ -312,12 +312,12 @@ Option B: Database-driven (best if non-technical editor needed)
 
 ```typescript
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 serve(async (req) => {
@@ -325,7 +325,16 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
 
   try {
-    const { name, email, message } = await req.json();
+    const { name, email, message, website } = await req.json();
+
+    // Honeypot: if "website" field is filled, it's a bot
+    if (website) {
+      // Return success to not tip off the bot
+      return new Response(
+        JSON.stringify({ success: true }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // Server-side validation
     if (!name?.trim() || name.length > 100)
@@ -368,8 +377,23 @@ serve(async (req) => {
 
     if (insertError) throw insertError;
 
-    // Send email notification (using Lovable's built-in email)
-    // The email will be sent to NOTIFICATION_EMAIL
+    // Send email notification via Resend (add RESEND_API_KEY to secrets)
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Portfolio <noreply@idderfsalem.dev>",
+          to: Deno.env.get("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com",
+          subject: `New Contact: ${name.trim()}`,
+          html: `<h2>New message from ${name.trim()}</h2><p><strong>Email:</strong> ${email.trim()}</p><p><strong>Message:</strong></p><p>${message.trim().replace(/\n/g, "<br>")}</p>`,
+        }),
+      });
+    }
     console.log(`New contact from ${name} (${email}): ${message.slice(0, 100)}`);
 
     return new Response(
@@ -392,12 +416,12 @@ serve(async (req) => {
 
 ```typescript
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 serve(async (req) => {
@@ -412,6 +436,7 @@ serve(async (req) => {
     if (!email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       throw new Error("Valid email required");
     if (!date || !time || !duration) throw new Error("Date/time/duration required");
+    if (![15, 30, 45, 60].includes(duration)) throw new Error("Invalid duration");
 
     // Parse datetime in UTC+8
     const startDateTime = new Date(`${date}T${time}:00+08:00`);
@@ -420,91 +445,136 @@ serve(async (req) => {
     // Verify it's in the future
     if (startDateTime <= new Date()) throw new Error("Cannot book in the past");
 
-    // Google Calendar: Create event with Meet link
-    const serviceAccountKey = JSON.parse(
-      Deno.env.get("GOOGLE_SERVICE_ACCOUNT_KEY")!
-    );
-    const calendarId = Deno.env.get("GOOGLE_CALENDAR_ID")!;
-
-    // Get access token via JWT
-    const token = await getGoogleAccessToken(serviceAccountKey);
-
-    // Check availability (freeBusy)
-    const freeBusyResp = await fetch(
-      "https://www.googleapis.com/calendar/v3/freeBusy",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          timeMin: startDateTime.toISOString(),
-          timeMax: endDateTime.toISOString(),
-          items: [{ id: calendarId }],
-        }),
-      }
-    );
-    const freeBusy = await freeBusyResp.json();
-    const busy = freeBusy.calendars?.[calendarId]?.busy || [];
-    if (busy.length > 0) {
-      return new Response(
-        JSON.stringify({ error: "This time slot is no longer available." }),
-        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // Create event with Google Meet
-    const eventResp = await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          summary: `Project Discussion - ${name.trim()}`,
-          description: `Booked via idderfsalem.dev\n\nName: ${name}\nEmail: ${email}\n\nNotes: ${notes || "None"}`,
-          start: { dateTime: startDateTime.toISOString(), timeZone: "Asia/Manila" },
-          end: { dateTime: endDateTime.toISOString(), timeZone: "Asia/Manila" },
-          attendees: [
-            { email: email.trim() },
-            { email: Deno.env.get("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com" },
-          ],
-          conferenceData: {
-            createRequest: {
-              requestId: crypto.randomUUID(),
-              conferenceSolutionKey: { type: "hangoutsMeet" },
-            },
-          },
-          reminders: {
-            useDefault: false,
-            overrides: [
-              { method: "email", minutes: 60 },
-              { method: "popup", minutes: 15 },
-            ],
-          },
-        }),
-      }
-    );
-
-    const event = await eventResp.json();
-    if (!eventResp.ok) {
-      console.error("Google Calendar error:", JSON.stringify(event));
-      throw new Error("Failed to create calendar event");
-    }
-
-    const meetLink = event.conferenceData?.entryPoints?.find(
-      (e: any) => e.entryPointType === "video"
-    )?.uri || event.hangoutLink || null;
-
-    // Store in database
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
+    // Check DB availability table (day_of_week + time range)
+    const dayOfWeek = startDateTime.getDay(); // 0=Sun
+    const timeStr = time + ":00"; // ensure HH:MM:SS
+    const { data: availSlots } = await supabase
+      .from("availability")
+      .select("*")
+      .eq("day_of_week", dayOfWeek)
+      .eq("is_active", true)
+      .lte("start_time", timeStr)
+      .gte("end_time", timeStr);
+
+    if (!availSlots || availSlots.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "This time slot is not within available hours." }),
+        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Check for existing bookings at this time
+    const { data: existingBookings } = await supabase
+      .from("bookings")
+      .select("id")
+      .eq("date", date)
+      .eq("time", time)
+      .eq("status", "confirmed");
+
+    if (existingBookings && existingBookings.length > 0) {
+      return new Response(
+        JSON.stringify({ error: "This time slot is already booked." }),
+        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Google Calendar: Create event with Meet link
+    // Google Calendar integration (graceful fallback if unavailable)
+    let meetLink: string | null = null;
+    let googleEventId: string | null = null;
+
+    const serviceAccountKeyRaw = Deno.env.get("GOOGLE_SERVICE_ACCOUNT_KEY");
+    const calendarId = Deno.env.get("GOOGLE_CALENDAR_ID");
+
+    if (serviceAccountKeyRaw && calendarId) {
+      try {
+        const serviceAccountKey = JSON.parse(serviceAccountKeyRaw);
+        const token = await getGoogleAccessToken(serviceAccountKey);
+
+        // Check availability (freeBusy)
+        const freeBusyResp = await fetch(
+          "https://www.googleapis.com/calendar/v3/freeBusy",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              timeMin: startDateTime.toISOString(),
+              timeMax: endDateTime.toISOString(),
+              items: [{ id: calendarId }],
+            }),
+          }
+        );
+        const freeBusy = await freeBusyResp.json();
+        const busy = freeBusy.calendars?.[calendarId]?.busy || [];
+        if (busy.length > 0) {
+          return new Response(
+            JSON.stringify({ error: "This time slot is no longer available." }),
+            { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+
+        // Create event with Google Meet
+        const eventResp = await fetch(
+          `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              summary: `Project Discussion - ${name.trim()}`,
+              description: `Booked via idderfsalem.dev\n\nName: ${name}\nEmail: ${email}\n\nNotes: ${notes || "None"}`,
+              start: { dateTime: startDateTime.toISOString(), timeZone: "Asia/Manila" },
+              end: { dateTime: endDateTime.toISOString(), timeZone: "Asia/Manila" },
+              attendees: [
+                { email: email.trim() },
+                { email: Deno.env.get("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com" },
+              ],
+              conferenceData: {
+                createRequest: {
+                  requestId: crypto.randomUUID(),
+                  conferenceSolutionKey: { type: "hangoutsMeet" },
+                },
+              },
+              reminders: {
+                useDefault: false,
+                overrides: [
+                  { method: "email", minutes: 60 },
+                  { method: "popup", minutes: 15 },
+                ],
+              },
+            }),
+          }
+        );
+
+        const event = await eventResp.json();
+        if (eventResp.ok) {
+          meetLink = event.conferenceData?.entryPoints?.find(
+            (e: any) => e.entryPointType === "video"
+          )?.uri || event.hangoutLink || null;
+          googleEventId = event.id;
+        } else {
+          console.error("Google Calendar error:", JSON.stringify(event));
+          // Continue without Meet link — booking still saved to DB
+        }
+      } catch (gcalError) {
+        console.error("Google Calendar integration failed:", gcalError);
+        // Graceful fallback: booking is stored without Meet link
+      }
+    } else {
+      console.warn("Google Calendar not configured — booking saved to DB only");
+    }
+
+    // Store in database
     await supabase.from("bookings").insert({
       name: name.trim(),
       email: email.trim(),
@@ -513,7 +583,7 @@ serve(async (req) => {
       time,
       duration_minutes: duration,
       meet_link: meetLink,
-      google_event_id: event.id,
+      google_event_id: googleEventId,
       status: "confirmed",
     });
 
@@ -710,23 +780,26 @@ create policy "Anyone can insert page views"
 
 ## Email System
 
-Lovable Cloud has built-in email capabilities. For the contact form notification:
+### Recommended: Resend (free tier: 3,000 emails/mo)
 
-**Option A - Lovable Cloud Email (recommended)**
-- Enable Lovable Cloud on the project
-- Use the built-in email service for notifications
-- No external API keys needed
+**Setup:**
+1. Sign up at https://resend.com
+2. Verify your domain (idderfsalem.dev) or use their shared domain for testing
+3. Create an API key
+4. Store as `RESEND_API_KEY` in Lovable Cloud secrets
 
-**Option B - Console logging + manual check**
+**Why Resend:**
+- Free tier covers portfolio needs (3,000 emails/month)
+- Simple REST API — single `fetch()` call, no SDK needed
+- Works perfectly in Deno edge functions
+- Deliverability is excellent (proper SPF/DKIM)
+
+**Implementation:** Already included in the contact edge function above. The booking system uses Google Calendar's built-in email invites — no additional email service needed for that.
+
+**Alternative: Console logging only (zero-cost)**
 - Edge function logs submissions to console
-- Check submissions via Supabase dashboard or Cloud View
-- Simplest approach, no email setup
-
-**Option C - Direct SMTP via Google**
-- Use Google's SMTP with an App Password
-- More complex but fully self-contained
-
-For the booking system, Google Calendar handles email invites automatically when you add attendees to the event. No additional email service needed.
+- Check submissions via Cloud View > Edge Function Logs
+- Simplest approach if you don't need instant email alerts
 
 ---
 
@@ -781,10 +854,27 @@ For the booking system, Google Calendar handles email invites automatically when
 - [ ] No hardcoded API keys anywhere in the codebase
 
 ### Content Security
-- [ ] Contact form has honeypot field (hidden input to catch bots)
+- [ ] Contact form has honeypot field (hidden `website` input — bots fill it, humans don't)
+- [ ] Booking edge function checks `availability` table before accepting
+- [ ] Booking edge function checks for duplicate bookings at same slot
 - [ ] Booking form validates dates are in the future
 - [ ] All user input sanitized before database insertion
 - [ ] Email validation both client and server side
+- [ ] Duration validated against allowed values (15/30/45/60)
+
+### Frontend Honeypot Implementation
+```tsx
+{/* Hidden honeypot field — invisible to humans, bots fill it */}
+<input
+  type="text"
+  name="website"
+  value={website}
+  onChange={(e) => setWebsite(e.target.value)}
+  className="absolute opacity-0 pointer-events-none h-0 w-0"
+  tabIndex={-1}
+  autoComplete="off"
+/>
+```
 
 ---
 
@@ -825,6 +915,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJ...
 GOOGLE_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
 GOOGLE_CALENDAR_ID=idderfsalem98@gmail.com
 NOTIFICATION_EMAIL=idderfsalem98@gmail.com
+RESEND_API_KEY=re_xxx (from https://resend.com/api-keys)
 LOVABLE_API_KEY=auto-provisioned
 ```
 
