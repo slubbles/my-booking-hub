@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import useSEO from "@/hooks/useSEO";
+import postcontentImg from "@/assets/projects/postcontent.png";
+import snarblesImg from "@/assets/projects/snarbles.png";
+import odvImg from "@/assets/projects/onedollarventures.png";
 
 const projectData: Record<string, {
   title: string;
@@ -16,6 +19,7 @@ const projectData: Record<string, {
   results: string[];
   tags: string[];
   stack: string[];
+  image: string;
 }> = {
   "post-content": {
     title: "Post Content",
@@ -36,6 +40,7 @@ const projectData: Record<string, {
     ],
     tags: ["React", "Node.js", "Grok API", "Authentication"],
     stack: ["React", "TypeScript", "Node.js", "Express", "Grok API", "Tailwind CSS", "JWT Auth"],
+    image: postcontentImg,
   },
   "snarbles": {
     title: "Snarbles",
@@ -56,6 +61,7 @@ const projectData: Record<string, {
     ],
     tags: ["Next.js", "TypeScript", "Stripe", "Analytics"],
     stack: ["Next.js", "TypeScript", "Stripe API", "PostgreSQL", "Prisma", "Vercel", "Tailwind CSS"],
+    image: snarblesImg,
   },
   "one-dollar-ventures": {
     title: "One Dollar Ventures",
@@ -76,6 +82,7 @@ const projectData: Record<string, {
     ],
     tags: ["React", "Node.js", "Payments", "Onboarding"],
     stack: ["React", "Node.js", "Express", "PostgreSQL", "Stripe", "Tailwind CSS"],
+    image: odvImg,
   },
 };
 
@@ -128,6 +135,18 @@ const ProjectDetail = () => {
                   Visit <ExternalLink size={12} />
                 </a>
               </Button>
+            </div>
+          </ScrollReveal>
+
+          {/* Screenshot */}
+          <ScrollReveal delay={0.04}>
+            <div className="rounded-2xl overflow-hidden border border-border/60 mb-12 premium-shadow">
+              <img
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                className="w-full object-cover object-top"
+                loading="lazy"
+              />
             </div>
           </ScrollReveal>
 

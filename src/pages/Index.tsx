@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Clock, ExternalLink } from "lucide-react";
+import { ArrowRight, MapPin, Clock } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import TechMarquee from "@/components/TechMarquee";
 import PageTransition from "@/components/PageTransition";
 import useSEO from "@/hooks/useSEO";
 import profileImg from "@/assets/profile.jpg";
+import postcontentImg from "@/assets/projects/postcontent.png";
+import snarblesImg from "@/assets/projects/snarbles.png";
+import odvImg from "@/assets/projects/onedollarventures.png";
 import { motion } from "framer-motion";
 
 const stats = [
@@ -14,25 +17,27 @@ const stats = [
   { value: "10+", label: "Happy Clients" },
 ];
 
-
 const featuredProjects = [
   {
     title: "Post Content",
     slug: "post-content",
     desc: "AI-powered content creation platform with Grok API. Generate hooks, scripts, and threads effortlessly.",
     tags: ["React", "Node.js", "Grok API"],
+    image: postcontentImg,
   },
   {
     title: "Snarbles",
     slug: "snarbles",
     desc: "Full-stack app with Stripe payments, analytics dashboard, and real-time verification system.",
     tags: ["Next.js", "Stripe", "TypeScript"],
+    image: snarblesImg,
   },
   {
     title: "One Dollar Ventures",
     slug: "one-dollar-ventures",
     desc: "Micro-crowdfunding platform with escrow logic and secure payment flows.",
     tags: ["React", "Node.js", "Payments"],
+    image: odvImg,
   },
 ];
 
@@ -41,16 +46,19 @@ const testimonials = [
     quote: "Salem delivered exactly what we needed - clean code, fast turnaround, and great communication throughout the project.",
     name: "Alex Chen",
     role: "Startup Founder",
+    project: "Post Content",
   },
   {
     quote: "Exceptional full-stack work. He handled everything from the UI to Stripe integration seamlessly. Would hire again.",
     name: "Maria Santos",
     role: "Product Manager",
+    project: "Snarbles",
   },
   {
     quote: "Professional, reliable, and technically sharp. Salem turned our rough idea into a polished, production-ready app.",
     name: "James Wright",
     role: "Business Owner",
+    project: "One Dollar Ventures",
   },
 ];
 
@@ -161,17 +169,27 @@ const Index = () => {
               <ScrollReveal key={project.title} delay={i * 0.08}>
                 <Link
                   to={`/projects/${project.slug}`}
-                  className="group block rounded-2xl p-6 h-full bg-card border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-1 transition-all duration-500"
+                  className="group block rounded-2xl overflow-hidden h-full bg-card border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-1 transition-all duration-500"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h3>
-                    <ArrowRight size={13} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-0.5" />
+                  <div className="aspect-[16/10] overflow-hidden bg-secondary">
+                    <img
+                      src={project.image}
+                      alt={`${project.title} screenshot`}
+                      className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                      loading="lazy"
+                    />
                   </div>
-                  <p className="text-[13px] text-muted-foreground leading-[1.65] mb-5">{project.desc}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-auto">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
-                    ))}
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h3>
+                      <ArrowRight size={13} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-0.5" />
+                    </div>
+                    <p className="text-[13px] text-muted-foreground leading-[1.65] mb-5">{project.desc}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-auto">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
+                      ))}
+                    </div>
                   </div>
                 </Link>
               </ScrollReveal>
@@ -203,9 +221,10 @@ const Index = () => {
                       <span key={j} className="text-primary/80 text-[13px]">&#9733;</span>
                     ))}
                   </div>
-                  <p className="text-[13px] text-foreground/75 leading-[1.75] mb-6 flex-1 font-light">
+                  <p className="text-[13px] text-foreground/75 leading-[1.75] mb-4 flex-1 font-light">
                     &ldquo;{t.quote}&rdquo;
                   </p>
+                  <p className="text-[10px] text-muted-foreground/50 mb-4 italic">Re: {t.project}</p>
                   <div className="flex items-center gap-3 pt-4 border-t border-border/50">
                     <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-[11px] font-semibold text-foreground/70">
                       {t.name.split(" ").map(n => n[0]).join("")}

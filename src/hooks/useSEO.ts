@@ -5,18 +5,21 @@ interface SEOProps {
   description?: string;
   path?: string;
   type?: string;
+  image?: string;
 }
 
 const SITE_NAME = "Idderf Salem";
 const BASE_URL = "https://idderfsalem.dev";
 const DEFAULT_DESCRIPTION =
   "Full Stack Developer building production web applications from idea to launch. Specializing in React, TypeScript, Node.js, and payment integrations.";
+const OG_IMAGE = `${BASE_URL}/og-image.png`;
 
 const useSEO = ({
   title,
   description = DEFAULT_DESCRIPTION,
   path = "",
   type = "website",
+  image,
 }: SEOProps = {}) => {
   useEffect(() => {
     const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Full Stack Developer`;
@@ -32,14 +35,20 @@ const useSEO = ({
       el.setAttribute("content", content);
     };
 
+    const ogImage = image || OG_IMAGE;
+
     setMeta("name", "description", description);
     setMeta("property", "og:title", fullTitle);
     setMeta("property", "og:description", description);
     setMeta("property", "og:type", type);
     setMeta("property", "og:url", `${BASE_URL}${path}`);
-    setMeta("name", "twitter:card", "summary");
+    setMeta("property", "og:image", ogImage);
+    setMeta("property", "og:site_name", SITE_NAME);
+    setMeta("name", "twitter:card", "summary_large_image");
     setMeta("name", "twitter:title", fullTitle);
     setMeta("name", "twitter:description", description);
+    setMeta("name", "twitter:image", ogImage);
+    setMeta("name", "twitter:creator", "@idderfsalem");
 
     // JSON-LD
     let script = document.querySelector('script[data-seo="jsonld"]') as HTMLScriptElement | null;
@@ -51,13 +60,16 @@ const useSEO = ({
     }
 
     const jsonLd = title
-      ? { "@context": "https://schema.org", "@type": "WebPage", name: fullTitle, description, url: `${BASE_URL}${path}` }
+      ? { "@context": "https://schema.org", "@type": "WebPage", name: fullTitle, description, url: `${BASE_URL}${path}`, image: ogImage }
       : {
           "@context": "https://schema.org",
           "@type": "Person",
           name: "Idderf Salem",
           jobTitle: "Full Stack Developer",
           url: BASE_URL,
+          image: OG_IMAGE,
+          description: DEFAULT_DESCRIPTION,
+          knowsAbout: ["React", "TypeScript", "Node.js", "Next.js", "PostgreSQL", "Stripe"],
           sameAs: [
             "https://github.com/slubbles",
             "https://www.linkedin.com/in/idderfsalem/",
@@ -74,7 +86,7 @@ const useSEO = ({
       document.head.appendChild(canonical);
     }
     canonical.href = `${BASE_URL}${path}`;
-  }, [title, description, path, type]);
+  }, [title, description, path, type, image]);
 };
 
 export default useSEO;
