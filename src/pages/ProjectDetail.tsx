@@ -111,7 +111,7 @@ const ProjectDetail = () => {
           <ScrollReveal>
             <Link
               to="/projects"
-              className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 mb-10 group"
+              className="inline-flex items-center gap-1.5 text-[14px] text-muted-foreground hover:text-foreground transition-colors duration-300 mb-10 group"
             >
               <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform duration-300" />
               All Projects
@@ -124,11 +124,11 @@ const ProjectDetail = () => {
               <div>
                 <div className="flex items-center gap-2.5 mb-1">
                   <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground">{project.title}</h1>
-                  <span className="px-2.5 py-0.5 text-[9px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">
+                  <span className="px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">
                     {project.status}
                   </span>
                 </div>
-                <p className="text-[12px] text-muted-foreground/70">{project.role}</p>
+                <p className="text-[14px] text-muted-foreground/70">{project.role}</p>
               </div>
               <Button variant="outline" size="sm" className="rounded-full gap-1.5 flex-shrink-0 mt-2" asChild>
                 <a href={project.url} target="_blank" rel="noopener noreferrer">
@@ -152,34 +152,34 @@ const ProjectDetail = () => {
 
           {/* Description */}
           <ScrollReveal delay={0.05}>
-            <p className="text-[14px] text-muted-foreground leading-[1.8] mb-12 font-light">{project.description}</p>
+            <p className="text-[15px] text-muted-foreground leading-[1.8] mb-12 font-light">{project.description}</p>
           </ScrollReveal>
 
           {/* Challenge */}
           <ScrollReveal delay={0.07}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-4 premium-shadow">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-3">The Challenge</h2>
-              <p className="text-[13px] text-muted-foreground leading-[1.8]">{project.challenge}</p>
+              <h2 className="text-[13px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-3">The Challenge</h2>
+              <p className="text-[15px] text-muted-foreground leading-[1.8]">{project.challenge}</p>
             </div>
           </ScrollReveal>
 
           {/* Solution */}
           <ScrollReveal delay={0.09}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-4 premium-shadow">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-3">The Solution</h2>
-              <p className="text-[13px] text-muted-foreground leading-[1.8]">{project.solution}</p>
+              <h2 className="text-[13px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-3">The Solution</h2>
+              <p className="text-[15px] text-muted-foreground leading-[1.8]">{project.solution}</p>
             </div>
           </ScrollReveal>
 
           {/* Results */}
           <ScrollReveal delay={0.11}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-12 premium-shadow">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-4">Key Results</h2>
+              <h2 className="text-[13px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-4">Key Results</h2>
               <div className="space-y-3">
                 {project.results.map((result, i) => (
                   <div key={i} className="flex gap-3 items-start">
-                    <span className="text-[9px] text-primary/60 font-mono mt-0.5 flex-shrink-0 w-4 text-right">{String(i + 1).padStart(2, "0")}</span>
-                    <p className="text-[13px] text-foreground/80 leading-[1.6]">{result}</p>
+                    <span className="text-[11px] text-primary/60 font-mono mt-0.5 flex-shrink-0 w-4 text-right">{String(i + 1).padStart(2, "0")}</span>
+                    <p className="text-[15px] text-foreground/80 leading-[1.6]">{result}</p>
                   </div>
                 ))}
               </div>
@@ -189,10 +189,10 @@ const ProjectDetail = () => {
           {/* Tech Stack */}
           <ScrollReveal delay={0.13}>
             <div className="mb-16">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-4">Tech Stack</h2>
+              <h2 className="text-[13px] uppercase tracking-[0.2em] text-muted-foreground/60 font-medium mb-4">Tech Stack</h2>
               <div className="flex flex-wrap gap-1.5">
                 {project.stack.map((tech) => (
-                  <span key={tech} className="px-3 py-1.5 text-[11px] rounded-full border border-border/70 text-muted-foreground/80 font-medium hover:border-primary/30 hover:text-foreground hover:bg-primary/[0.03] transition-all duration-300 cursor-default">
+                  <span key={tech} className="px-3 py-1.5 text-[13px] rounded-full border border-border/70 text-muted-foreground/80 font-medium hover:border-primary/30 hover:text-foreground hover:bg-primary/[0.03] transition-all duration-300 cursor-default">
                     {tech}
                   </span>
                 ))}
@@ -203,14 +203,14 @@ const ProjectDetail = () => {
           {/* Next project */}
           <ScrollReveal delay={0.15}>
             <div className="border-t border-border/60 pt-10">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/50 mb-3">Next Project</p>
+              <p className="text-[12px] uppercase tracking-[0.25em] text-muted-foreground/50 mb-3">Next Project</p>
               <Link
                 to={`/projects/${nextSlug}`}
                 className="group flex items-center justify-between py-4 px-5 rounded-2xl bg-card border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500"
               >
                 <div>
-                  <h3 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{nextProject.title}</h3>
-                  <p className="text-[11px] text-muted-foreground/70">{nextProject.role}</p>
+                  <h3 className="text-[16px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{nextProject.title}</h3>
+                  <p className="text-[13px] text-muted-foreground/70">{nextProject.role}</p>
                 </div>
                 <ArrowRight size={16} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300" />
               </Link>

@@ -82,7 +82,7 @@ const TechMarquee = () => {
                 className={`w-5 h-5 object-contain ${tech.invertInDark ? "dark:invert dark:brightness-200" : ""}`}
                 loading="lazy"
               />
-              <span className="text-[12px] text-muted-foreground/80 whitespace-nowrap font-medium tracking-wide">
+              <span className="text-[13px] text-muted-foreground/80 whitespace-nowrap font-medium tracking-wide">
                 {tech.name}
               </span>
             </div>

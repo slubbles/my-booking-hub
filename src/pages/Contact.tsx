@@ -64,12 +64,12 @@ const ContactPage = () => {
         <div className="container mx-auto px-6 max-w-lg">
           <div className="text-center">
             <ScrollReveal>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Get in Touch</span>
+              <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Get in Touch</span>
               <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-2">Let's Work Together</h1>
-              <p className="text-[14px] text-muted-foreground mb-1 font-light">
+              <p className="text-[15px] text-muted-foreground mb-1 font-light">
                 Open to freelance projects, full-time roles, and collaborations.
               </p>
-              <p className="text-[12px] text-muted-foreground/70 mb-8">
+              <p className="text-[14px] text-muted-foreground/70 mb-8">
                 Based in the Philippines (UTC+8) - available for remote work worldwide.
               </p>
             </ScrollReveal>
@@ -88,7 +88,7 @@ const ContactPage = () => {
                         <CheckCircle2 size={28} className="text-primary" />
                       </div>
                       <h2 className="text-[18px] font-bold text-foreground mb-2">Message ready!</h2>
-                      <p className="text-[13px] text-muted-foreground mb-6">Your email client should have opened with the message pre-filled.</p>
+                      <p className="text-[15px] text-muted-foreground mb-6">Your email client should have opened with the message pre-filled.</p>
                       <Button variant="outline" size="sm" className="rounded-full" onClick={resetForm}>Send Another</Button>
                     </div>
                   </ScrollReveal>
@@ -104,44 +104,44 @@ const ContactPage = () => {
                     <form onSubmit={handleSubmit} noValidate className="bg-card border border-border/60 rounded-2xl p-7 mb-8 premium-shadow text-left">
                       <div className="space-y-4 mb-6">
                         <div>
-                          <label className="text-[12px] font-medium text-foreground mb-1.5 block">Name</label>
+                          <label className="text-[14px] font-medium text-foreground mb-1.5 block">Name</label>
                           <Input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Your name"
-                            className="text-[13px]"
+                            className="text-[15px]"
                             maxLength={100}
                           />
-                          {errors.name && <p className="text-[11px] text-destructive mt-1">{errors.name}</p>}
+                          {errors.name && <p className="text-[13px] text-destructive mt-1">{errors.name}</p>}
                         </div>
                         <div>
-                          <label className="text-[12px] font-medium text-foreground mb-1.5 block">Email</label>
+                          <label className="text-[14px] font-medium text-foreground mb-1.5 block">Email</label>
                           <Input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@example.com"
-                            className="text-[13px]"
+                            className="text-[15px]"
                             maxLength={255}
                           />
-                          {errors.email && <p className="text-[11px] text-destructive mt-1">{errors.email}</p>}
+                          {errors.email && <p className="text-[13px] text-destructive mt-1">{errors.email}</p>}
                         </div>
                         <div>
-                          <label className="text-[12px] font-medium text-foreground mb-1.5 block">Message</label>
+                          <label className="text-[14px] font-medium text-foreground mb-1.5 block">Message</label>
                           <Textarea
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             placeholder="Tell me about your project, timeline, and budget..."
-                            className="min-h-[120px] text-[13px] resize-none"
+                            className="min-h-[120px] text-[15px] resize-none"
                             maxLength={2000}
                           />
                           <div className="flex justify-between mt-1">
-                            {errors.message && <p className="text-[11px] text-destructive">{errors.message}</p>}
-                            <p className="text-[10px] text-muted-foreground/50 ml-auto">{message.length}/2000</p>
+                            {errors.message && <p className="text-[13px] text-destructive">{errors.message}</p>}
+                            <p className="text-[12px] text-muted-foreground/50 ml-auto">{message.length}/2000</p>
                           </div>
                         </div>
                       </div>
-                      <Button type="submit" className="w-full rounded-full h-11 text-[13px] font-medium group">
+                      <Button type="submit" className="w-full rounded-full h-11 text-[15px] font-medium group">
                         Send Message <Send size={14} className="ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </Button>
                     </form>
@@ -150,13 +150,13 @@ const ContactPage = () => {
                   <ScrollReveal delay={0.12}>
                     <div className="flex items-center gap-3 mb-6">
                       <div className="h-px flex-1 bg-border/60" />
-                      <span className="text-[10px] text-muted-foreground/50 uppercase tracking-wider">or reach out directly</span>
+                      <span className="text-[12px] text-muted-foreground/50 uppercase tracking-wider">or reach out directly</span>
                       <div className="h-px flex-1 bg-border/60" />
                     </div>
 
                     <div className="flex justify-center gap-2 mb-8">
-                      <a href="mailto:idderfsalem98@gmail.com" className="inline-flex items-center gap-1.5 px-4 py-2 text-[12px] text-muted-foreground hover:text-foreground rounded-full border border-border/60 hover:border-border transition-all duration-300">
-                        <Mail size={13} /> Email
+                      <a href="mailto:idderfsalem98@gmail.com" className="inline-flex items-center gap-1.5 px-4 py-2 text-[14px] text-muted-foreground hover:text-foreground rounded-full border border-border/60 hover:border-border transition-all duration-300">
+                        <Mail size={14} /> Email
                       </a>
                       {[
                         { icon: Github, href: "https://github.com/slubbles", label: "GitHub" },
@@ -184,8 +184,8 @@ const ContactPage = () => {
                   </ScrollReveal>
 
                   <ScrollReveal delay={0.16}>
-                    <p className="text-[12px] text-muted-foreground/70 mb-4">Or schedule a meeting</p>
-                    <Button size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium shadow-sm" asChild>
+                    <p className="text-[14px] text-muted-foreground/70 mb-4">Or schedule a meeting</p>
+                    <Button size="lg" className="rounded-full px-8 h-11 text-[15px] font-medium shadow-sm" asChild>
                       <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1" /></Link>
                     </Button>
                   </ScrollReveal>

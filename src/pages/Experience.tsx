@@ -24,9 +24,9 @@ const ExperiencePage = () => {
       <div className="py-24 md:py-32">
         <div className="container mx-auto px-6 max-w-2xl">
           <ScrollReveal>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Background</span>
+            <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Background</span>
             <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Experience</h1>
-            <p className="text-[14px] text-muted-foreground mb-10 font-light">Building production systems and shipping real products.</p>
+            <p className="text-[15px] text-muted-foreground mb-10 font-light">Building production systems and shipping real products.</p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.06}>
@@ -38,17 +38,17 @@ const ExperiencePage = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <h2 className="text-[16px] font-semibold text-foreground">Full Stack Developer</h2>
-                    <span className="px-2.5 py-0.5 text-[9px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">Active</span>
+                    <span className="px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">Active</span>
                   </div>
-                  <p className="text-[12px] text-muted-foreground/70 mt-0.5">Freelance / Self-Employed · Dec 2023 - Present</p>
+                  <p className="text-[14px] text-muted-foreground/70 mt-0.5">Freelance / Self-Employed · Dec 2023 - Present</p>
                 </div>
               </div>
               <div className="space-y-3 ml-[60px]">
                 {highlights.map((item, i) => (
                   <ScrollReveal key={i} delay={0.1 + i * 0.04} distance={8}>
                     <div className="flex gap-3 items-start">
-                      <span className="text-[9px] text-primary/60 font-mono mt-1 flex-shrink-0 w-4 text-right">{String(i + 1).padStart(2, "0")}</span>
-                      <p className="text-[12px] text-muted-foreground leading-[1.75]">{item}</p>
+                      <span className="text-[11px] text-primary/60 font-mono mt-1 flex-shrink-0 w-4 text-right">{String(i + 1).padStart(2, "0")}</span>
+                      <p className="text-[14px] text-muted-foreground leading-[1.75]">{item}</p>
                     </div>
                   </ScrollReveal>
                 ))}
@@ -64,8 +64,8 @@ const ExperiencePage = () => {
               <ScrollReveal key={cert.title} delay={0.12 + i * 0.05}>
                 <div className="bg-card border border-border/60 rounded-2xl p-5 premium-shadow hover:premium-shadow-hover transition-all duration-500 h-full">
                   <cert.icon size={18} className="text-primary/80 mb-3" />
-                  <p className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">{cert.type}</p>
-                  <h3 className="text-[13px] font-semibold text-foreground">{cert.title}</h3>
+                  <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">{cert.type}</p>
+                  <h3 className="text-[15px] font-semibold text-foreground">{cert.title}</h3>
                 </div>
               </ScrollReveal>
             ))}
