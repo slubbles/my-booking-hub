@@ -96,7 +96,7 @@ const Index = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <div className="flex flex-wrap gap-3 mb-24">
+              <div className="flex flex-wrap gap-3 mb-16">
                 <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm group" asChild>
                   <Link to="/projects">View My Work <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
                 </Button>
