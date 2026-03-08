@@ -42,7 +42,7 @@ const SkillsPage = () => {
           <ScrollReveal>
             <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Expertise</span>
             <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Technical Skills</h1>
-            <p className="text-[14px] text-muted-foreground mb-14 font-light">Technologies and tools I ship production code with.</p>
+            <p className="text-[14px] text-muted-foreground mb-10 font-light">Technologies and tools I ship production code with.</p>
           </ScrollReveal>
 
           <div className="grid sm:grid-cols-2 gap-4">

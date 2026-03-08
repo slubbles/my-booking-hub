@@ -20,7 +20,7 @@ const BlogPage = () => {
           <ScrollReveal>
             <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Writing</span>
             <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Blog</h1>
-            <p className="text-[14px] text-muted-foreground mb-14 font-light">Technical deep dives and lessons from shipping production apps.</p>
+            <p className="text-[14px] text-muted-foreground mb-10 font-light">Technical deep dives and lessons from shipping production apps.</p>
           </ScrollReveal>
 
           <div className="space-y-4">
