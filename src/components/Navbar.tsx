@@ -68,7 +68,7 @@ const Navbar = () => {
                 className={cn(
                   "relative px-4 py-1.5 text-[12px] font-medium rounded-full transition-all duration-300",
                   isActive
-                    ? "text-primary-foreground"
+                    ? "text-background"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
