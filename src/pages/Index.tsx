@@ -63,69 +63,76 @@ const Index = () => {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04),transparent_70%)] pointer-events-none" />
+      <section className="py-24 md:py-40 relative overflow-hidden">
+        {/* Ambient glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06),transparent_70%)]" />
+        </div>
         
         <div className="container mx-auto px-6 relative">
-          <div className="max-w-3xl">
+          <div className="max-w-2xl">
             <ScrollReveal>
-              <div className="flex items-center gap-3 mb-10">
+              <div className="flex items-center gap-4 mb-12">
                 <div className="relative">
-                  <img src={profileImg} alt="Idderf Salem" className="w-14 h-14 rounded-full object-cover ring-2 ring-border" />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-primary rounded-full border-2 border-background" />
+                  <img
+                    src={profileImg}
+                    alt="Idderf Salem"
+                    className="w-12 h-12 rounded-full object-cover ring-[1.5px] ring-border shadow-sm"
+                  />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-background" />
                 </div>
-                <div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/8 text-primary text-[12px] font-medium">
+                <div className="flex flex-col gap-1">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground font-medium">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
                     </span>
                     Available for Work
                   </span>
-                  <div className="flex items-center gap-3 text-[12px] text-muted-foreground mt-1">
-                    <span className="flex items-center gap-1"><MapPin size={11} /> Philippines</span>
-                    <span className="flex items-center gap-1"><Clock size={11} /> UTC+8</span>
+                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground/70">
+                    <span className="flex items-center gap-1"><MapPin size={10} /> Philippines</span>
+                    <span className="flex items-center gap-1"><Clock size={10} /> UTC+8</span>
                   </div>
                 </div>
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.06}>
-              <h1 className="text-[44px] md:text-[68px] font-extrabold tracking-[-0.04em] text-foreground leading-[1.02] mb-6">
+            <ScrollReveal delay={0.05}>
+              <h1 className="text-[40px] md:text-[64px] font-extrabold tracking-[-0.035em] text-foreground leading-[1.05] mb-5">
                 I build products
                 <br />
-                <span className="text-muted-foreground/60">from idea to launch.</span>
+                <span className="text-muted-foreground/50">from idea to launch.</span>
               </h1>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.12}>
-              <p className="text-[17px] md:text-[19px] text-muted-foreground leading-[1.7] mb-10 max-w-xl">
+            <ScrollReveal delay={0.1}>
+              <p className="text-[16px] md:text-[18px] text-muted-foreground leading-[1.75] mb-10 max-w-lg font-light">
                 Full Stack Developer shipping end-to-end web applications — UI design, backend APIs, payment integrations, and deployment.
               </p>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.18}>
-              <div className="flex flex-wrap gap-3 mb-20">
-                <Button size="lg" className="rounded-full px-7 h-12 text-[14px]" asChild>
-                  <Link to="/projects">View My Work <ArrowRight size={16} /></Link>
+            <ScrollReveal delay={0.15}>
+              <div className="flex flex-wrap gap-3 mb-24">
+                <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm" asChild>
+                  <Link to="/projects">View My Work <ArrowRight size={15} className="ml-1" /></Link>
                 </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-7 h-12 text-[14px]" asChild>
+                <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium" asChild>
                   <Link to="/booking">Book a Call</Link>
                 </Button>
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.24}>
-              <div className="flex gap-12 md:gap-16">
+            <ScrollReveal delay={0.2}>
+              <div className="flex gap-14 md:gap-20">
                 {stats.map((stat, i) => (
                   <motion.div
                     key={stat.label}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
+                    transition={{ delay: 0.4 + i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <div className="text-[36px] md:text-[44px] font-extrabold text-foreground leading-none tracking-tight">{stat.value}</div>
-                    <div className="text-[12px] text-muted-foreground mt-2 tracking-wide">{stat.label}</div>
+                    <div className="text-[32px] md:text-[40px] font-extrabold text-foreground leading-none tracking-tight">{stat.value}</div>
+                    <div className="text-[11px] text-muted-foreground/70 mt-2 tracking-[0.05em] uppercase font-medium">{stat.label}</div>
                   </motion.div>
                 ))}
               </div>
@@ -134,15 +141,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Tech stack */}
-      <section className="border-y border-border py-4 overflow-hidden">
+      {/* Tech stack — subtle horizontal strip */}
+      <section className="border-y border-border/60 py-3.5 overflow-hidden">
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="flex items-center gap-4 overflow-x-auto no-scrollbar">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium flex-shrink-0">Stack</span>
-              <div className="w-px h-4 bg-border flex-shrink-0" />
+              <span className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/60 font-medium flex-shrink-0">Stack</span>
+              <div className="w-px h-3 bg-border flex-shrink-0" />
               {techStack.map((t) => (
-                <span key={t} className="px-3 py-1 text-[12px] rounded-full border border-border text-muted-foreground whitespace-nowrap hover:border-foreground/20 hover:text-foreground transition-all duration-200 cursor-default">
+                <span key={t} className="px-3 py-1 text-[11px] rounded-full border border-border/70 text-muted-foreground/70 whitespace-nowrap hover:border-border hover:text-foreground/80 transition-all duration-300 cursor-default">
                   {t}
                 </span>
               ))}
@@ -152,37 +159,37 @@ const Index = () => {
       </section>
 
       {/* Featured projects */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-32">
         <div className="container mx-auto px-6">
           <ScrollReveal>
-            <div className="flex items-end justify-between mb-10">
+            <div className="flex items-end justify-between mb-12">
               <div>
-                <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Featured Work</span>
-                <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mt-2">Selected Projects</h2>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Featured Work</span>
+                <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">Selected Projects</h2>
               </div>
-              <Link to="/projects" className="hidden sm:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group">
-                View all <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              <Link to="/projects" className="hidden sm:flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 group">
+                View all <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </Link>
             </div>
           </ScrollReveal>
 
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-3 gap-4">
             {featuredProjects.map((project, i) => (
-              <ScrollReveal key={project.title} delay={i * 0.1}>
+              <ScrollReveal key={project.title} delay={i * 0.08}>
                 <a
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block border border-border rounded-xl p-6 h-full hover:border-foreground/15 hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1"
+                  className="group block rounded-2xl p-6 h-full bg-card border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500"
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-[16px] font-bold text-foreground">{project.title}</h3>
-                    <ExternalLink size={14} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all duration-200 mt-0.5" />
+                    <h3 className="text-[15px] font-semibold text-foreground">{project.title}</h3>
+                    <ExternalLink size={13} className="text-muted-foreground/40 group-hover:text-muted-foreground transition-all duration-300 mt-0.5" />
                   </div>
-                  <p className="text-[13px] text-muted-foreground leading-[1.6] mb-4">{project.desc}</p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <p className="text-[13px] text-muted-foreground leading-[1.65] mb-5">{project.desc}</p>
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="px-2.5 py-0.5 text-[11px] rounded-full border border-border text-muted-foreground">{tag}</span>
+                      <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
                     ))}
                   </div>
                 </a>
@@ -190,41 +197,41 @@ const Index = () => {
             ))}
           </div>
 
-          <Link to="/projects" className="sm:hidden flex items-center justify-center gap-1 text-[13px] text-muted-foreground hover:text-foreground transition-colors mt-8">
-            View all projects <ArrowRight size={14} />
+          <Link to="/projects" className="sm:hidden flex items-center justify-center gap-1 text-[12px] text-muted-foreground hover:text-foreground transition-colors mt-10">
+            View all projects <ArrowRight size={13} />
           </Link>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 md:py-28 border-y border-border bg-secondary/30">
+      <section className="py-24 md:py-32 border-y border-border/60">
         <div className="container mx-auto px-6">
           <ScrollReveal>
-            <div className="text-center mb-14">
-              <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Testimonials</span>
-              <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mt-2">What Clients Say</h2>
+            <div className="text-center mb-16">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Testimonials</span>
+              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What Clients Say</h2>
             </div>
           </ScrollReveal>
 
-          <div className="grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+          <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {testimonials.map((t, i) => (
-              <ScrollReveal key={t.name} delay={i * 0.1}>
-                <div className="bg-background border border-border rounded-xl p-6 h-full flex flex-col hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] transition-all duration-300">
+              <ScrollReveal key={t.name} delay={i * 0.08}>
+                <div className="bg-card border border-border/60 rounded-2xl p-6 h-full flex flex-col premium-shadow hover:premium-shadow-hover transition-all duration-500">
                   <div className="flex gap-0.5 mb-4">
                     {[...Array(5)].map((_, j) => (
-                      <span key={j} className="text-primary text-[14px]">★</span>
+                      <span key={j} className="text-primary/80 text-[13px]">&#9733;</span>
                     ))}
                   </div>
-                  <p className="text-[14px] text-foreground/80 leading-[1.7] mb-5 flex-1">
-                    "{t.quote}"
+                  <p className="text-[13px] text-foreground/75 leading-[1.75] mb-6 flex-1 font-light">
+                    &ldquo;{t.quote}&rdquo;
                   </p>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border">
-                    <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-[12px] font-bold text-foreground">
+                  <div className="flex items-center gap-3 pt-4 border-t border-border/50">
+                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-[11px] font-semibold text-foreground/70">
                       {t.name.split(" ").map(n => n[0]).join("")}
                     </div>
                     <div>
-                      <p className="text-[13px] font-semibold text-foreground">{t.name}</p>
-                      <p className="text-[11px] text-muted-foreground">{t.role}</p>
+                      <p className="text-[12px] font-semibold text-foreground">{t.name}</p>
+                      <p className="text-[10px] text-muted-foreground">{t.role}</p>
                     </div>
                   </div>
                 </div>
@@ -235,22 +242,22 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28">
+      <section className="py-24 md:py-32">
         <div className="container mx-auto px-6">
           <ScrollReveal>
-            <div className="text-center max-w-xl mx-auto">
-              <span className="text-[11px] uppercase tracking-[0.2em] text-primary font-medium">Let's Connect</span>
-              <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight text-foreground mt-2 mb-3">
+            <div className="text-center max-w-md mx-auto">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>
+              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-3">
                 Have a project in mind?
               </h2>
-              <p className="text-[15px] text-muted-foreground mb-8 leading-relaxed">
+              <p className="text-[14px] text-muted-foreground mb-10 leading-[1.7] font-light">
                 I'm currently available for freelance work and full-time opportunities. Let's build something great together.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                <Button size="lg" className="rounded-full px-8 h-12 text-[14px]" asChild>
-                  <Link to="/booking">Book a Call <ArrowRight size={16} /></Link>
+                <Button size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium shadow-sm" asChild>
+                  <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1" /></Link>
                 </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-[14px]" asChild>
+                <Button variant="outline" size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium" asChild>
                   <a href="mailto:idderfsalem98@gmail.com">Email Me</a>
                 </Button>
               </div>
