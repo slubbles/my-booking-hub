@@ -29,6 +29,7 @@ const durations = [
 type Step = "calendar" | "details" | "confirmed";
 
 const BookingPage = () => {
+  usePageTitle("Book a Call");
   const [step, setStep] = useState<Step>("calendar");
   const [selectedDuration, setSelectedDuration] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
