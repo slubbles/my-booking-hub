@@ -1,4 +1,4 @@
-import { Download, Briefcase, GraduationCap, Code2, Globe, Mail, Rocket, ExternalLink } from "lucide-react";
+import { ExternalLink as ExtLink, Briefcase, GraduationCap, Code2, Globe, Mail, Rocket, ExternalLink } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import usePageTitle from "@/hooks/usePageTitle";
@@ -78,10 +78,12 @@ const ResumePage = () => {
                 variant="dark"
                 size="sm"
                 className="rounded-full gap-1.5 flex-shrink-0 mt-2"
-                onClick={() => window.print()}
+                asChild
               >
-                <Download size={14} />
-                <span className="hidden sm:inline">Print</span>
+                <a href="/Idderf_Salem_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                  <ExtLink size={14} />
+                  <span className="hidden sm:inline">View Resume</span>
+                </a>
               </Button>
             </div>
           </ScrollReveal>
