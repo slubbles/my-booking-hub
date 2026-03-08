@@ -29,19 +29,19 @@ const NotFound = () => {
             <h1 className="text-[24px] md:text-[32px] font-bold tracking-[-0.02em] text-foreground mb-3">
               Page not found
             </h1>
-            <p className="text-[14px] text-muted-foreground mb-10 leading-[1.7] font-light">
+            <p className="text-[15px] text-muted-foreground mb-10 leading-[1.7] font-light">
               The page you're looking for doesn't exist or has been moved. Let's get you back on track.
             </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm group" asChild>
+              <Button size="lg" className="rounded-full px-7 h-11 text-[15px] font-medium shadow-sm group" asChild>
                 <Link to="/">
                   <Home size={14} className="mr-1.5" /> Go Home
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium" onClick={() => window.history.back()}>
+              <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[15px] font-medium" onClick={() => window.history.back()}>
                 <ArrowLeft size={14} className="mr-1.5" /> Go Back
               </Button>
             </div>
@@ -49,7 +49,7 @@ const NotFound = () => {
 
           <ScrollReveal delay={0.15}>
             <div className="border-t border-border/60 pt-8">
-              <p className="text-[11px] text-muted-foreground/60 mb-4">Maybe you were looking for:</p>
+              <p className="text-[13px] text-muted-foreground/60 mb-4">Maybe you were looking for:</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {[
                   { label: "Projects", href: "/projects" },
@@ -60,10 +60,10 @@ const NotFound = () => {
                   <Link
                     key={link.href}
                     to={link.href}
-                    className="inline-flex items-center gap-1 px-3.5 py-1.5 text-[12px] rounded-full border border-border/60 text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-all duration-300 group"
+                    className="inline-flex items-center gap-1 px-3.5 py-1.5 text-[14px] rounded-full border border-border/60 text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-all duration-300 group"
                   >
                     {link.label}
-                    <ArrowRight size={11} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
+                    <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
                   </Link>
                 ))}
               </div>

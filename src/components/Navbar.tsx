@@ -45,7 +45,7 @@ const Navbar = () => {
       <div className="container mx-auto flex h-14 items-center justify-between px-6">
         {/* Logo */}
         <Link to="/" className="relative group flex items-center">
-          <span className="text-[14px] font-semibold tracking-tight text-foreground">
+          <span className="text-[15px] font-semibold tracking-tight text-foreground">
             Idderf Salem
           </span>
         </Link>
@@ -61,7 +61,7 @@ const Navbar = () => {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "relative px-4 py-1.5 text-[12px] font-medium rounded-full transition-all duration-300",
+                  "relative px-4 py-1.5 text-[13px] font-medium rounded-full transition-all duration-300",
                   isActive
                     ? "text-background bg-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -78,13 +78,13 @@ const Navbar = () => {
           <ThemeToggle />
           <Link
             to="/contact"
-            className="text-[12px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary/60 transition-all duration-300"
+            className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary/60 transition-all duration-300"
           >
             Get in Touch
           </Link>
           <Link
             to="/booking"
-            className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-primary text-primary-foreground text-[12px] font-medium hover:bg-primary/90 transition-all duration-300 group"
+            className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-300 group"
           >
             Book a Call
             <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -135,7 +135,7 @@ const Navbar = () => {
                     <Link
                       to={item.href}
                       className={cn(
-                        "flex items-center justify-between px-4 py-3 text-[15px] rounded-xl transition-all duration-300",
+                        "flex items-center justify-between px-4 py-3 text-[16px] rounded-xl transition-all duration-300",
                         location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href))
                           ? "text-foreground font-semibold bg-secondary/70"
                           : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
@@ -154,13 +154,13 @@ const Navbar = () => {
               <div className="mt-auto pb-8 flex flex-col gap-2.5">
                 <Link
                   to="/contact"
-                  className="flex items-center justify-center h-11 rounded-xl border border-border text-[13px] font-medium text-foreground hover:bg-secondary transition-all duration-300"
+                  className="flex items-center justify-center h-11 rounded-xl border border-border text-[15px] font-medium text-foreground hover:bg-secondary transition-all duration-300"
                 >
                   Get in Touch
                 </Link>
                 <Link
                   to="/booking"
-                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-300"
+                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-primary-foreground text-[15px] font-medium hover:bg-primary/90 transition-all duration-300"
                 >
                   Book a Call <ArrowRight size={14} />
                 </Link>

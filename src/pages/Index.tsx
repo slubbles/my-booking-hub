@@ -87,16 +87,16 @@ const Index = () => {
                   <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-primary rounded-full border-2 border-background" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground font-medium">
+                  <span className="inline-flex items-center gap-1.5 text-[14px] text-muted-foreground font-medium">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
                     </span>
                     Available for Work
                   </span>
-                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground/70">
-                    <span className="flex items-center gap-1"><MapPin size={10} /> Philippines</span>
-                    <span className="flex items-center gap-1"><Clock size={10} /> UTC+8</span>
+                  <div className="flex items-center gap-3 text-[13px] text-muted-foreground/70">
+                    <span className="flex items-center gap-1"><MapPin size={11} /> Philippines</span>
+                    <span className="flex items-center gap-1"><Clock size={11} /> UTC+8</span>
                   </div>
                 </div>
               </div>
@@ -118,10 +118,10 @@ const Index = () => {
 
             <ScrollReveal delay={0.15}>
               <div className="flex flex-wrap gap-3 mb-12">
-                <Button size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium shadow-sm group" asChild>
+                <Button size="lg" className="rounded-full px-7 h-11 text-[15px] font-medium shadow-sm group" asChild>
                   <Link to="/projects">View My Work <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
                 </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[13px] font-medium hover:shadow-sm transition-shadow duration-300" asChild>
+                <Button variant="outline" size="lg" className="rounded-full px-7 h-11 text-[15px] font-medium hover:shadow-sm transition-shadow duration-300" asChild>
                   <Link to="/booking">Book a Call</Link>
                 </Button>
               </div>
@@ -137,7 +137,7 @@ const Index = () => {
                     transition={{ delay: 0.4 + i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <div className="text-[32px] md:text-[40px] font-extrabold text-foreground leading-none tracking-tight">{stat.value}</div>
-                    <div className="text-[11px] text-muted-foreground/70 mt-2 tracking-[0.05em] uppercase font-medium">{stat.label}</div>
+                    <div className="text-[13px] text-muted-foreground/70 mt-2 tracking-[0.05em] uppercase font-medium">{stat.label}</div>
                   </motion.div>
                 ))}
               </div>
@@ -154,7 +154,7 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="mb-12">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Services</span>
+              <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Services</span>
               <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What I Can Help With</h2>
             </div>
           </ScrollReveal>
@@ -177,8 +177,8 @@ const Index = () => {
                           <service.icon size={18} className="text-primary" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-[13px] font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
-                          <p className="text-[12px] text-muted-foreground leading-[1.7]">{service.desc}</p>
+                          <h3 className="text-[15px] font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                          <p className="text-[14px] text-muted-foreground leading-[1.7]">{service.desc}</p>
                         </div>
                       </div>
                     </CarouselItem>
@@ -198,11 +198,11 @@ const Index = () => {
           <ScrollReveal>
             <div className="flex items-end justify-between mb-12">
               <div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Featured Work</span>
+                <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Featured Work</span>
                 <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">Selected Projects</h2>
               </div>
-              <Link to="/projects" className="hidden sm:flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 group">
-                View all <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              <Link to="/projects" className="hidden sm:flex items-center gap-1.5 text-[14px] text-muted-foreground hover:text-foreground transition-colors duration-300 group">
+                View all <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </Link>
             </div>
           </ScrollReveal>
@@ -224,13 +224,13 @@ const Index = () => {
                   </div>
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h3>
-                      <ArrowRight size={13} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-0.5" />
+                      <h3 className="text-[16px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h3>
+                      <ArrowRight size={14} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-0.5" />
                     </div>
-                    <p className="text-[13px] text-muted-foreground leading-[1.65] mb-5">{project.desc}</p>
+                    <p className="text-[15px] text-muted-foreground leading-[1.65] mb-5">{project.desc}</p>
                     <div className="flex flex-wrap gap-1.5 mt-auto">
                       {project.tags.map((tag) => (
-                        <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
+                        <span key={tag} className="px-2.5 py-0.5 text-[12px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
                       ))}
                     </div>
                   </div>
@@ -239,8 +239,8 @@ const Index = () => {
             ))}
           </div>
 
-          <Link to="/projects" className="sm:hidden flex items-center justify-center gap-1 text-[12px] text-muted-foreground hover:text-foreground transition-colors mt-10">
-            View all projects <ArrowRight size={13} />
+          <Link to="/projects" className="sm:hidden flex items-center justify-center gap-1 text-[14px] text-muted-foreground hover:text-foreground transition-colors mt-10">
+            View all projects <ArrowRight size={14} />
           </Link>
         </div>
       </section>
@@ -250,7 +250,7 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <ScrollReveal>
             <div className="mb-12">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Social Proof</span>
+              <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Social Proof</span>
               <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What People Say</h2>
             </div>
           </ScrollReveal>
@@ -260,10 +260,10 @@ const Index = () => {
               <ScrollReveal key={t.name} delay={i * 0.08}>
                 <div className="bg-card border border-border/60 rounded-2xl p-6 h-full premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500 flex flex-col">
                   <Quote size={16} className="text-primary/30 mb-4 flex-shrink-0" />
-                  <p className="text-[13px] text-muted-foreground leading-[1.7] mb-6 flex-1 italic">"{t.quote}"</p>
+                  <p className="text-[15px] text-muted-foreground leading-[1.7] mb-6 flex-1 italic">"{t.quote}"</p>
                   <div>
-                    <p className="text-[13px] font-semibold text-foreground">{t.name}</p>
-                    <p className="text-[11px] text-muted-foreground/60">{t.role}</p>
+                    <p className="text-[15px] font-semibold text-foreground">{t.name}</p>
+                    <p className="text-[13px] text-muted-foreground/60">{t.role}</p>
                   </div>
                 </div>
               </ScrollReveal>
@@ -278,11 +278,11 @@ const Index = () => {
           <ScrollReveal>
             <div className="flex items-end justify-between mb-12">
               <div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Writing</span>
+                <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Writing</span>
                 <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">Latest from the Blog</h2>
               </div>
-              <Link to="/blog" className="hidden sm:flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 group">
-                All posts <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              <Link to="/blog" className="hidden sm:flex items-center gap-1.5 text-[14px] text-muted-foreground hover:text-foreground transition-colors duration-300 group">
+                All posts <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </Link>
             </div>
           </ScrollReveal>
@@ -294,16 +294,16 @@ const Index = () => {
                   to={`/blog/${post.slug}`}
                   className="group block bg-card border border-border/60 rounded-2xl p-6 h-full premium-shadow hover:premium-shadow-hover hover:-translate-y-1 transition-all duration-500"
                 >
-                  <div className="flex items-center gap-2 mb-3 text-[10px] text-muted-foreground/60">
+                  <div className="flex items-center gap-2 mb-3 text-[12px] text-muted-foreground/60">
                     <time>{format(new Date(post.date), "MMM d, yyyy")}</time>
                     <span>·</span>
                     <span>{post.readTime}</span>
                   </div>
-                  <h3 className="text-[14px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-2 leading-snug">{post.title}</h3>
-                  <p className="text-[12px] text-muted-foreground leading-[1.65] mb-4">{post.excerpt.slice(0, 100)}...</p>
+                  <h3 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-2 leading-snug">{post.title}</h3>
+                  <p className="text-[14px] text-muted-foreground leading-[1.65] mb-4">{post.excerpt.slice(0, 100)}...</p>
                   <div className="flex flex-wrap gap-1.5">
                     {post.tags.map((tag) => (
-                      <span key={tag} className="px-2 py-0.5 text-[9px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
+                      <span key={tag} className="px-2 py-0.5 text-[11px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
                     ))}
                   </div>
                 </Link>
@@ -311,8 +311,8 @@ const Index = () => {
             ))}
           </div>
 
-          <Link to="/blog" className="sm:hidden flex items-center justify-center gap-1 text-[12px] text-muted-foreground hover:text-foreground transition-colors mt-10">
-            All posts <ArrowRight size={13} />
+          <Link to="/blog" className="sm:hidden flex items-center justify-center gap-1 text-[14px] text-muted-foreground hover:text-foreground transition-colors mt-10">
+            All posts <ArrowRight size={14} />
           </Link>
         </div>
       </section>
@@ -330,20 +330,20 @@ const Index = () => {
         <div className="container mx-auto px-6 relative">
           <ScrollReveal>
             <div className="text-center max-w-md mx-auto">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>
+              <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>
               <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-3">
                 Have a project in mind?
               </h2>
-              <p className="text-[14px] text-muted-foreground mb-8 leading-[1.7] font-light">
+              <p className="text-[15px] text-muted-foreground mb-8 leading-[1.7] font-light">
                 I'm currently available for freelance work and full-time opportunities. Let's build something great together.
               </p>
 
               <div className="flex flex-wrap justify-center gap-3">
-                <Button size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium shadow-sm group" asChild>
+                <Button size="lg" className="rounded-full px-8 h-11 text-[15px] font-medium shadow-sm group" asChild>
                   <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
                 </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-8 h-11 text-[13px] font-medium" asChild>
-                  <a href="mailto:idderfsalem98@gmail.com">Email Me</a>
+                <Button variant="outline" size="lg" className="rounded-full px-8 h-11 text-[15px] font-medium" asChild>
+                  <Link to="/contact">Send a Message</Link>
                 </Button>
               </div>
             </div>

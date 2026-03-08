@@ -49,9 +49,9 @@ const ProjectsPage = () => {
       <div className="py-24 md:py-32">
         <div className="container mx-auto px-6 max-w-2xl">
           <ScrollReveal>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Portfolio</span>
+            <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Portfolio</span>
             <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Key Projects</h1>
-            <p className="text-[14px] text-muted-foreground mb-10 font-light">Live production systems I've built and shipped.</p>
+            <p className="text-[15px] text-muted-foreground mb-10 font-light">Live production systems I've built and shipped.</p>
           </ScrollReveal>
 
           <div className="space-y-6">
@@ -73,19 +73,19 @@ const ProjectsPage = () => {
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <div className="flex items-center gap-2.5 mb-0.5">
-                          <h2 className="text-[15px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h2>
-                          <span className="px-2 py-0.5 text-[9px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">
+                          <h2 className="text-[16px] font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{project.title}</h2>
+                          <span className="px-2 py-0.5 text-[11px] font-medium rounded-full bg-primary/[0.08] text-primary tracking-wide">
                             {project.status}
                           </span>
                         </div>
-                        <p className="text-[11px] text-muted-foreground/70">{project.role}</p>
+                        <p className="text-[13px] text-muted-foreground/70">{project.role}</p>
                       </div>
-                      <ArrowRight size={13} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-1" />
+                      <ArrowRight size={14} className="text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300 mt-1" />
                     </div>
-                    <p className="text-[13px] text-muted-foreground leading-[1.7] mb-4">{project.description}</p>
+                    <p className="text-[15px] text-muted-foreground leading-[1.7] mb-4">{project.description}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {project.tags.map((tag) => (
-                        <span key={tag} className="px-2.5 py-0.5 text-[10px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
+                        <span key={tag} className="px-2.5 py-0.5 text-[12px] rounded-full bg-secondary text-muted-foreground/80 font-medium">{tag}</span>
                       ))}
                     </div>
                   </div>
