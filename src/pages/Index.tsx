@@ -138,22 +138,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Tech stack */}
-      <section className="border-y border-border/60 py-3.5 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <ScrollReveal>
-            <div className="flex items-center gap-4 overflow-x-auto no-scrollbar">
-              <span className="text-[9px] uppercase tracking-[0.25em] text-muted-foreground/60 font-medium flex-shrink-0">Stack</span>
-              <div className="w-px h-3 bg-border flex-shrink-0" />
-              {techStack.map((t) => (
-                <span key={t} className="px-3 py-1 text-[11px] rounded-full border border-border/70 text-muted-foreground/70 whitespace-nowrap hover:border-primary/30 hover:text-foreground/80 hover:bg-primary/[0.03] transition-all duration-300 cursor-default">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* Tech stack marquee */}
+      <TechMarquee />
 
       {/* Featured projects */}
       <section className="py-24 md:py-32">
