@@ -9,7 +9,7 @@ import { format } from "date-fns";
 const BlogPage = () => {
   useSEO({
     title: "Blog",
-    description: "Technical writing by Idderf Salem — deep dives into payment integrations, AI architecture, and full-stack development.",
+    description: "Technical writing by Idderf Salem - deep dives into payment integrations, AI architecture, and full-stack development.",
     path: "/blog",
   });
 
