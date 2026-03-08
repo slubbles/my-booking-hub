@@ -107,7 +107,7 @@ const Index = () => {
 
             <ScrollReveal delay={0.1}>
               <p className="text-[16px] md:text-[18px] text-muted-foreground leading-[1.75] mb-10 max-w-lg font-light">
-                Full Stack Developer shipping end-to-end web applications — UI design, backend APIs, payment integrations, and deployment.
+                Full Stack Developer shipping end-to-end web applications - UI design, backend APIs, payment integrations, and deployment.
               </p>
             </ScrollReveal>
 
