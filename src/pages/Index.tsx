@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MapPin, Clock, Quote } from "lucide-react";
+import { ArrowRight, MapPin, Clock, Quote, Monitor, Server, Database, Cloud, Bot, Compass } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import TechMarquee from "@/components/TechMarquee";
 import PageTransition from "@/components/PageTransition";
