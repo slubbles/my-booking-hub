@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -16,7 +16,7 @@ const Navbar = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -52,7 +52,6 @@ const Navbar = () => {
 
         {/* Center nav */}
         <nav
-          ref={navRef}
           className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 bg-secondary/50 rounded-full px-1 py-0.5 border border-border/40"
         >
           {navItems.map((item) => {
