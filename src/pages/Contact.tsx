@@ -101,7 +101,7 @@ const ContactPage = () => {
                   exit={{ opacity: 0 }}
                 >
                   <ScrollReveal delay={0.08}>
-                    <form onSubmit={handleSubmit} className="bg-card border border-border/60 rounded-2xl p-7 mb-8 premium-shadow text-left">
+                    <form onSubmit={handleSubmit} noValidate className="bg-card border border-border/60 rounded-2xl p-7 mb-8 premium-shadow text-left">
                       <div className="space-y-4 mb-6">
                         <div>
                           <label className="text-[12px] font-medium text-foreground mb-1.5 block">Name</label>

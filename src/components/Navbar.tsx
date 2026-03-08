@@ -56,7 +56,7 @@ const Navbar = () => {
           className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 bg-secondary/50 rounded-full px-1 py-0.5 border border-border/40"
         >
           {navItems.map((item) => {
-            const isActive = location.pathname === item.href;
+            const isActive = location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
@@ -144,7 +144,7 @@ const Navbar = () => {
                       to={item.href}
                       className={cn(
                         "flex items-center justify-between px-4 py-3 text-[15px] rounded-xl transition-all duration-300",
-                        location.pathname === item.href
+                        location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href))
                           ? "text-foreground font-semibold bg-secondary/70"
                           : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
                       )}
@@ -152,7 +152,7 @@ const Navbar = () => {
                       {item.label}
                       <ArrowRight size={14} className={cn(
                         "transition-opacity",
-                        location.pathname === item.href ? "opacity-60" : "opacity-0"
+                        (location.pathname === item.href || (item.href !== "/" && location.pathname.startsWith(item.href))) ? "opacity-60" : "opacity-0"
                       )} />
                     </Link>
                   </motion.div>
