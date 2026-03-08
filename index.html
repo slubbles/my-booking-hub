@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Idderf Salem</title>
     <script>
-      // Default to dark mode
+      // Default to dark mode — runs before paint to prevent flash
       (function() {
         var theme = localStorage.getItem('theme');
-        if (theme === 'light') return;
-        document.documentElement.classList.add('dark');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
       })();
     </script>
+    <!-- Preload critical fonts to reduce render-blocking -->
+    <link rel="preload" href="/fonts/Larsseit-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/Larsseit-Bold.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/Larsseit-ExtraBold.otf" as="font" type="font/otf" crossorigin>
     <meta name="description" content="Full Stack Developer building production web applications from idea to launch. Specializing in React, TypeScript, Node.js, and payment integrations.">
     <meta name="author" content="Idderf Salem" />
     <meta name="robots" content="index, follow" />
