@@ -168,58 +168,45 @@ const Index = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
           <ScrollReveal>
-            <div className="mb-12">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Services</span>
-              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What I Can Help With</h2>
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Services</span>
+                <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2">What I Can Help With</h2>
+              </div>
             </div>
           </ScrollReveal>
 
-          <div className="space-y-0 divide-y divide-border/40">
-            {[
-              {
-                icon: Monitor,
-                title: "Frontend Development",
-                desc: "Pixel-perfect, responsive UIs with React, Next.js, TypeScript, and Tailwind CSS.",
-              },
-              {
-                icon: Server,
-                title: "Backend Development",
-                desc: "RESTful APIs, authentication, webhooks, and third-party integrations with Node.js.",
-              },
-              {
-                icon: Database,
-                title: "Database Design",
-                desc: "Schema design, migrations, and optimization with PostgreSQL, Prisma, and Supabase.",
-              },
-              {
-                icon: Cloud,
-                title: "DevOps & Deployment",
-                desc: "CI/CD pipelines, containerization, and production deployments on Vercel, Railway, and AWS.",
-              },
-              {
-                icon: Bot,
-                title: "AI Agents",
-                desc: "Custom AI integrations and agent workflows using Claude, Grok, and OpenAI APIs.",
-              },
-              {
-                icon: Compass,
-                title: "System Design",
-                desc: "Architecture planning, scalability strategies, and technical decisions for production systems.",
-              },
-            ].map((service, i) => (
-              <ScrollReveal key={service.title} delay={i * 0.04}>
-                <div className="group flex items-start gap-5 py-5 first:pt-0 last:pb-0 cursor-default">
-                  <div className="w-9 h-9 rounded-lg bg-primary/[0.07] flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary/[0.12] transition-colors duration-300">
-                    <service.icon size={16} className="text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-[13px] font-semibold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
-                    <p className="text-[12px] text-muted-foreground leading-[1.65]">{service.desc}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal delay={0.05}>
+            <Carousel
+              opts={{ align: "start", loop: true }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
+                {services.map((service) => (
+                  <CarouselItem key={service.title} className="pl-4 basis-[85%] sm:basis-[45%] lg:basis-[32%]">
+                    <div className="group rounded-2xl overflow-hidden border border-border/60 premium-shadow hover:premium-shadow-hover hover:-translate-y-0.5 transition-all duration-500 h-full bg-card">
+                      <div className="aspect-[5/3] overflow-hidden bg-secondary">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="p-5">
+                        <h3 className="text-[14px] font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                        <p className="text-[12px] text-muted-foreground leading-[1.7]">{service.desc}</p>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex items-center gap-2 mt-6">
+                <CarouselPrevious className="static translate-y-0 h-8 w-8 rounded-full border-border/60" />
+                <CarouselNext className="static translate-y-0 h-8 w-8 rounded-full border-border/60" />
+              </div>
+            </Carousel>
+          </ScrollReveal>
         </div>
       </section>
 
