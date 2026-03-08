@@ -17,7 +17,10 @@ const certs = [
   { icon: ShieldCheck, type: "Training", title: "Smart Contract Security" },
 ];
 
-const ExperiencePage = () => (
+const ExperiencePage = () => {
+  usePageTitle("Experience");
+  return (
+  <PageTransition>
   <div className="py-16 md:py-24">
     <div className="container mx-auto px-6 max-w-2xl">
       <ScrollReveal>
