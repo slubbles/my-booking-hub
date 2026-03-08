@@ -41,7 +41,7 @@ const featuredProjects = [
 
 const testimonials = [
   {
-    quote: "Salem delivered exactly what we needed — clean code, fast turnaround, and great communication throughout the project.",
+    quote: "Salem delivered exactly what we needed - clean code, fast turnaround, and great communication throughout the project.",
     name: "Alex Chen",
     role: "Startup Founder",
   },
