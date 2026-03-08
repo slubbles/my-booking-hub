@@ -28,7 +28,6 @@ const Navbar = () => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -37,27 +36,27 @@ const Navbar = () => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-300",
+        "sticky top-0 z-50 transition-all duration-500",
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-sm"
-          : "bg-background border-b border-border"
+          ? "bg-background/70 backdrop-blur-2xl border-b border-border/40"
+          : "bg-background/95 border-b border-transparent"
       )}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-6">
+      <div className="container mx-auto flex h-14 items-center justify-between px-6">
         {/* Logo */}
-        <Link to="/" className="relative group flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+        <Link to="/" className="relative group flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-md bg-foreground flex items-center justify-center text-background text-[10px] font-bold tracking-tight">
             IS
           </div>
-          <span className="text-[15px] font-semibold tracking-tight text-foreground hidden sm:block">
+          <span className="text-[14px] font-medium tracking-tight text-foreground hidden sm:block">
             Idderf Salem
           </span>
         </Link>
 
-        {/* Center nav — pill style */}
+        {/* Center nav */}
         <nav
           ref={navRef}
-          className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 bg-secondary/60 rounded-full px-1.5 py-1"
+          className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 bg-secondary/50 rounded-full px-1 py-0.5 border border-border/40"
         >
           {navItems.map((item) => {
             const isActive = location.pathname === item.href;
@@ -66,7 +65,7 @@ const Navbar = () => {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "relative px-4 py-1.5 text-[13px] font-medium rounded-full transition-all duration-200",
+                  "relative px-4 py-1.5 text-[12px] font-medium rounded-full transition-all duration-300",
                   isActive
                     ? "text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -76,7 +75,7 @@ const Navbar = () => {
                   <motion.div
                     layoutId="navbar-active"
                     className="absolute inset-0 bg-foreground rounded-full"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                   />
                 )}
                 <span className="relative z-10">{item.label}</span>
@@ -86,20 +85,20 @@ const Navbar = () => {
         </nav>
 
         {/* Right CTAs */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-1.5">
           <ThemeToggle />
           <Link
             to="/contact"
-            className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary transition-all duration-200"
+            className="text-[12px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary/60 transition-all duration-300"
           >
             Get in Touch
           </Link>
           <Link
             to="/booking"
-            className="inline-flex items-center gap-2 h-9 px-5 rounded-full bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-200 group"
+            className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-foreground text-background text-[12px] font-medium hover:bg-foreground/90 transition-all duration-300 group"
           >
             Book a Call
-            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
           </Link>
         </div>
 
@@ -107,17 +106,17 @@ const Navbar = () => {
         <div className="md:hidden flex items-center gap-1">
           <ThemeToggle />
           <button
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-secondary text-foreground transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-secondary text-foreground transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             <AnimatePresence mode="wait" initial={false}>
               {mobileOpen ? (
                 <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <X size={18} />
+                  <X size={16} />
                 </motion.div>
               ) : (
                 <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <Menu size={18} />
+                  <Menu size={16} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -125,56 +124,56 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu — full screen overlay */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
+            exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden fixed inset-x-0 top-16 bottom-0 bg-background/95 backdrop-blur-xl z-40"
+            className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-background/98 backdrop-blur-2xl z-40"
           >
             <div className="container mx-auto px-6 py-8 flex flex-col h-full">
               <nav className="flex flex-col gap-1">
                 {navItems.map((item, i) => (
                   <motion.div
                     key={item.href}
-                    initial={{ opacity: 0, x: -12 }}
+                    initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, duration: 0.2 }}
+                    transition={{ delay: i * 0.04, duration: 0.2 }}
                   >
                     <Link
                       to={item.href}
                       className={cn(
-                        "flex items-center justify-between px-4 py-3.5 text-[16px] rounded-xl transition-all",
+                        "flex items-center justify-between px-4 py-3 text-[15px] rounded-xl transition-all duration-300",
                         location.pathname === item.href
-                          ? "text-foreground font-semibold bg-secondary"
-                          : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                          ? "text-foreground font-semibold bg-secondary/70"
+                          : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
                       )}
                     >
                       {item.label}
-                      <ArrowRight size={16} className={cn(
+                      <ArrowRight size={14} className={cn(
                         "transition-opacity",
-                        location.pathname === item.href ? "opacity-100" : "opacity-0"
+                        location.pathname === item.href ? "opacity-60" : "opacity-0"
                       )} />
                     </Link>
                   </motion.div>
                 ))}
               </nav>
 
-              <div className="mt-auto pb-8 flex flex-col gap-3">
+              <div className="mt-auto pb-8 flex flex-col gap-2.5">
                 <Link
                   to="/contact"
-                  className="flex items-center justify-center h-12 rounded-xl border border-border text-[14px] font-medium text-foreground hover:bg-secondary transition-colors"
+                  className="flex items-center justify-center h-11 rounded-xl border border-border text-[13px] font-medium text-foreground hover:bg-secondary transition-all duration-300"
                 >
                   Get in Touch
                 </Link>
                 <Link
                   to="/booking"
-                  className="flex items-center justify-center gap-2 h-12 rounded-xl bg-primary text-primary-foreground text-[14px] font-medium hover:bg-primary/90 transition-colors"
+                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-foreground text-background text-[13px] font-medium hover:bg-foreground/90 transition-all duration-300"
                 >
-                  Book a Call <ArrowRight size={16} />
+                  Book a Call <ArrowRight size={14} />
                 </Link>
               </div>
             </div>

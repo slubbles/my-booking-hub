@@ -20,23 +20,23 @@ const AnnouncementBanner = () => {
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="bg-foreground text-background overflow-hidden"
         >
-          <div className="container mx-auto px-6 flex items-center justify-center gap-3 py-2.5 text-[12px] relative">
-            <span className="font-medium">Currently open for new projects</span>
+          <div className="container mx-auto px-6 flex items-center justify-center gap-3 py-2 text-[11px] relative">
+            <span className="font-medium tracking-wide">Currently open for new projects</span>
             <Link
               to="/booking"
-              className="inline-flex items-center gap-1 font-semibold hover:underline underline-offset-2"
+              className="inline-flex items-center gap-1 font-semibold hover:underline underline-offset-2 opacity-80 hover:opacity-100 transition-opacity"
             >
-              Book a call <ArrowRight size={12} />
+              Book a call <ArrowRight size={10} />
             </Link>
             <button
               onClick={handleDismiss}
-              className="absolute right-6 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-background/10 transition-colors"
+              className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full hover:bg-background/10 transition-colors"
               aria-label="Dismiss"
             >
-              <X size={13} />
+              <X size={11} />
             </button>
           </div>
         </motion.div>
