@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const ThemeToggle = () => {
   const [dark, setDark] = useState(() => {
@@ -21,7 +21,6 @@ const ThemeToggle = () => {
     }
   }, [dark]);
 
-  // Init from localStorage or system preference
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     if (stored === "dark") {
@@ -34,15 +33,20 @@ const ThemeToggle = () => {
   }, []);
 
   return (
-    <button
-      onClick={() => setDark(!dark)}
-      className={cn(
-        "w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
-      )}
-      aria-label="Toggle theme"
-    >
-      {dark ? <Sun size={16} /> : <Moon size={16} />}
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={() => setDark(!dark)}
+          className="w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {dark ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{dark ? "Light mode" : "Dark mode"}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import usePageTitle from "@/hooks/usePageTitle";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const ContactPage = () => {
   usePageTitle("Contact");
@@ -36,10 +37,23 @@ const ContactPage = () => {
                     { icon: Github, href: "https://github.com/slubbles", label: "GitHub" },
                     { icon: Linkedin, href: "https://www.linkedin.com/in/idderfsalem/", label: "LinkedIn" },
                     { icon: Twitter, href: "https://x.com/idderfsalem", label: "X (Twitter)" },
-                  ].map((s, i) => (
-                    <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/20 hover:bg-secondary transition-all duration-200">
-                      <s.icon size={16} />
-                    </a>
+                  ].map((s) => (
+                    <Tooltip key={s.label}>
+                      <TooltipTrigger asChild>
+                        <a
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={s.label}
+                          className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/20 hover:bg-secondary transition-all duration-200"
+                        >
+                          <s.icon size={16} />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{s.label}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   ))}
                 </div>
               </div>
