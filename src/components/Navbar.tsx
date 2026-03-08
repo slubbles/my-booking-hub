@@ -87,6 +87,7 @@ const Navbar = () => {
 
         {/* Right CTAs */}
         <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           <Link
             to="/contact"
             className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary transition-all duration-200"
