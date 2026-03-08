@@ -484,83 +484,95 @@ serve(async (req) => {
     }
 
     // Google Calendar: Create event with Meet link
-    const serviceAccountKey = JSON.parse(
-      Deno.env.get("GOOGLE_SERVICE_ACCOUNT_KEY")!
-    );
-    const calendarId = Deno.env.get("GOOGLE_CALENDAR_ID")!;
+    // Google Calendar integration (graceful fallback if unavailable)
+    let meetLink: string | null = null;
+    let googleEventId: string | null = null;
 
-    // Get access token via JWT
-    const token = await getGoogleAccessToken(serviceAccountKey);
+    const serviceAccountKeyRaw = Deno.env.get("GOOGLE_SERVICE_ACCOUNT_KEY");
+    const calendarId = Deno.env.get("GOOGLE_CALENDAR_ID");
 
-    // Check availability (freeBusy)
-    const freeBusyResp = await fetch(
-      "https://www.googleapis.com/calendar/v3/freeBusy",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          timeMin: startDateTime.toISOString(),
-          timeMax: endDateTime.toISOString(),
-          items: [{ id: calendarId }],
-        }),
-      }
-    );
-    const freeBusy = await freeBusyResp.json();
-    const busy = freeBusy.calendars?.[calendarId]?.busy || [];
-    if (busy.length > 0) {
-      return new Response(
-        JSON.stringify({ error: "This time slot is no longer available." }),
-        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
+    if (serviceAccountKeyRaw && calendarId) {
+      try {
+        const serviceAccountKey = JSON.parse(serviceAccountKeyRaw);
+        const token = await getGoogleAccessToken(serviceAccountKey);
 
-    // Create event with Google Meet
-    const eventResp = await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          summary: `Project Discussion - ${name.trim()}`,
-          description: `Booked via idderfsalem.dev\n\nName: ${name}\nEmail: ${email}\n\nNotes: ${notes || "None"}`,
-          start: { dateTime: startDateTime.toISOString(), timeZone: "Asia/Manila" },
-          end: { dateTime: endDateTime.toISOString(), timeZone: "Asia/Manila" },
-          attendees: [
-            { email: email.trim() },
-            { email: Deno.env.get("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com" },
-          ],
-          conferenceData: {
-            createRequest: {
-              requestId: crypto.randomUUID(),
-              conferenceSolutionKey: { type: "hangoutsMeet" },
+        // Check availability (freeBusy)
+        const freeBusyResp = await fetch(
+          "https://www.googleapis.com/calendar/v3/freeBusy",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
-          },
-          reminders: {
-            useDefault: false,
-            overrides: [
-              { method: "email", minutes: 60 },
-              { method: "popup", minutes: 15 },
-            ],
-          },
-        }),
+            body: JSON.stringify({
+              timeMin: startDateTime.toISOString(),
+              timeMax: endDateTime.toISOString(),
+              items: [{ id: calendarId }],
+            }),
+          }
+        );
+        const freeBusy = await freeBusyResp.json();
+        const busy = freeBusy.calendars?.[calendarId]?.busy || [];
+        if (busy.length > 0) {
+          return new Response(
+            JSON.stringify({ error: "This time slot is no longer available." }),
+            { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+
+        // Create event with Google Meet
+        const eventResp = await fetch(
+          `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              summary: `Project Discussion - ${name.trim()}`,
+              description: `Booked via idderfsalem.dev\n\nName: ${name}\nEmail: ${email}\n\nNotes: ${notes || "None"}`,
+              start: { dateTime: startDateTime.toISOString(), timeZone: "Asia/Manila" },
+              end: { dateTime: endDateTime.toISOString(), timeZone: "Asia/Manila" },
+              attendees: [
+                { email: email.trim() },
+                { email: Deno.env.get("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com" },
+              ],
+              conferenceData: {
+                createRequest: {
+                  requestId: crypto.randomUUID(),
+                  conferenceSolutionKey: { type: "hangoutsMeet" },
+                },
+              },
+              reminders: {
+                useDefault: false,
+                overrides: [
+                  { method: "email", minutes: 60 },
+                  { method: "popup", minutes: 15 },
+                ],
+              },
+            }),
+          }
+        );
+
+        const event = await eventResp.json();
+        if (eventResp.ok) {
+          meetLink = event.conferenceData?.entryPoints?.find(
+            (e: any) => e.entryPointType === "video"
+          )?.uri || event.hangoutLink || null;
+          googleEventId = event.id;
+        } else {
+          console.error("Google Calendar error:", JSON.stringify(event));
+          // Continue without Meet link — booking still saved to DB
+        }
+      } catch (gcalError) {
+        console.error("Google Calendar integration failed:", gcalError);
+        // Graceful fallback: booking is stored without Meet link
       }
-    );
-
-    const event = await eventResp.json();
-    if (!eventResp.ok) {
-      console.error("Google Calendar error:", JSON.stringify(event));
-      throw new Error("Failed to create calendar event");
+    } else {
+      console.warn("Google Calendar not configured — booking saved to DB only");
     }
-
-    const meetLink = event.conferenceData?.entryPoints?.find(
-      (e: any) => e.entryPointType === "video"
-    )?.uri || event.hangoutLink || null;
 
     // Store in database
     const supabase = createClient(
