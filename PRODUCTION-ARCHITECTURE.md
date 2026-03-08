@@ -780,23 +780,26 @@ create policy "Anyone can insert page views"
 
 ## Email System
 
-Lovable Cloud has built-in email capabilities. For the contact form notification:
+### Recommended: Resend (free tier: 3,000 emails/mo)
 
-**Option A - Lovable Cloud Email (recommended)**
-- Enable Lovable Cloud on the project
-- Use the built-in email service for notifications
-- No external API keys needed
+**Setup:**
+1. Sign up at https://resend.com
+2. Verify your domain (idderfsalem.dev) or use their shared domain for testing
+3. Create an API key
+4. Store as `RESEND_API_KEY` in Lovable Cloud secrets
 
-**Option B - Console logging + manual check**
+**Why Resend:**
+- Free tier covers portfolio needs (3,000 emails/month)
+- Simple REST API — single `fetch()` call, no SDK needed
+- Works perfectly in Deno edge functions
+- Deliverability is excellent (proper SPF/DKIM)
+
+**Implementation:** Already included in the contact edge function above. The booking system uses Google Calendar's built-in email invites — no additional email service needed for that.
+
+**Alternative: Console logging only (zero-cost)**
 - Edge function logs submissions to console
-- Check submissions via Supabase dashboard or Cloud View
-- Simplest approach, no email setup
-
-**Option C - Direct SMTP via Google**
-- Use Google's SMTP with an App Password
-- More complex but fully self-contained
-
-For the booking system, Google Calendar handles email invites automatically when you add attendees to the event. No additional email service needed.
+- Check submissions via Cloud View > Edge Function Logs
+- Simplest approach if you don't need instant email alerts
 
 ---
 
