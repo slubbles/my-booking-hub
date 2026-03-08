@@ -854,10 +854,27 @@ create policy "Anyone can insert page views"
 - [ ] No hardcoded API keys anywhere in the codebase
 
 ### Content Security
-- [ ] Contact form has honeypot field (hidden input to catch bots)
+- [ ] Contact form has honeypot field (hidden `website` input — bots fill it, humans don't)
+- [ ] Booking edge function checks `availability` table before accepting
+- [ ] Booking edge function checks for duplicate bookings at same slot
 - [ ] Booking form validates dates are in the future
 - [ ] All user input sanitized before database insertion
 - [ ] Email validation both client and server side
+- [ ] Duration validated against allowed values (15/30/45/60)
+
+### Frontend Honeypot Implementation
+```tsx
+{/* Hidden honeypot field — invisible to humans, bots fill it */}
+<input
+  type="text"
+  name="website"
+  value={website}
+  onChange={(e) => setWebsite(e.target.value)}
+  className="absolute opacity-0 pointer-events-none h-0 w-0"
+  tabIndex={-1}
+  autoComplete="off"
+/>
+```
 
 ---
 
