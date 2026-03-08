@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Twitter, Mail, ArrowRight } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+const socialLinks = [
+  { icon: Github, href: "https://github.com/slubbles", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/idderfsalem/", label: "LinkedIn" },
+  { icon: Twitter, href: "https://x.com/idderfsalem", label: "X (Twitter)" },
+  { icon: Mail, href: "mailto:idderfsalem98@gmail.com", label: "Email" },
+];
 
 const Footer = () => (
   <footer className="border-t border-border mt-0">
@@ -17,15 +25,23 @@ const Footer = () => (
             Full Stack Developer building production web applications from idea to launch.
           </p>
           <div className="flex items-center gap-1.5">
-            {[
-              { icon: Github, href: "https://github.com/slubbles" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/idderfsalem/" },
-              { icon: Twitter, href: "https://x.com/idderfsalem" },
-              { icon: Mail, href: "mailto:idderfsalem98@gmail.com" },
-            ].map((s, i) => (
-              <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200">
-                <s.icon size={15} />
-              </a>
+            {socialLinks.map((s) => (
+              <Tooltip key={s.label}>
+                <TooltipTrigger asChild>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
+                  >
+                    <s.icon size={15} />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{s.label}</p>
+                </TooltipContent>
+              </Tooltip>
             ))}
           </div>
         </div>
