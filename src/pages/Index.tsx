@@ -141,7 +141,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Tech stack — subtle horizontal strip */}
+      {/* Tech stack - subtle horizontal strip */}
       <section className="border-y border-border/60 py-3.5 overflow-hidden">
         <div className="container mx-auto px-6">
           <ScrollReveal>

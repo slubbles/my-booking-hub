@@ -197,7 +197,7 @@ const ResumePage = () => {
           {/* Bonus note */}
           <ScrollReveal delay={0.13}>
             <p className="text-[10px] text-muted-foreground/50 text-center mt-14">
-              Bonus: Solana blockchain, Rust, Smart Contracts — available where relevant.
+              Bonus: Solana blockchain, Rust, Smart Contracts - available where relevant.
             </p>
           </ScrollReveal>
         </div>

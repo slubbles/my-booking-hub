@@ -40,7 +40,7 @@ const ExperiencePage = () => {
                     <h2 className="text-[16px] font-semibold text-foreground">Full Stack Developer</h2>
                     <span className="px-2.5 py-0.5 text-[9px] font-medium rounded-full bg-primary/8 text-primary tracking-wide">Active</span>
                   </div>
-                  <p className="text-[12px] text-muted-foreground/70 mt-0.5">Freelance / Self-Employed · Dec 2023 — Present</p>
+                  <p className="text-[12px] text-muted-foreground/70 mt-0.5">Freelance / Self-Employed · Dec 2023 - Present</p>
                 </div>
               </div>
               <div className="space-y-3 ml-[60px]">
