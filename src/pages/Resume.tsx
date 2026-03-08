@@ -90,7 +90,7 @@ const ResumePage = () => {
           <ScrollReveal delay={0.03}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-12 premium-shadow">
               <p className="text-[12px] leading-[1.8] text-muted-foreground">
-                Proven ability to ship complete solutions independently — from UI design to backend APIs, payment systems, and deployment. Experienced with React, TypeScript, Node.js, PostgreSQL, and cloud platforms. Comfortable working across the entire stack and delivering production-ready products under real-world constraints.
+                Proven ability to ship complete solutions independently - from UI design to backend APIs, payment systems, and deployment. Experienced with React, TypeScript, Node.js, PostgreSQL, and cloud platforms. Comfortable working across the entire stack and delivering production-ready products under real-world constraints.
               </p>
             </div>
           </ScrollReveal>
