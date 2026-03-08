@@ -915,6 +915,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJ...
 GOOGLE_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
 GOOGLE_CALENDAR_ID=idderfsalem98@gmail.com
 NOTIFICATION_EMAIL=idderfsalem98@gmail.com
+RESEND_API_KEY=re_xxx (from https://resend.com/api-keys)
 LOVABLE_API_KEY=auto-provisioned
 ```
 
