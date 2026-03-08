@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Home, ArrowRight } from "lucide-react";
+import { ArrowLeft, Home, ArrowRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import usePageTitle from "@/hooks/usePageTitle";
 import PageTransition from "@/components/PageTransition";
