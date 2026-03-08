@@ -62,7 +62,7 @@ const ResumePage = () => {
         <div className="container mx-auto px-6 max-w-2xl">
           {/* Header */}
           <ScrollReveal>
-            <div className="flex items-start justify-between gap-4 mb-14">
+            <div className="flex items-start justify-between gap-4 mb-10">
               <div>
                 <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Resume</span>
                 <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Idderf Salem</h1>

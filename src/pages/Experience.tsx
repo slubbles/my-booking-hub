@@ -26,7 +26,7 @@ const ExperiencePage = () => {
           <ScrollReveal>
             <span className="text-[10px] uppercase tracking-[0.25em] text-primary/80 font-medium">Background</span>
             <h1 className="text-[30px] md:text-[40px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-1">Experience</h1>
-            <p className="text-[14px] text-muted-foreground mb-14 font-light">Building production systems and shipping real products.</p>
+            <p className="text-[14px] text-muted-foreground mb-10 font-light">Building production systems and shipping real products.</p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.06}>
