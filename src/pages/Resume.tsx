@@ -54,7 +54,7 @@ const education = [
 ];
 
 const ResumePage = () => {
-  usePageTitle("Resume");
+  useSEO({ title: "Resume", description: "Resume of Idderf Salem — Full Stack Developer with production experience in React, TypeScript, and Node.js.", path: "/resume" });
 
   return (
     <PageTransition>
