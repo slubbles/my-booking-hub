@@ -325,7 +325,16 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
 
   try {
-    const { name, email, message } = await req.json();
+    const { name, email, message, website } = await req.json();
+
+    // Honeypot: if "website" field is filled, it's a bot
+    if (website) {
+      // Return success to not tip off the bot
+      return new Response(
+        JSON.stringify({ success: true }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // Server-side validation
     if (!name?.trim() || name.length > 100)
