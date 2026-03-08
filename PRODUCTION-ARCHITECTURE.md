@@ -377,8 +377,23 @@ serve(async (req) => {
 
     if (insertError) throw insertError;
 
-    // Send email notification (using Lovable's built-in email)
-    // The email will be sent to NOTIFICATION_EMAIL
+    // Send email notification via Resend (add RESEND_API_KEY to secrets)
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Portfolio <noreply@idderfsalem.dev>",
+          to: Deno.env.get("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com",
+          subject: `New Contact: ${name.trim()}`,
+          html: `<h2>New message from ${name.trim()}</h2><p><strong>Email:</strong> ${email.trim()}</p><p><strong>Message:</strong></p><p>${message.trim().replace(/\n/g, "<br>")}</p>`,
+        }),
+      });
+    }
     console.log(`New contact from ${name} (${email}): ${message.slice(0, 100)}`);
 
     return new Response(
