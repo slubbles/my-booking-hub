@@ -32,7 +32,7 @@ const ExperiencePage = () => {
           <ScrollReveal delay={0.06}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-10 premium-shadow hover:premium-shadow-hover transition-all duration-500">
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-11 h-11 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-primary/[0.08] flex items-center justify-center flex-shrink-0">
                   <Briefcase size={18} className="text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
