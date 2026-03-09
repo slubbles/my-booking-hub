@@ -1,4 +1,4 @@
-import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
+import {} from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import useSEO from "@/hooks/useSEO";
