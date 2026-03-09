@@ -1,4 +1,4 @@
-import { Briefcase, GraduationCap, Award, ShieldCheck } from "lucide-react";
+import {} from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import useSEO from "@/hooks/useSEO";
@@ -12,9 +12,9 @@ const highlights = [
 ];
 
 const certs = [
-  { icon: GraduationCap, type: "Bootcamp", title: "Solana Bootcamp" },
-  { icon: Award, type: "Certification", title: "Anchor Framework" },
-  { icon: ShieldCheck, type: "Training", title: "Smart Contract Security" },
+  { type: "Bootcamp", title: "Solana Bootcamp" },
+  { type: "Certification", title: "Anchor Framework" },
+  { type: "Training", title: "Smart Contract Security" },
 ];
 
 const ExperiencePage = () => {
@@ -32,9 +32,6 @@ const ExperiencePage = () => {
           <ScrollReveal delay={0.06}>
             <div className="bg-card border border-border/60 rounded-2xl p-6 mb-10 premium-shadow hover:premium-shadow-hover transition-all duration-500">
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-11 h-11 rounded-xl bg-primary/[0.08] flex items-center justify-center flex-shrink-0">
-                  <Briefcase size={18} className="text-primary" />
-                </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <h2 className="text-[16px] font-semibold text-foreground">Full Stack Developer</h2>
@@ -63,7 +60,7 @@ const ExperiencePage = () => {
             {certs.map((cert, i) => (
               <ScrollReveal key={cert.title} delay={0.12 + i * 0.05}>
                 <div className="bg-card border border-border/60 rounded-2xl p-5 premium-shadow hover:premium-shadow-hover transition-all duration-500 h-full">
-                  <cert.icon size={18} className="text-primary/80 mb-3" />
+                  
                   <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">{cert.type}</p>
                   <h3 className="text-[15px] font-semibold text-foreground">{cert.title}</h3>
                 </div>

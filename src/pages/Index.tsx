@@ -273,6 +273,33 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Book a Call */}
+      <section className="py-16 md:py-24 border-t border-border/20 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]"
+            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+        <div className="container mx-auto px-6 max-w-5xl relative">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>
+              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-2">
+                Have a project in mind?
+              </h2>
+              <p className="text-[15px] text-muted-foreground leading-[1.7] font-light max-w-md mx-auto">
+                I'm currently available for freelance work and full-time opportunities. Book a call below or <Link to="/contact" className="text-primary hover:underline underline-offset-2">send a message</Link>.
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <BookingWidget compact />
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Latest from the blog */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-6">
@@ -315,33 +342,6 @@ const Index = () => {
           <Link to="/blog" className="sm:hidden flex items-center justify-center gap-1 text-[14px] text-muted-foreground hover:text-foreground transition-colors mt-10">
             All posts <ArrowRight size={14} />
           </Link>
-        </div>
-      </section>
-
-      {/* Book a Call */}
-      <section className="py-16 md:py-24 border-t border-border/20 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]"
-            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-        <div className="container mx-auto px-6 max-w-5xl relative">
-          <ScrollReveal>
-            <div className="text-center mb-10">
-              <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>
-              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-2">
-                Have a project in mind?
-              </h2>
-              <p className="text-[15px] text-muted-foreground leading-[1.7] font-light max-w-md mx-auto">
-                I'm currently available for freelance work and full-time opportunities. Book a call below or <Link to="/contact" className="text-primary hover:underline underline-offset-2">send a message</Link>.
-              </p>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <BookingWidget compact />
-          </ScrollReveal>
         </div>
       </section>
     </PageTransition>

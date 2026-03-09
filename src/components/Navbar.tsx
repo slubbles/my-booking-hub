@@ -77,12 +77,6 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-1.5">
           <ThemeToggle />
           <Link
-            to="/contact"
-            className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary/60 transition-all duration-300"
-          >
-            Get in Touch
-          </Link>
-          <Link
             to="/booking"
             className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-300 group"
           >
@@ -152,12 +146,6 @@ const Navbar = () => {
               </nav>
 
               <div className="mt-auto pb-8 flex flex-col gap-2.5">
-                <Link
-                  to="/contact"
-                  className="flex items-center justify-center h-11 rounded-xl border border-border text-[15px] font-medium text-foreground hover:bg-secondary transition-all duration-300"
-                >
-                  Get in Touch
-                </Link>
                 <Link
                   to="/booking"
                   className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-primary-foreground text-[15px] font-medium hover:bg-primary/90 transition-all duration-300"
