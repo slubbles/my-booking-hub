@@ -15,7 +15,7 @@ const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const Experience = lazy(() => import("./pages/Experience"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Contact = lazy(() => import("./pages/Contact"));
-const Resume = lazy(() => import("./pages/Resume"));
+
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPostPage = lazy(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
