@@ -147,12 +147,6 @@ const Navbar = () => {
 
               <div className="mt-auto pb-8 flex flex-col gap-2.5">
                 <Link
-                  to="/contact"
-                  className="flex items-center justify-center h-11 rounded-xl border border-border text-[15px] font-medium text-foreground hover:bg-secondary transition-all duration-300"
-                >
-                  Get in Touch
-                </Link>
-                <Link
                   to="/booking"
                   className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary text-primary-foreground text-[15px] font-medium hover:bg-primary/90 transition-all duration-300"
                 >

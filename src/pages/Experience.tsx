@@ -60,7 +60,7 @@ const ExperiencePage = () => {
             {certs.map((cert, i) => (
               <ScrollReveal key={cert.title} delay={0.12 + i * 0.05}>
                 <div className="bg-card border border-border/60 rounded-2xl p-5 premium-shadow hover:premium-shadow-hover transition-all duration-500 h-full">
-                  <cert.icon size={18} className="text-primary/80 mb-3" />
+                  
                   <p className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">{cert.type}</p>
                   <h3 className="text-[15px] font-semibold text-foreground">{cert.title}</h3>
                 </div>
