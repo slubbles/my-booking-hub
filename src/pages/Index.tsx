@@ -317,36 +317,29 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Book a Call */}
       <section className="py-16 md:py-24 border-t border-border/20 relative overflow-hidden">
-        {/* Animated ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.05),transparent_70%)]"
             animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
-        <div className="container mx-auto px-6 relative">
+        <div className="container mx-auto px-6 max-w-5xl relative">
           <ScrollReveal>
-            <div className="text-center max-w-md mx-auto">
+            <div className="text-center mb-10">
               <span className="text-[12px] uppercase tracking-[0.25em] text-primary/80 font-medium">Let's Connect</span>
-              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-3">
+              <h2 className="text-[26px] md:text-[34px] font-bold tracking-[-0.02em] text-foreground mt-2 mb-2">
                 Have a project in mind?
               </h2>
-              <p className="text-[15px] text-muted-foreground mb-8 leading-[1.7] font-light">
-                I'm currently available for freelance work and full-time opportunities. Let's build something great together.
+              <p className="text-[15px] text-muted-foreground leading-[1.7] font-light max-w-md mx-auto">
+                I'm currently available for freelance work and full-time opportunities. Book a call below or <Link to="/contact" className="text-primary hover:underline underline-offset-2">send a message</Link>.
               </p>
-
-              <div className="flex flex-wrap justify-center gap-3">
-                <Button size="lg" className="rounded-full px-8 h-11 text-[15px] font-medium shadow-sm group" asChild>
-                  <Link to="/booking">Book a Call <ArrowRight size={15} className="ml-1 transition-transform duration-300 group-hover:translate-x-0.5" /></Link>
-                </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-8 h-11 text-[15px] font-medium" asChild>
-                  <Link to="/contact">Send a Message</Link>
-                </Button>
-              </div>
             </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <BookingWidget compact />
           </ScrollReveal>
         </div>
       </section>
