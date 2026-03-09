@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BookingWidget from "@/components/BookingWidget";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MapPin, Clock, Quote, Monitor, Server, Database, Cloud, Bot, Compass } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
