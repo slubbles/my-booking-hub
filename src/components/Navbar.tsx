@@ -77,12 +77,6 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-1.5">
           <ThemeToggle />
           <Link
-            to="/contact"
-            className="text-[13px] font-medium text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-full hover:bg-secondary/60 transition-all duration-300"
-          >
-            Get in Touch
-          </Link>
-          <Link
             to="/booking"
             className="inline-flex items-center gap-1.5 h-8 px-4 rounded-full bg-primary text-primary-foreground text-[13px] font-medium hover:bg-primary/90 transition-all duration-300 group"
           >
