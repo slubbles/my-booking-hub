@@ -12,9 +12,9 @@ const highlights = [
 ];
 
 const certs = [
-  { icon: GraduationCap, type: "Bootcamp", title: "Solana Bootcamp" },
-  { icon: Award, type: "Certification", title: "Anchor Framework" },
-  { icon: ShieldCheck, type: "Training", title: "Smart Contract Security" },
+  { type: "Bootcamp", title: "Solana Bootcamp" },
+  { type: "Certification", title: "Anchor Framework" },
+  { type: "Training", title: "Smart Contract Security" },
 ];
 
 const ExperiencePage = () => {
