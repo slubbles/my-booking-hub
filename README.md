@@ -52,10 +52,6 @@ Analytics can be enabled by setting:
 - `VITE_PLAUSIBLE_DOMAIN`
 - optionally `VITE_PLAUSIBLE_SCRIPT_URL` if you self-host Plausible or use an alternative endpoint
 
-Error monitoring can be enabled by setting:
-
-- `VITE_SENTRY_DSN`
-
 ## Database
 
 The initial schema is in [supabase/schema.sql](supabase/schema.sql).

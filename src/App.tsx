@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import * as Sentry from "@sentry/react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -69,9 +68,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AnalyticsProvider>
-          <Sentry.ErrorBoundary fallback={<ErrorFallback />}>
-            <AnimatedRoutes />
-          </Sentry.ErrorBoundary>
+          <AnimatedRoutes />
         </AnalyticsProvider>
       </BrowserRouter>
     </TooltipProvider>

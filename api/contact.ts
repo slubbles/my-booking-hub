@@ -1,8 +1,8 @@
-import { contactSubmissionSchema } from "../src/lib/schemas";
-import { getOptionalEnv } from "./_lib/env";
-import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http";
-import { escapeHtml } from "./_lib/sanitize";
-import { createAdminClient } from "./_lib/supabase";
+import { contactSubmissionSchema } from "../src/lib/schemas.ts";
+import { getOptionalEnv } from "./_lib/env.ts";
+import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http.ts";
+import { escapeHtml } from "./_lib/sanitize.ts";
+import { createAdminClient } from "./_lib/supabase.ts";
 
 const MAX_CONTACT_SUBMISSIONS_PER_HOUR = 5;
 

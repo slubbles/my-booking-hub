@@ -1,9 +1,10 @@
-import { bookingRequestSchema } from "../src/lib/schemas";
-import { bookingsOverlap, minutesToTimeString } from "../src/lib/booking";
-import { createCalendarBooking } from "./_lib/google-calendar";
-import { getOptionalEnv } from "./_lib/env";
-import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http";
-import { createAdminClient } from "./_lib/supabase";
+import { bookingRequestSchema } from "../src/lib/schemas.ts";
+import { bookingsOverlap, minutesToTimeString } from "../src/lib/booking.ts";
+import { createCalendarBooking } from "./_lib/google-calendar.ts";
+import { getOptionalEnv } from "./_lib/env.ts";
+import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http.ts";
+import { escapeHtml } from "./_lib/sanitize.ts";
+import { createAdminClient } from "./_lib/supabase.ts";
 
 const MAX_BOOKINGS_PER_DAY_PER_IP = 10;
 
@@ -103,6 +104,8 @@ export default async function handler(request: any, response: any) {
     }
 
     const notificationEmail = getOptionalEnv("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com";
+    const resendApiKey = getOptionalEnv("RESEND_API_KEY");
+    const emailFrom = getOptionalEnv("EMAIL_FROM") || "Portfolio <noreply@example.com>";
 
     let meetLink: string | null = null;
     let googleEventId: string | null = null;
@@ -143,6 +146,36 @@ export default async function handler(request: any, response: any) {
 
     if (insertError) {
       throw insertError;
+    }
+
+    if (resendApiKey) {
+      const safeName = escapeHtml(name);
+      const safeEmail = escapeHtml(email);
+      const safeNotes = escapeHtml(notes || "None").replace(/\n/g, "<br>");
+      const safeDateTime = escapeHtml(startDateTime.toLocaleString("en-PH", {
+        dateStyle: "full",
+        timeStyle: "short",
+        timeZone: "Asia/Manila",
+      }));
+
+      const emailResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: emailFrom,
+          to: notificationEmail,
+          subject: `New booking from ${name}`,
+          html: `<h2>New booking confirmed</h2><p><strong>Name:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p><p><strong>When:</strong> ${safeDateTime} (Asia/Manila)</p><p><strong>Duration:</strong> ${duration} minutes</p><p><strong>Notes:</strong></p><p>${safeNotes}</p>${meetLink ? `<p><strong>Google Meet:</strong> <a href="${meetLink}">${meetLink}</a></p>` : ""}`,
+          reply_to: email,
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        console.error("Booking notification failed", await emailResponse.text());
+      }
     }
 
     response.status(200).json({

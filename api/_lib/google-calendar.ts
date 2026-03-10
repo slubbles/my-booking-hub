@@ -1,4 +1,4 @@
-import { getOptionalEnv } from "./env";
+import { getOptionalEnv } from "./env.ts";
 
 interface CalendarBookingInput {
   name: string;
