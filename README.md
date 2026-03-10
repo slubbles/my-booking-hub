@@ -1,73 +1,87 @@
-# Welcome to your Lovable project
+# My Booking Hub
 
-## Project info
+Portfolio and lead-generation site for Idderf Salem, built with Vite, React, TypeScript, Tailwind CSS, and shadcn/ui.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Stack
 
-## How can I edit this code?
+- Vite
+- React 18
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Framer Motion
+- Supabase
+- Vercel Functions
 
-There are several ways of editing your application.
+## Local Development
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Install dependencies:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+npm install
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Start the frontend only:
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+This runs the Vite app on `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+For full-stack local development with Vercel Functions, use:
 
-**Use GitHub Codespaces**
+```sh
+npx vercel dev
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+That is the correct local mode once the server-side environment variables are configured.
 
-## What technologies are used for this project?
+## Environment Variables
 
-This project is built with:
+Copy the example file and fill in the real values:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```sh
+copy .env.example .env
+```
 
-## How can I deploy this project?
+Required values are documented in [.env.example](.env.example) and [MASTERPLAN.md](MASTERPLAN.md).
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Analytics can be enabled by setting:
 
-## Can I connect a custom domain to my Lovable project?
+- `VITE_PLAUSIBLE_DOMAIN`
+- optionally `VITE_PLAUSIBLE_SCRIPT_URL` if you self-host Plausible or use an alternative endpoint
 
-Yes, you can!
+Error monitoring can be enabled by setting:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- `VITE_SENTRY_DSN`
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Database
+
+The initial schema is in [supabase/schema.sql](supabase/schema.sql).
+
+Apply it in the Supabase SQL editor after creating the project.
+
+## Production Deployment
+
+Target production platform: Vercel.
+
+Recommended production stack:
+
+- frontend on Vercel
+- server endpoints in `api/`
+- database on Supabase
+- email notifications via Resend
+- booking integration via Google Calendar API
+
+Client-side routing for Vercel is configured in [vercel.json](vercel.json).
+
+Basic deployment verification endpoint:
+
+- `GET /api/health`
+
+## Planning Docs
+
+- [MASTERPLAN.md](MASTERPLAN.md)
+- [PRODUCTION-ARCHITECTURE.md](PRODUCTION-ARCHITECTURE.md)
+- [DEPLOYMENT-CHECKLIST.md](DEPLOYMENT-CHECKLIST.md)

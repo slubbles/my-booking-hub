@@ -1,0 +1,162 @@
+import { bookingRequestSchema } from "../src/lib/schemas";
+import { bookingsOverlap, minutesToTimeString } from "../src/lib/booking";
+import { createCalendarBooking } from "./_lib/google-calendar";
+import { getOptionalEnv } from "./_lib/env";
+import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http";
+import { createAdminClient } from "./_lib/supabase";
+
+const MAX_BOOKINGS_PER_DAY_PER_IP = 10;
+
+export default async function handler(request: any, response: any) {
+  if (request.method === "OPTIONS") {
+    response.setHeader("Allow", "POST, OPTIONS");
+    response.status(204).end();
+    return;
+  }
+
+  if (request.method !== "POST") {
+    sendMethodNotAllowed(response, ["POST", "OPTIONS"]);
+    return;
+  }
+
+  try {
+    const payload = parseJsonBody(request);
+    const parsed = bookingRequestSchema.safeParse(payload);
+
+    if (!parsed.success) {
+      response.status(400).json({
+        error: "Invalid booking request.",
+        details: flattenZodErrors(parsed.error.flatten().fieldErrors),
+      });
+      return;
+    }
+
+    const { name, email, notes, date, time, duration } = parsed.data;
+    const startDateTime = new Date(`${date}T${time}:00+08:00`);
+
+    if (Number.isNaN(startDateTime.getTime())) {
+      response.status(400).json({ error: "Invalid booking date or time." });
+      return;
+    }
+
+    if (startDateTime <= new Date()) {
+      response.status(400).json({ error: "Bookings must be scheduled in the future." });
+      return;
+    }
+
+    const requestedEndMinutes = duration + Number(time.slice(0, 2)) * 60 + Number(time.slice(3, 5));
+    const endDateTime = new Date(startDateTime.getTime() + duration * 60 * 1000);
+    const manilaDayOfWeek = new Date(`${date}T00:00:00+08:00`).getUTCDay();
+    const supabase = createAdminClient();
+    const ipAddress = getClientIp(request);
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+    const { count: bookingCount, error: bookingCountError } = await supabase
+      .from("bookings")
+      .select("id", { count: "exact", head: true })
+      .eq("ip_address", ipAddress)
+      .gte("created_at", oneDayAgo);
+
+    if (bookingCountError) {
+      throw bookingCountError;
+    }
+
+    if ((bookingCount || 0) >= MAX_BOOKINGS_PER_DAY_PER_IP) {
+      response.status(429).json({ error: "Too many booking attempts. Please try again later." });
+      return;
+    }
+
+    const { data: availabilitySlots, error: availabilityError } = await supabase
+      .from("availability")
+      .select("start_time, end_time")
+      .eq("day_of_week", manilaDayOfWeek)
+      .eq("is_active", true)
+      .lte("start_time", `${time}:00`)
+      .gte("end_time", minutesToTimeString(requestedEndMinutes));
+
+    if (availabilityError) {
+      throw availabilityError;
+    }
+
+    if (!availabilitySlots?.length) {
+      response.status(409).json({ error: "That time is outside the available booking window." });
+      return;
+    }
+
+    const { data: existingBookings, error: bookingsError } = await supabase
+      .from("bookings")
+      .select("time, duration_minutes")
+      .eq("date", date)
+      .eq("status", "confirmed");
+
+    if (bookingsError) {
+      throw bookingsError;
+    }
+
+    const hasConflict = existingBookings?.some((booking) => {
+      return bookingsOverlap(time, duration, booking.time, booking.duration_minutes);
+    });
+
+    if (hasConflict) {
+      response.status(409).json({ error: "This time slot is already booked." });
+      return;
+    }
+
+    const notificationEmail = getOptionalEnv("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com";
+
+    let meetLink: string | null = null;
+    let googleEventId: string | null = null;
+
+    try {
+      const calendarResult = await createCalendarBooking({
+        name,
+        email,
+        notes,
+        startDateTime,
+        endDateTime,
+        notificationEmail,
+      });
+
+      if (calendarResult.conflict) {
+        response.status(409).json({ error: "This slot is no longer available." });
+        return;
+      }
+
+      meetLink = calendarResult.meetLink;
+      googleEventId = calendarResult.googleEventId;
+    } catch (calendarError) {
+      console.error("Google Calendar booking failed", calendarError);
+    }
+
+    const { error: insertError } = await supabase.from("bookings").insert({
+      name,
+      email,
+      notes: notes || null,
+      ip_address: ipAddress,
+      date,
+      time: `${time}:00`,
+      duration_minutes: duration,
+      meet_link: meetLink,
+      google_event_id: googleEventId,
+      status: "confirmed",
+    });
+
+    if (insertError) {
+      throw insertError;
+    }
+
+    response.status(200).json({
+      success: true,
+      meetLink,
+      scheduledAt: startDateTime.toISOString(),
+    });
+  } catch (error) {
+    console.error("Booking API error", error);
+    response.status(500).json({
+      error:
+        error instanceof Error
+          ? error.message
+          : "Booking failed. Check your server configuration.",
+    });
+  }
+}

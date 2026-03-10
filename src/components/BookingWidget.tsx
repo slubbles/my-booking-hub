@@ -7,6 +7,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Clock, CheckCircle2, ArrowLeft, ArrowRight, Video, Globe } from "lucide-react";
 import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { cn } from "@/lib/utils";
+import { ApiError, postJson } from "@/lib/api";
+import { captureMonitoringException } from "@/lib/monitoring";
+import { bookingRequestSchema } from "@/lib/schemas";
+import { trackEvent } from "@/components/AnalyticsProvider";
 import { toast } from "sonner";
 import profileImg from "@/assets/profile.jpg";
 
@@ -37,15 +41,63 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [meetLink, setMeetLink] = useState<string | null>(null);
 
   const disabledDays = (date: Date) => {
     const today = startOfDay(new Date());
     return isBefore(date, today) || date.getDay() === 0 || date.getDay() === 6;
   };
 
-  const handleConfirm = () => {
-    toast.success("Booking confirmed! You'll receive a confirmation email.");
-    setStep("confirmed");
+  const handleConfirm = async () => {
+    if (!selectedDate || !selectedTime) {
+      toast.error("Select a date and time first.");
+      return;
+    }
+
+    setFieldErrors({});
+
+    const result = bookingRequestSchema.safeParse({
+      name,
+      email,
+      notes,
+      date: format(selectedDate, "yyyy-MM-dd"),
+      time: selectedTime,
+      duration: durations[selectedDuration].minutes,
+    });
+
+    if (!result.success) {
+      setFieldErrors(
+        Object.fromEntries(
+          Object.entries(result.error.flatten().fieldErrors).map(([key, value]) => [key, value?.[0] || "Invalid value"]),
+        ),
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await postJson<{ success: boolean; meetLink: string | null }>("/api/booking", result.data);
+      setMeetLink(response.meetLink);
+      trackEvent("booking_confirmed", {
+        route: compact ? "homepage-widget" : "/booking",
+        duration: String(durations[selectedDuration].minutes),
+      });
+      toast.success("Booking confirmed.");
+      setStep("confirmed");
+    } catch (error) {
+      captureMonitoringException(error, { feature: "booking" });
+
+      if (error instanceof ApiError && error.details) {
+        setFieldErrors(error.details);
+      }
+
+      toast.error(error instanceof Error ? error.message : "Failed to confirm booking.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetBooking = () => {
@@ -55,6 +107,9 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
     setName("");
     setEmail("");
     setNotes("");
+    setFieldErrors({});
+    setIsSubmitting(false);
+    setMeetLink(null);
   };
 
   return (
@@ -78,6 +133,20 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
           <p className="text-[14px] text-muted-foreground mb-6">
             Confirmation sent to <span className="text-foreground font-medium">{email}</span>
           </p>
+          {meetLink ? (
+            <a
+              href={meetLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-border px-4 py-2 text-[14px] text-foreground hover:bg-secondary transition-colors mb-6"
+            >
+              Open Google Meet
+            </a>
+          ) : (
+            <p className="text-[13px] text-muted-foreground mb-6">
+              The booking is saved. Add Google Calendar credentials to enable automatic Meet links.
+            </p>
+          )}
           <Button variant="outline" size="sm" onClick={resetBooking}>Book Another</Button>
         </motion.div>
       ) : (
@@ -209,21 +278,24 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
                     <div>
                       <label className="text-[14px] font-medium text-foreground mb-1 block">Name *</label>
                       <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" className="text-[14px]" />
+                      {fieldErrors.name && <p className="text-[13px] text-destructive mt-1">{fieldErrors.name}</p>}
                     </div>
                     <div>
                       <label className="text-[14px] font-medium text-foreground mb-1 block">Email *</label>
                       <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com" className="text-[14px]" />
+                      {fieldErrors.email && <p className="text-[13px] text-destructive mt-1">{fieldErrors.email}</p>}
                     </div>
                     <div>
                       <label className="text-[14px] font-medium text-foreground mb-1 block">Notes</label>
                       <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Tell me about your project..." className="min-h-[80px] text-[14px]" />
+                      {fieldErrors.notes && <p className="text-[13px] text-destructive mt-1">{fieldErrors.notes}</p>}
                     </div>
                     <Button
                       className="w-full text-[14px]"
-                      disabled={!name.trim() || !email.trim()}
+                      disabled={!name.trim() || !email.trim() || isSubmitting}
                       onClick={handleConfirm}
                     >
-                      Confirm Booking
+                      {isSubmitting ? "Confirming..." : "Confirm Booking"}
                     </Button>
                   </div>
                 </div>

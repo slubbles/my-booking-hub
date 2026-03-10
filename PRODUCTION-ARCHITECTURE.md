@@ -905,17 +905,17 @@ Node version: 18+
 **Client-side (VITE_ prefix, safe to expose):**
 ```env
 VITE_SUPABASE_URL=https://xxx.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=eyJ...
+VITE_SUPABASE_PUBLISHABLE_KEY=<supabase-anon-key>
 ```
 
 **Server-side (edge functions only, never exposed):**
 ```env
 SUPABASE_URL=https://xxx.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=eyJ...
-GOOGLE_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
+SUPABASE_SERVICE_ROLE_KEY=<supabase-service-role-key>
+GOOGLE_SERVICE_ACCOUNT_KEY=<minified-service-account-json>
 GOOGLE_CALENDAR_ID=idderfsalem98@gmail.com
 NOTIFICATION_EMAIL=idderfsalem98@gmail.com
-RESEND_API_KEY=re_xxx (from https://resend.com/api-keys)
+RESEND_API_KEY=<resend-api-key>
 LOVABLE_API_KEY=auto-provisioned
 ```
 

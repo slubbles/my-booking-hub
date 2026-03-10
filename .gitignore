@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+my-booking-hub-489816-3508521ea5e7.json
 
 # Editor directories and files
 .vscode/*

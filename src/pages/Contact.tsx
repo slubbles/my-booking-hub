@@ -8,15 +8,12 @@ import ScrollReveal from "@/components/ScrollReveal";
 import PageTransition from "@/components/PageTransition";
 import useSEO from "@/hooks/useSEO";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { postJson, ApiError } from "@/lib/api";
+import { captureMonitoringException } from "@/lib/monitoring";
+import { contactSubmissionSchema } from "@/lib/schemas";
+import { trackEvent } from "@/components/AnalyticsProvider";
 import { toast } from "sonner";
-import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-
-const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Please enter a valid email").max(255, "Email must be less than 255 characters"),
-  message: z.string().trim().min(1, "Message is required").max(2000, "Message must be less than 2000 characters"),
-});
 
 const ContactPage = () => {
   useSEO({ title: "Contact", description: "Get in touch with Idderf Salem for freelance projects, full-time roles, and collaborations.", path: "/contact" });
@@ -24,38 +21,53 @@ const ContactPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
-    const result = contactSchema.safeParse({ name, email, message });
+    const result = contactSubmissionSchema.safeParse({ name, email, message, website });
     if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0]) fieldErrors[err.path[0] as string] = err.message;
-      });
-      setErrors(fieldErrors);
+      setErrors(
+        Object.fromEntries(
+          Object.entries(result.error.flatten().fieldErrors).map(([key, value]) => [key, value?.[0] || "Invalid value"]),
+        ),
+      );
       return;
     }
 
-    // Build mailto link with form data
-    const subject = encodeURIComponent(`Project Inquiry from ${result.data.name}`);
-    const body = encodeURIComponent(`Name: ${result.data.name}\nEmail: ${result.data.email}\n\n${result.data.message}`);
-    window.open(`mailto:idderfsalem98@gmail.com?subject=${subject}&body=${body}`, "_self");
-    
-    toast.success("Opening your email client...");
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      await postJson<{ success: boolean }>("/api/contact", result.data);
+      trackEvent("contact_submit", { route: "/contact" });
+      toast.success("Message sent successfully.");
+      setSubmitted(true);
+    } catch (error) {
+      captureMonitoringException(error, { feature: "contact" });
+
+      if (error instanceof ApiError && error.details) {
+        setErrors(error.details);
+      }
+
+      toast.error(error instanceof Error ? error.message : "Failed to send message.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {
     setName("");
     setEmail("");
     setMessage("");
+    setWebsite("");
     setErrors({});
     setSubmitted(false);
+    setIsSubmitting(false);
   };
 
   return (
@@ -87,8 +99,8 @@ const ContactPage = () => {
                       <div className="w-14 h-14 rounded-full bg-primary/[0.08] flex items-center justify-center mx-auto mb-4">
                         <CheckCircle2 size={28} className="text-primary" />
                       </div>
-                      <h2 className="text-[18px] font-bold text-foreground mb-2">Message ready!</h2>
-                      <p className="text-[15px] text-muted-foreground mb-6">Your email client should have opened with the message pre-filled.</p>
+                      <h2 className="text-[18px] font-bold text-foreground mb-2">Message sent</h2>
+                      <p className="text-[15px] text-muted-foreground mb-6">Your message has been stored and a notification has been sent.</p>
                       <Button variant="outline" size="sm" className="rounded-full" onClick={resetForm}>Send Another</Button>
                     </div>
                   </ScrollReveal>
@@ -102,6 +114,16 @@ const ContactPage = () => {
                 >
                   <ScrollReveal delay={0.08}>
                     <form onSubmit={handleSubmit} noValidate className="bg-card border border-border/60 rounded-2xl p-7 mb-8 premium-shadow text-left">
+                      <input
+                        type="text"
+                        name="website"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                        className="absolute opacity-0 pointer-events-none h-0 w-0"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                      />
                       <div className="space-y-4 mb-6">
                         <div>
                           <label className="text-[14px] font-medium text-foreground mb-1.5 block">Name</label>
@@ -141,8 +163,8 @@ const ContactPage = () => {
                           </div>
                         </div>
                       </div>
-                      <Button type="submit" className="w-full rounded-full h-11 text-[15px] font-medium group">
-                        Send Message <Send size={14} className="ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      <Button type="submit" className="w-full rounded-full h-11 text-[15px] font-medium group" disabled={isSubmitting}>
+                        {isSubmitting ? "Sending..." : "Send Message"} <Send size={14} className="ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" />
                       </Button>
                     </form>
                   </ScrollReveal>
