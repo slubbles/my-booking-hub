@@ -1,4 +1,4 @@
-import { sendMethodNotAllowed } from "./_lib/http.ts";
+import { sendMethodNotAllowed } from "./_lib/http.js";
 
 export default async function handler(request: any, response: any) {
   if (request.method !== "GET") {

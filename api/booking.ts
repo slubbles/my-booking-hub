@@ -1,10 +1,10 @@
-import { bookingRequestSchema } from "../src/lib/schemas.ts";
-import { bookingsOverlap, minutesToTimeString } from "../src/lib/booking.ts";
-import { createCalendarBooking } from "./_lib/google-calendar.ts";
-import { getOptionalEnv } from "./_lib/env.ts";
-import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http.ts";
-import { escapeHtml } from "./_lib/sanitize.ts";
-import { createAdminClient } from "./_lib/supabase.ts";
+import { bookingRequestSchema } from "../src/lib/schemas.js";
+import { bookingsOverlap, minutesToTimeString } from "../src/lib/booking.js";
+import { createCalendarBooking } from "./_lib/google-calendar.js";
+import { getOptionalEnv } from "./_lib/env.js";
+import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http.js";
+import { escapeHtml } from "./_lib/sanitize.js";
+import { createAdminClient } from "./_lib/supabase.js";
 
 const MAX_BOOKINGS_PER_DAY_PER_IP = 10;
 

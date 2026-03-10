@@ -1,4 +1,4 @@
-import { getOptionalEnv } from "./env.ts";
+import { getOptionalEnv } from "./env.js";
 
 interface CalendarBookingInput {
   name: string;
@@ -14,6 +14,25 @@ interface CalendarBookingResult {
   conflict: boolean;
   meetLink: string | null;
   googleEventId: string | null;
+}
+
+interface GoogleTokenResponse {
+  access_token?: string;
+}
+
+interface GoogleFreeBusyResponse {
+  calendars?: Record<string, { busy?: Array<{ start?: string; end?: string }> }>;
+}
+
+interface GoogleCalendarEventResponse {
+  id?: string;
+  hangoutLink?: string;
+  conferenceData?: {
+    entryPoints?: Array<{ entryPointType?: string; uri?: string }>;
+  };
+  error?: {
+    message?: string;
+  };
 }
 
 const toBase64Url = (value: string | Uint8Array) => {
@@ -63,7 +82,7 @@ const getGoogleAccessToken = async (serviceAccount: Record<string, string>) => {
     }),
   });
 
-  const tokenData = await tokenResponse.json();
+  const tokenData = (await tokenResponse.json()) as GoogleTokenResponse;
 
   if (!tokenResponse.ok || !tokenData.access_token) {
     throw new Error("Failed to obtain Google access token.");
@@ -107,7 +126,7 @@ export const createCalendarBooking = async ({
     }),
   });
 
-  const freeBusyData = await freeBusyResponse.json();
+  const freeBusyData = (await freeBusyResponse.json()) as GoogleFreeBusyResponse;
   const busySlots = freeBusyData.calendars?.[calendarId]?.busy || [];
 
   if (busySlots.length > 0) {
@@ -143,14 +162,14 @@ export const createCalendarBooking = async ({
     },
   );
 
-  const eventData = await eventResponse.json();
+  const eventData = (await eventResponse.json()) as GoogleCalendarEventResponse;
 
   if (!eventResponse.ok) {
     throw new Error(eventData.error?.message || "Failed to create Google Calendar event.");
   }
 
   const meetLink =
-    eventData.conferenceData?.entryPoints?.find((entryPoint: { entryPointType?: string; uri?: string }) => entryPoint.entryPointType === "video")?.uri ||
+    eventData.conferenceData?.entryPoints?.find((entryPoint) => entryPoint.entryPointType === "video")?.uri ||
     eventData.hangoutLink ||
     null;
 
