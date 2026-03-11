@@ -1,4 +1,5 @@
 import { contactSubmissionSchema } from "../src/lib/schemas.js";
+import { buildEmailFrom, renderContactNotificationEmail } from "./_lib/email.js";
 import { getOptionalEnv } from "./_lib/env.js";
 import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http.js";
 import { escapeHtml } from "./_lib/sanitize.js";
@@ -72,7 +73,7 @@ export default async function handler(request: any, response: any) {
 
     const resendApiKey = getOptionalEnv("RESEND_API_KEY");
     const notificationEmail = getOptionalEnv("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com";
-    const emailFrom = getOptionalEnv("EMAIL_FROM") || "Portfolio <noreply@example.com>";
+    const emailFrom = buildEmailFrom(getOptionalEnv("EMAIL_FROM") || "noreply@example.com");
 
     if (resendApiKey) {
       const emailResponse = await fetch("https://api.resend.com/emails", {
@@ -85,7 +86,11 @@ export default async function handler(request: any, response: any) {
           from: emailFrom,
           to: notificationEmail,
           subject: `New portfolio contact from ${name}`,
-          html: `<h2>New contact submission</h2><p><strong>Name:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p><p><strong>Message:</strong></p><p>${safeMessage}</p>`,
+          html: renderContactNotificationEmail({
+            name: safeName,
+            email: safeEmail,
+            message: safeMessage,
+          }),
           reply_to: email,
         }),
       });

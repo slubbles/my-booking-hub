@@ -15,6 +15,8 @@ export const bookingRequestSchema = z.object({
   notes: z.string().trim().max(1000, "Notes must be less than 1000 characters").optional().default(""),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must use YYYY-MM-DD"),
   time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Time must use HH:MM"),
+  prospectTimeZone: z.string().trim().min(1).max(100).optional(),
+  prospectUtcOffsetMinutes: z.number().int().min(-720).max(840).optional(),
   duration: z.union([
     z.literal(bookingDurations[0]),
     z.literal(bookingDurations[1]),

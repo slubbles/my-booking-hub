@@ -16,6 +16,7 @@ const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const Experience = lazy(() => import("./pages/Experience"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Contact = lazy(() => import("./pages/Contact"));
+const AdminAvailability = lazy(() => import("./pages/AdminAvailability"));
 
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPostPage = lazy(() => import("./pages/BlogPost"));
@@ -49,6 +50,7 @@ const AnimatedRoutes = () => {
             <Route path="/projects/:slug" element={<ProjectDetail />} />
             <Route path="/experience" element={<Experience />} />
             <Route path="/booking" element={<Booking />} />
+            <Route path="/admin/availability" element={<AdminAvailability />} />
             
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />

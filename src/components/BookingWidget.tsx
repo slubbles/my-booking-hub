@@ -1,24 +1,20 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Calendar } from "@/components/ui/calendar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Clock, CheckCircle2, ArrowLeft, ArrowRight, Video, Globe } from "lucide-react";
 import { format, addDays, isBefore, startOfDay } from "date-fns";
 import { cn } from "@/lib/utils";
-import { ApiError, postJson } from "@/lib/api";
+import { ApiError, getJson, postJson } from "@/lib/api";
 import { captureMonitoringException } from "@/lib/monitoring";
+import { BOOKING_TIME_SLOTS } from "@/lib/booking";
 import { bookingRequestSchema } from "@/lib/schemas";
 import { trackEvent } from "@/components/AnalyticsProvider";
 import { toast } from "sonner";
 import profileImg from "@/assets/profile.jpg";
-
-const timeSlots = [
-  "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-  "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
-  "16:00", "16:30", "17:00",
-];
 
 const durations = [
   { label: "15m", minutes: 15 },
@@ -33,6 +29,41 @@ interface BookingWidgetProps {
   compact?: boolean;
 }
 
+interface AvailabilitySlot {
+  time: string;
+  available: boolean;
+  reason: "available" | "booked" | "outside_window";
+}
+
+interface AvailabilityResponse {
+  date: string;
+  duration: number;
+  slots: AvailabilitySlot[];
+}
+
+const VISITOR_TIME_ZONE = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+const VISITOR_UTC_OFFSET_MINUTES = -new Date().getTimezoneOffset();
+
+const getTimeZoneName = (date: Date, timeZone: string) => {
+  try {
+    return new Intl.DateTimeFormat(undefined, { timeZone, timeZoneName: "short" })
+      .formatToParts(date)
+      .find((part) => part.type === "timeZoneName")?.value || timeZone;
+  } catch {
+    return timeZone;
+  }
+};
+
+const formatSlotForTimeZone = (date: Date, time: string, timeZone: string) => {
+  const sourceDate = new Date(`${format(date, "yyyy-MM-dd")}T${time}:00+08:00`);
+
+  return new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone,
+  }).format(sourceDate);
+};
+
 const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
   const [step, setStep] = useState<Step>("calendar");
   const [selectedDuration, setSelectedDuration] = useState(1);
@@ -44,6 +75,60 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [meetLink, setMeetLink] = useState<string | null>(null);
+  const [availability, setAvailability] = useState<AvailabilityResponse | null>(null);
+  const [isLoadingAvailability, setIsLoadingAvailability] = useState(false);
+
+  const visitorTimeZoneName = useMemo(() => getTimeZoneName(new Date(), VISITOR_TIME_ZONE), []);
+  const selectedDateValue = selectedDate ? format(selectedDate, "yyyy-MM-dd") : null;
+
+  useEffect(() => {
+    if (!selectedDateValue) {
+      setAvailability(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadAvailability = async () => {
+      setIsLoadingAvailability(true);
+
+      try {
+        const response = await getJson<AvailabilityResponse>(`/api/availability?date=${selectedDateValue}&duration=${durations[selectedDuration].minutes}`);
+        if (cancelled) {
+          return;
+        }
+
+        setAvailability(response);
+
+        if (selectedTime && !response.slots.some((slot) => slot.time === selectedTime && slot.available)) {
+          setSelectedTime(null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error(error);
+          toast.error("Failed to load booking availability.");
+          setAvailability(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingAvailability(false);
+        }
+      }
+    };
+
+    loadAvailability();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedDateValue, selectedDuration, selectedTime]);
+
+  const displayedSlots = availability?.slots || BOOKING_TIME_SLOTS.map((time) => ({ time, available: false, reason: "outside_window" as const }));
+
+  const selectedLocalTimeLabel = selectedDate && selectedTime
+    ? formatSlotForTimeZone(selectedDate, selectedTime, VISITOR_TIME_ZONE)
+    : null;
+  const selectedManilaTimeLabel = selectedTime;
 
   const disabledDays = (date: Date) => {
     const today = startOfDay(new Date());
@@ -64,6 +149,8 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
       notes,
       date: format(selectedDate, "yyyy-MM-dd"),
       time: selectedTime,
+      prospectTimeZone: VISITOR_TIME_ZONE,
+      prospectUtcOffsetMinutes: VISITOR_UTC_OFFSET_MINUTES,
       duration: durations[selectedDuration].minutes,
     });
 
@@ -79,7 +166,7 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
     setIsSubmitting(true);
 
     try {
-      const response = await postJson<{ success: boolean; meetLink: string | null }>("/api/booking", result.data);
+      const response = await postJson<{ success: boolean; meetLink: string | null; scheduledAt: string }>("/api/booking", result.data);
       setMeetLink(response.meetLink);
       trackEvent("booking_confirmed", {
         route: compact ? "homepage-widget" : "/booking",
@@ -129,7 +216,12 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
           <p className="text-[15px] text-muted-foreground mb-1">
             {durations[selectedDuration].label} meeting on {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")}
           </p>
-          <p className="text-[15px] text-muted-foreground mb-6">at {selectedTime} (UTC+8)</p>
+          <p className="text-[15px] text-muted-foreground mb-1">
+            at {selectedLocalTimeLabel || selectedManilaTimeLabel} ({visitorTimeZoneName})
+          </p>
+          <p className="text-[13px] text-muted-foreground mb-6">
+            Host time: {selectedManilaTimeLabel} (Asia/Manila)
+          </p>
           <p className="text-[14px] text-muted-foreground mb-6">
             Confirmation sent to <span className="text-foreground font-medium">{email}</span>
           </p>
@@ -195,13 +287,17 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
               </div>
               <div className="flex items-center gap-2 text-[13px] text-muted-foreground">
                 <Globe size={13} />
-                <span>Asia/Manila (UTC+8)</span>
+                <span>Your timezone: {VISITOR_TIME_ZONE} ({visitorTimeZoneName})</span>
+              </div>
+              <div className="flex items-center gap-2 text-[13px] text-muted-foreground mt-1">
+                <Globe size={13} />
+                <span>Host timezone: Asia/Manila (UTC+8)</span>
               </div>
 
               {selectedDate && selectedTime && step === "details" && (
                 <div className="mt-4 pt-4 border-t border-border">
                   <p className="text-[14px] font-medium text-foreground">{format(selectedDate, "EEEE, MMMM d")}</p>
-                  <p className="text-[13px] text-muted-foreground">{selectedTime} · {durations[selectedDuration].label}</p>
+                  <p className="text-[13px] text-muted-foreground">{selectedLocalTimeLabel} your time · {selectedTime} Manila · {durations[selectedDuration].label}</p>
                 </div>
               )}
             </div>
@@ -228,20 +324,35 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
                       <p className="text-[14px] font-medium text-foreground mb-0.5">
                         {format(selectedDate, "EEE, MMM d")}
                       </p>
-                      <p className="text-[12px] text-muted-foreground mb-3">Available times</p>
+                      <p className="text-[12px] text-muted-foreground mb-1">Available times in your local timezone</p>
+                      <p className="text-[12px] text-muted-foreground mb-3">Booked and unavailable slots are disabled automatically.</p>
+                      {isLoadingAvailability ? <p className="text-[12px] text-muted-foreground mb-3">Loading live availability...</p> : null}
                       <div className="space-y-1 max-h-[320px] overflow-y-auto pr-1">
-                        {timeSlots.map((slot) => (
+                        {displayedSlots.map((slot) => (
                           <button
-                            key={slot}
-                            onClick={() => setSelectedTime(slot)}
+                            key={slot.time}
+                            onClick={() => slot.available && setSelectedTime(slot.time)}
+                            disabled={!slot.available}
                             className={cn(
-                              "w-full py-2 px-3 text-[14px] font-medium rounded-md border transition-all text-center",
-                              selectedTime === slot
+                              "w-full py-2 px-3 text-[14px] font-medium rounded-md border transition-all text-left",
+                              selectedTime === slot.time
                                 ? "border-primary bg-primary text-primary-foreground"
-                                : "border-border text-foreground hover:border-foreground/20"
+                                : slot.available
+                                  ? "border-border text-foreground hover:border-foreground/20"
+                                  : "border-border/60 text-muted-foreground/50 cursor-not-allowed"
                             )}
                           >
-                            {slot}
+                            <div className="flex items-center justify-between gap-3">
+                              <div>
+                                <div>{formatSlotForTimeZone(selectedDate, slot.time, VISITOR_TIME_ZONE)}</div>
+                                <div className={cn("text-[11px]", selectedTime === slot.time ? "text-primary-foreground/80" : "text-muted-foreground")}>Host time: {slot.time} Manila</div>
+                              </div>
+                              {!slot.available ? (
+                                <Badge variant="outline" className="border-border/60 text-[10px] uppercase tracking-[0.08em]">
+                                  {slot.reason === "booked" ? "Booked" : "Unavailable"}
+                                </Badge>
+                              ) : null}
+                            </div>
                           </button>
                         ))}
                       </div>
@@ -289,6 +400,9 @@ const BookingWidget = ({ compact = false }: BookingWidgetProps) => {
                       <label className="text-[14px] font-medium text-foreground mb-1 block">Notes</label>
                       <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Tell me about your project..." className="min-h-[80px] text-[14px]" />
                       {fieldErrors.notes && <p className="text-[13px] text-destructive mt-1">{fieldErrors.notes}</p>}
+                    </div>
+                    <div className="rounded-lg border border-border bg-secondary/40 px-3 py-2 text-[12px] text-muted-foreground">
+                      The booking will be saved as <span className="text-foreground font-medium">{selectedLocalTimeLabel}</span> in your timezone and <span className="text-foreground font-medium">{selectedManilaTimeLabel}</span> in Asia/Manila.
                     </div>
                     <Button
                       className="w-full text-[14px]"

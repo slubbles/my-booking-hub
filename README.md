@@ -47,6 +47,22 @@ copy .env.example .env
 
 Required values are documented in [.env.example](.env.example) and [MASTERPLAN.md](MASTERPLAN.md).
 
+Important email note:
+
+- `EMAIL_FROM` should use the `Idderf Salem <noreply@yourdomain.com>` format
+- Resend must verify your sending domain before custom-domain email delivery will work reliably
+
+Google Calendar note:
+
+- OAuth refresh-token auth is the primary path for Meet generation
+- `GOOGLE_SERVICE_ACCOUNT_KEY` is optional fallback configuration, not the preferred production path
+
+Availability admin note:
+
+- Private availability management is available at `/admin/availability`
+- Set `ADMIN_AVAILABILITY_TOKEN` in your environment before using it
+- The admin page sends the token in a request header and stores it only in browser session storage
+
 Analytics can be enabled by setting:
 
 - `VITE_PLAUSIBLE_DOMAIN`

@@ -1,12 +1,37 @@
 import { bookingRequestSchema } from "../src/lib/schemas.js";
 import { bookingsOverlap, minutesToTimeString } from "../src/lib/booking.js";
 import { createCalendarBooking } from "./_lib/google-calendar.js";
+import { buildEmailFrom, renderBookingConfirmationEmail, renderBookingNotificationEmail } from "./_lib/email.js";
 import { getOptionalEnv } from "./_lib/env.js";
 import { flattenZodErrors, getClientIp, parseJsonBody, sendMethodNotAllowed } from "./_lib/http.js";
 import { escapeHtml } from "./_lib/sanitize.js";
 import { createAdminClient } from "./_lib/supabase.js";
 
 const MAX_BOOKINGS_PER_DAY_PER_IP = 10;
+
+const formatDateTimeForZone = (date: Date, timeZone: string) => {
+  try {
+    return new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone,
+    }).format(date);
+  } catch {
+    return new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "UTC",
+    }).format(date);
+  }
+};
 
 export default async function handler(request: any, response: any) {
   if (request.method === "OPTIONS") {
@@ -32,7 +57,7 @@ export default async function handler(request: any, response: any) {
       return;
     }
 
-    const { name, email, notes, date, time, duration } = parsed.data;
+    const { name, email, notes, date, time, duration, prospectTimeZone, prospectUtcOffsetMinutes } = parsed.data;
     const startDateTime = new Date(`${date}T${time}:00+08:00`);
 
     if (Number.isNaN(startDateTime.getTime())) {
@@ -105,7 +130,12 @@ export default async function handler(request: any, response: any) {
 
     const notificationEmail = getOptionalEnv("NOTIFICATION_EMAIL") || "idderfsalem98@gmail.com";
     const resendApiKey = getOptionalEnv("RESEND_API_KEY");
-    const emailFrom = getOptionalEnv("EMAIL_FROM") || "Portfolio <noreply@example.com>";
+    const emailFrom = buildEmailFrom(getOptionalEnv("EMAIL_FROM") || "noreply@example.com");
+    const timeZoneLabel = prospectTimeZone || (typeof prospectUtcOffsetMinutes === "number" ? `UTC${prospectUtcOffsetMinutes >= 0 ? "+" : ""}${Math.trunc(prospectUtcOffsetMinutes / 60)}` : "Your local timezone");
+    const manilaTime = `${formatDateTimeForZone(startDateTime, "Asia/Manila")} (Asia/Manila)`;
+    const prospectTime = prospectTimeZone
+      ? `${formatDateTimeForZone(startDateTime, prospectTimeZone)} (${prospectTimeZone})`
+      : manilaTime;
 
     let meetLink: string | null = null;
     let googleEventId: string | null = null;
@@ -152,11 +182,6 @@ export default async function handler(request: any, response: any) {
       const safeName = escapeHtml(name);
       const safeEmail = escapeHtml(email);
       const safeNotes = escapeHtml(notes || "None").replace(/\n/g, "<br>");
-      const safeDateTime = escapeHtml(startDateTime.toLocaleString("en-PH", {
-        dateStyle: "full",
-        timeStyle: "short",
-        timeZone: "Asia/Manila",
-      }));
 
       const emailResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -168,7 +193,16 @@ export default async function handler(request: any, response: any) {
           from: emailFrom,
           to: notificationEmail,
           subject: `New booking from ${name}`,
-          html: `<h2>New booking confirmed</h2><p><strong>Name:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p><p><strong>When:</strong> ${safeDateTime} (Asia/Manila)</p><p><strong>Duration:</strong> ${duration} minutes</p><p><strong>Notes:</strong></p><p>${safeNotes}</p>${meetLink ? `<p><strong>Google Meet:</strong> <a href="${meetLink}">${meetLink}</a></p>` : ""}`,
+          html: renderBookingNotificationEmail({
+            name: safeName,
+            email: safeEmail,
+            prospectTime: escapeHtml(prospectTime),
+            manilaTime: escapeHtml(manilaTime),
+            duration,
+            timeZoneLabel: escapeHtml(timeZoneLabel),
+            notes: safeNotes,
+            meetLink,
+          }),
           reply_to: email,
         }),
       });
@@ -187,7 +221,15 @@ export default async function handler(request: any, response: any) {
           from: emailFrom,
           to: email,
           subject: "Your booking is confirmed",
-          html: `<h2>Your booking is confirmed</h2><p>Thanks, ${safeName}.</p><p><strong>When:</strong> ${safeDateTime} (Asia/Manila)</p><p><strong>Duration:</strong> ${duration} minutes</p>${meetLink ? `<p><strong>Google Meet:</strong> <a href="${meetLink}">${meetLink}</a></p>` : "<p>Your booking was saved successfully. A Google Meet link is not available automatically with the current calendar setup, so it will need to be sent separately.</p>"}<p><strong>Notes:</strong></p><p>${safeNotes}</p>`,
+          html: renderBookingConfirmationEmail({
+            name: safeName,
+            prospectTime: escapeHtml(prospectTime),
+            manilaTime: escapeHtml(manilaTime),
+            duration,
+            timeZoneLabel: escapeHtml(timeZoneLabel),
+            notes: safeNotes,
+            meetLink,
+          }),
         }),
       });
 
