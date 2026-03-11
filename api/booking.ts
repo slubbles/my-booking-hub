@@ -176,6 +176,24 @@ export default async function handler(request: any, response: any) {
       if (!emailResponse.ok) {
         console.error("Booking notification failed", await emailResponse.text());
       }
+
+      const confirmationResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: emailFrom,
+          to: email,
+          subject: "Your booking is confirmed",
+          html: `<h2>Your booking is confirmed</h2><p>Thanks, ${safeName}.</p><p><strong>When:</strong> ${safeDateTime} (Asia/Manila)</p><p><strong>Duration:</strong> ${duration} minutes</p>${meetLink ? `<p><strong>Google Meet:</strong> <a href="${meetLink}">${meetLink}</a></p>` : "<p>Your booking was saved successfully. A Google Meet link is not available automatically with the current calendar setup, so it will need to be sent separately.</p>"}<p><strong>Notes:</strong></p><p>${safeNotes}</p>`,
+        }),
+      });
+
+      if (!confirmationResponse.ok) {
+        console.error("Booking confirmation email failed", await confirmationResponse.text());
+      }
     }
 
     response.status(200).json({

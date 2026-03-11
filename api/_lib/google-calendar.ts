@@ -26,14 +26,45 @@ interface GoogleFreeBusyResponse {
 
 interface GoogleCalendarEventResponse {
   id?: string;
+  htmlLink?: string;
   hangoutLink?: string;
   conferenceData?: {
+    createRequest?: {
+      status?: {
+        statusCode?: string;
+      };
+    };
     entryPoints?: Array<{ entryPointType?: string; uri?: string }>;
   };
   error?: {
     message?: string;
   };
 }
+
+const extractMeetLink = (eventData: GoogleCalendarEventResponse) => {
+  return (
+    eventData.conferenceData?.entryPoints?.find((entryPoint) => entryPoint.entryPointType === "video")?.uri ||
+    eventData.hangoutLink ||
+    null
+  );
+};
+
+const fetchCalendarEvent = async (calendarId: string, eventId: string, accessToken: string) => {
+  const response = await fetch(
+    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${encodeURIComponent(eventId)}?conferenceDataVersion=1`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    return null;
+  }
+
+  return (await response.json()) as GoogleCalendarEventResponse;
+};
 
 const toBase64Url = (value: string | Uint8Array) => {
   const buffer = typeof value === "string" ? Buffer.from(value, "utf8") : Buffer.from(value);
@@ -151,11 +182,9 @@ export const createCalendarBooking = async ({
         description: `Booked via portfolio website\n\nName: ${name}\nEmail: ${email}\n\nNotes: ${notes || "None"}`,
         start: { dateTime: startDateTime.toISOString(), timeZone: "Asia/Manila" },
         end: { dateTime: endDateTime.toISOString(), timeZone: "Asia/Manila" },
-        attendees: [{ email }, { email: notificationEmail }],
         conferenceData: {
           createRequest: {
             requestId: crypto.randomUUID(),
-            conferenceSolutionKey: { type: "hangoutsMeet" },
           },
         },
       }),
@@ -168,10 +197,15 @@ export const createCalendarBooking = async ({
     throw new Error(eventData.error?.message || "Failed to create Google Calendar event.");
   }
 
-  const meetLink =
-    eventData.conferenceData?.entryPoints?.find((entryPoint) => entryPoint.entryPointType === "video")?.uri ||
-    eventData.hangoutLink ||
-    null;
+  let meetLink = extractMeetLink(eventData);
+
+  if (!meetLink && eventData.id) {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const refreshedEvent = await fetchCalendarEvent(calendarId, eventData.id, accessToken);
+    if (refreshedEvent) {
+      meetLink = extractMeetLink(refreshedEvent);
+    }
+  }
 
   return {
     configured: true,
