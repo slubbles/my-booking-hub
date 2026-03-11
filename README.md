@@ -68,7 +68,7 @@ Recommended production stack:
 - server endpoints in `api/`
 - database on Supabase
 - email notifications via Resend
-- booking integration via Google Calendar API
+- booking integration via Google Calendar API using OAuth refresh-token auth for reliable Google Meet creation
 
 Client-side routing for Vercel is configured in [vercel.json](vercel.json).
 

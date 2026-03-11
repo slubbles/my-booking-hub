@@ -18,6 +18,8 @@ interface CalendarBookingResult {
 
 interface GoogleTokenResponse {
   access_token?: string;
+  error?: string;
+  error_description?: string;
 }
 
 interface GoogleFreeBusyResponse {
@@ -64,6 +66,35 @@ const fetchCalendarEvent = async (calendarId: string, eventId: string, accessTok
   }
 
   return (await response.json()) as GoogleCalendarEventResponse;
+};
+
+const getGoogleOAuthAccessToken = async () => {
+  const clientId = getOptionalEnv("GOOGLE_OAUTH_CLIENT_ID");
+  const clientSecret = getOptionalEnv("GOOGLE_OAUTH_CLIENT_SECRET");
+  const refreshToken = getOptionalEnv("GOOGLE_OAUTH_REFRESH_TOKEN");
+
+  if (!clientId || !clientSecret || !refreshToken) {
+    return null;
+  }
+
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: "refresh_token",
+    }),
+  });
+
+  const tokenData = (await tokenResponse.json()) as GoogleTokenResponse;
+
+  if (!tokenResponse.ok || !tokenData.access_token) {
+    throw new Error(tokenData.error_description || tokenData.error || "Failed to obtain Google OAuth access token.");
+  }
+
+  return tokenData.access_token;
 };
 
 const toBase64Url = (value: string | Uint8Array) => {
@@ -130,10 +161,11 @@ export const createCalendarBooking = async ({
   endDateTime,
   notificationEmail,
 }: CalendarBookingInput): Promise<CalendarBookingResult> => {
+  const oauthAccessToken = await getGoogleOAuthAccessToken();
   const serviceAccountKey = getOptionalEnv("GOOGLE_SERVICE_ACCOUNT_KEY");
   const calendarId = getOptionalEnv("GOOGLE_CALENDAR_ID");
 
-  if (!serviceAccountKey || !calendarId) {
+  if (!calendarId || (!oauthAccessToken && !serviceAccountKey)) {
     return {
       configured: false,
       conflict: false,
@@ -142,7 +174,8 @@ export const createCalendarBooking = async ({
     };
   }
 
-  const accessToken = await getGoogleAccessToken(JSON.parse(serviceAccountKey));
+  const accessToken = oauthAccessToken || (await getGoogleAccessToken(JSON.parse(serviceAccountKey)));
+  const usesOAuth = Boolean(oauthAccessToken);
 
   const freeBusyResponse = await fetch("https://www.googleapis.com/calendar/v3/freeBusy", {
     method: "POST",
@@ -182,9 +215,19 @@ export const createCalendarBooking = async ({
         description: `Booked via portfolio website\n\nName: ${name}\nEmail: ${email}\n\nNotes: ${notes || "None"}`,
         start: { dateTime: startDateTime.toISOString(), timeZone: "Asia/Manila" },
         end: { dateTime: endDateTime.toISOString(), timeZone: "Asia/Manila" },
+        ...(usesOAuth
+          ? {
+              attendees: [{ email }],
+            }
+          : {}),
         conferenceData: {
           createRequest: {
             requestId: crypto.randomUUID(),
+            ...(usesOAuth
+              ? {
+                  conferenceSolutionKey: { type: "hangoutsMeet" },
+                }
+              : {}),
           },
         },
       }),
